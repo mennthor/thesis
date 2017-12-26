@@ -1,0 +1,126 @@
+\documentclass[parskip=half, cleardoublepage=plain]{scrbook}
+
+% Warning, if another latex run is needed
+\usepackage[aux]{rerunfilecheck}
+
+% Just list chapters and sections in the toc, not subsections or smaller
+\setcounter{tocdepth}{1}
+
+%------------------------------------------------------------------------------
+%-- Language and Type
+%------------------------------------------------------------------------------
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}  % -- becomes en-dash etc.
+
+% Language: english | german
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+
+% For german | english abstract and german | english titles in the toc
+\setotherlanguages{english}
+
+% Intelligent quotation marks, language and nesting sensitive
+\usepackage[autostyle]{csquotes}
+
+% Microtypographical features, makes the text look nicer on the small scale
+\usepackage{microtype}
+
+%------------------------------------------------------------------------------
+%-- Math
+%------------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+% Enable Unicode-Math and follow the ISO-Standards for typesetting math
+\usepackage[
+  math-style=ISO,
+  bold-style=ISO,
+  sans-style=italic,
+  nabla=upright,
+  partial=upright,
+]{unicode-math}
+\setmathfont{Latin Modern Math}
+
+% Small fracs for the text with \sfrac{}{}
+\usepackage{xfrac}
+\usepackage{braket}
+
+%------------------------------------------------------------------------------
+%-- Numbers and Units
+%------------------------------------------------------------------------------
+\usepackage[
+  locale=US,
+  separate-uncertainty=true,
+  per-mode=symbol-or-fraction,
+  exponent-product=\cdot,
+]{siunitx}
+\sisetup{math-micro=\text{µ},text-micro=µ}
+
+%------------------------------------------------------------------------------
+%--Tables
+%------------------------------------------------------------------------------
+\usepackage{booktabs}  % Use \toprule, \midrule, \bottomrule
+
+%------------------------------------------------------------------------------
+%-- Graphics
+%------------------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{grffile}  % Flexible filename support
+
+%------------------------------------------------------------------------------
+%-- Floats
+%------------------------------------------------------------------------------
+% Allow figures to be placed in the running text by default:
+\usepackage{scrhack}
+\usepackage{float}
+\floatplacement{figure}{htbp}
+\floatplacement{table}{htbp}
+
+% Keep figures and tables in the section
+\usepackage[section, below]{placeins}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+%------------------------------------------------------------------------------
+%-- Customize list environments
+%------------------------------------------------------------------------------
+\usepackage{enumitem}
+
+%------------------------------------------------------------------------------
+%-- Colors
+%------------------------------------------------------------------------------
+\usepackage{xcolor}
+
+%------------------------------------------------------------------------------
+%-- Bibliography
+%------------------------------------------------------------------------------
+\usepackage[backend=biber]{biblatex}
+
+%------------------------------------------------------------------------------
+%-- Code environment
+%------------------------------------------------------------------------------
+\usepackage{listings}
+
+%------------------------------------------------------------------------------
+%-- Misc
+%------------------------------------------------------------------------------
+\usepackage[pdfusetitle,unicode]{hyperref}
+\usepackage{bookmark}
+\usepackage[shortcuts]{extdash}
+\usepackage{scrlayer-scrpage}  % KOMA layout modifications
+
+%------------------------------------------------------------------------------
+%-- Custom commands
+%------------------------------------------------------------------------------
+
+\newcommand{\mperiod}{\quad\text{.}}
+\newcommand{\mcomma}{\quad\text{,}}
+\newcommand{\mintertext}[1]{\quad\text{#1}\quad}
+
+\DeclareMathOperator{\rect}{rect}
+
+% Debug
+\newcommand{\needsCite}[1]{\textcolor{orange}{[CITE: #1]}}
+\newcommand{\needsTODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
