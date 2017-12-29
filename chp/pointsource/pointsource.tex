@@ -2,12 +2,12 @@
 
 This chapter derives the unbinned Likelihood search methods used for IceCube point source searches and in this thesis to identify point like neutrino sources.
 
-\needsTODO{General introduction: Signal and background contributions. Possible connection to multimessenger recap. Sample description and characterization in analysis part.}
+\needsTODO{General introduction: Scenario, unbinned Likelihood, signal and background contributions. Possible connection to multimessenger recap. Sample description and characterization in analysis part.}
 
 We start from the general unbinned extended Likelihood approach and process through the special cases used here to carry out the time dependent and independent searches particularly handling multiple years of data from different detector configurations and multiple sources for the stacking case.
 In the following we note a single event with index $i$, a source with index $k$ and a data sample with index $j$.
 
-\section{Extended Likelihood}
+\section{Extended unbinned Likelihood}
 The extended Likelihood \needsCite{Barlow book} and the corresponding logarithmic extended Likelihood function is defined as
 \begin{equation}
   \mathcal{L}(\lambda) = \frac{\lambda^N e^{-\lambda}}{N!}\prod_{i=1}^N P_i
@@ -83,31 +83,60 @@ The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H
 
 Here we introduce $\hat{\lambda}_{k,S/B}$ which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
 This leads to the test statistic
-\begin{align}
-  -2\ln\Lambda
-  &= 2\ln(\mathcal{L}_1(\{\hat{\lambda}_{k,S/B}\})) -
-     2\ln(\mathcal{L}_0(\{\hat{\lambda}^{(0)}_{k,B}\})) \\
-  &= -2\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
-                                       \hat{\lambda}_{k,B} -
-                                       \hat{\lambda}_{k,S}^{(0)}\right) +
-    2\sum_{i=1}^N \ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}\left(
-          \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
-          {\sum_{k=1}^{N_\text{srcs}}\left(
-            \hat{\lambda}_{k,B}^{(0)} B_{i,k}
-          \right)}
-        \right)
-  \mcomma
-\end{align}
+\begin{equation}
+  \begin{aligned}
+    -2\ln\Lambda
+    &= 2\ln(\mathcal{L}_1(\{\hat{\lambda}_{k,S/B}\})) -
+       2\ln(\mathcal{L}_0(\{\hat{\lambda}^{(0)}_{k,B}\})) \\
+    &= -2\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
+                                         \hat{\lambda}_{k,B} -
+                                         \hat{\lambda}_{k,S}^{(0)}\right) +
+      2\sum_{i=1}^N \ln\left(
+        \frac{\sum_{k=1}^{N_\text{srcs}}\left(
+            \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
+            {\sum_{k=1}^{N_\text{srcs}}\left(
+              \hat{\lambda}_{k,B}^{(0)} B_{i,k}
+            \right)}
+          \right)
+    \mcomma
+  \end{aligned}
+\end{equation}
 which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \needsCite{Wilk paper and/or statistic book}.
 As seen above we have to distinguish all best fit parameters from both hypotheses in general, differentiating $\hat{\lambda}_{m,B}^{(0)}$ from the null hypothesis which are not the same as $\hat{\lambda}_{k,B}$ from the composite hypothesis.
 
 In the following sections we see how specific model choices for the signal and background distributions and approximating assumptions transform the above expression to commonly known forms in time dependent and time integrated point source analyses.
 
 \subsection{Per event distributions}
-The introduced per event distributions are similar for both the time dependent and independent Likelihoods and follow the conventions for most point source searches in IceCube \needsCite{Braun paper. Maybe both for time dep. / indep. searches.}.
+The introduced per event distributions $S_i, B_i$ are similar for both the time dependent and independent Likelihoods and follow the conventions for most point source searches in IceCube \needsCite{Braun paper. Maybe both for time dep. / indep. searches.}.
+These distributions introduce further separation power between signal and background hypotheses additional to the mixing portions $\lambda_{i,S/B}$ by introducing more a-priori knowledge.
 
+The most important part in the search for neutrino point sources is the spatial clustering of events in a small region on the sky.
+As we have an estimate of the per event uncertainty available we assume a symmetric two dimensional gaussian distribtion or a symmetric Kent or van-Mises distribution \needsCite{Kent paper, van-Mises paper} for the per event spatial distribution.
+The van-Mises distribution is the pendant of a symmetric two dimensional gaussian but correctly normalized on the sphere.
+For small event uncertainties both distributions are virtually indistinguishable and the easier to grasp gaussian is used here \needsTODO{show or ref to plot of sigma vs kappa; Maybe explain both PDFs more?}.
+As we search for point sources, the distribution of a source position is fixed on the sky.
+The resulting spatial signal distribution can thus be expressed as a convolution of the gaussian per event part and a delta distribution:
+\begin{equation}
+  \begin{aligned}
+    S^S(\vec{x}_i, \vec{x}_{\mathrm{src},j}) &=
+      \int_\Omega \frac{1}{2\pi \sigma_i^2}
+      \exp\left(-\frac{|\vec{x}-\vec{x}_i|^2}{2\sigma_i^2}\right) \cdot
+      \delta(\vec{x}_{\mathrm{src},j} - \vec{x}) \d{\vec{x}} \\
+      &= \frac{1}{2\pi \sigma_i^2}
+         \exp\left(-\frac{|\vec{x}_{\mathrm{src},j}-
+                          \vec{x}_i|^2}{2\sigma_i^2}\right)
+      \mperiod
+  \end{aligned}
+\end{equation}
 
+The spatial background distribution is constructed similarly to the signal case above.
+Because we have a detector at the south pole the distribution is assumed to be declination $\delta$ dependent only.
+This dependency can be constructed by histogramming experimental data and yields
+\begin{equation}
+  B^S(\delta_i) = \frac{1}{2\pi} \cdot P(\sin\delta_i)
+  \mperiod
+\end{equation}
+where the first factor is the uniform distribution in right-ascension and the latter indicating the often alternatively used dependence on $\sin\delta$.
 
 
 \section{Time dependent Likelihood}
