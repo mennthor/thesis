@@ -1,10 +1,27 @@
 \chapter{Point source searches with IceCube neutrinos}
 
-This chapter derives the unbinned Likelihood search methods used for IceCube point source searches and in this thesis to identify point like neutrino sources.
-
+\needsTODO{Methods are described in details here}
 \needsTODO{General introduction: Scenario, unbinned Likelihood, signal and background contributions. Possible connection to multimessenger recap. Sample description and characterization in analysis part.}
+\begin{itemize}
+  \item Derive special methods from general extended likelihood
+  \item handle case of stacking and multiple independent data samples for both cases
+  \item Handle source fitting in the time dependent case
+  \item statistics framework, frequentist p-values, a-priori sensitivity, chi2 method
+\end{itemize}
 
-We start from the general unbinned extended Likelihood approach and process through the special cases used here to carry out the time dependent and independent searches particularly handling multiple years of data from different detector configurations and multiple sources for the stacking case.
+In this chapter we derive the unbinned Likelihood search methods often used for IceCube point source searches and in this thesis as well to identify point like neutrino sources.
+
+Astrophysical neutrinos carrying information about source physics is one of the main goals of IceCube.
+To identify an astrophysical neutrino signal from a specific source on the sky we need to measure an excess of events from that direction.
+In general we cannot distinguish atmospheric from extraterrestrial neutrino signals on a per event basis.
+Instead it is possible to search from a sample based point-of-view by measuring deviations for an ensemble of events regarding to a known background expectation.
+A simple method could be to define a fixed search region around a direction from which signal is expected, count the number of measured events and compare them to number of events from a background expectation in the region.
+If the measured number of events is significantly higher than the expected number of background events we may have found a signal from that direction.
+
+Here we follow a similar approach but in a more advanced form, incorporating multiple event information to increase the detection sensitivity.
+Also the simple search region, often also called a binned approach, is replaced with an unbinned version on a per event basis, which has the advantage of avoiding hard search region boundaries which can delicately drop the sensitivity of the approach.
+We start from a general unbinned, extended Likelihood approach and process through the special cases used here to carry out the time dependent and independent searches.
+Particular cases handling multiple years of data from different detector configurations and multiple sources for the so called stacking case are derived from the basis forms.
 In the following we note a single event with index $i$, a source with index $k$ and a data sample with index $j$.
 
 \section{Extended unbinned Likelihood}
@@ -17,7 +34,8 @@ The extended Likelihood \needsCite{Barlow book} and the corresponding logarithmi
 \end{equation}
 where the constant term $\ln(N!)$ is dropped in the logarithmic version.
 Here $\lambda$ is the expected number of events and $N$ the number of measured events following a Poisson counting distribution.
-The per event model distribution $P_i$ describes the Likelihood of each event under the assumed model and how likely it contributes to the expectation.
+The per event model distribution $P_i$, normalized to integral 1, describes the Likelihood of each event under the assumed model and how likely it contributes to the expectation.
+The use of the Poisson term is justified by a renormalization of the per event distributions to include the total number of measured events which is not fixed for multiple experiments of the same kind but may fluctuate around an expectation value.
 
 The tested hypotheses are encoded in the description of the models $P$.
 To obtain a fairly general expression we can derive the point source special cases from, we can split the expectation model in multiple classes by splitting the expectation and the models accordingly:
@@ -53,7 +71,7 @@ and from the Poisson condition we still have the constrain
   \mperiod
 \end{equation}
 
-For testing the significance of a potential signal contribution in the measured data, a use Likelihood ratio test is used.
+For testing the significance of a potential signal contribution in the measured data, a Likelihood ratio test is used.
 The null hypotheses $H_0$, which is that only background is expected to be measured, is constructed by using only a portion $\Theta_0$ of the allowed parameter space, here by setting all signal expectations to zero
 \begin{equation}
   \ln\mathcal{L}_0(\{\lambda_{k,S}=0\}, \{\lambda_{k,B}\})
@@ -102,20 +120,35 @@ This leads to the test statistic
   \end{aligned}
 \end{equation}
 which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \needsCite{Wilk paper and/or statistic book}.
-As seen above we have to distinguish all best fit parameters from both hypotheses in general, differentiating $\hat{\lambda}_{m,B}^{(0)}$ from the null hypothesis which are not the same as $\hat{\lambda}_{k,B}$ from the composite hypothesis.
+As seen above we have to distinguish all best fit parameters from both hypotheses in general, differentiating $\hat{\lambda}_{k,B}^{(0)}$ from the null hypothesis which are not the same as $\hat{\lambda}_{k,B}$ from the composite hypothesis.
 
 In the following sections we see how specific model choices for the signal and background distributions and approximating assumptions transform the above expression to commonly known forms in time dependent and time integrated point source analyses.
 
 \subsection{Per event distributions}
 The introduced per event distributions $S_i, B_i$ are similar for both the time dependent and independent Likelihoods and follow the conventions for most point source searches in IceCube \needsCite{Braun paper. Maybe both for time dep. / indep. searches.}.
-These distributions introduce further separation power between signal and background hypotheses additional to the mixing portions $\lambda_{i,S/B}$ by introducing more a-priori knowledge.
+These distributions introduce the separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a-priori knowledge, defining signal- and background-like regions in the parameter space.
+The better these distributions are able to separate signal and background regions the more sensitive the analysis becomes.
+A common approach with known good separation power is to combine contributions from spatial clustering and energy information, where the first one necessary for the tested hypotheses and the latter providing additional information under certain assumptions of signal flux shapes.
+We can then write the signal and background contributions as
+\begin{align}
+  S_{i,j} &= S(\vec{x}_i, \vec{x}_{\mathrm{src},j}, E_i | \gamma)
+    = S^S(\vec{x}_i, \vec{x}_{\mathrm{src},j})\cdot
+      S^E(E_i, \delta_i | \gamma) \\
+  \intertext{and}
+  B_i &= B(\delta_i, E_i | \phi_\mathrm{BG})
+    = B^S(\delta_i) \cdot B^E(E_i, \delta_i | \phi_\mathrm{BG})
+\end{align}
+where $\gamma$ is the shape parameter of an assumed signal flux proportional to a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ the usually better known flux model for an atmospheric neutrino flux.
 
-The most important part in the search for neutrino point sources is the spatial clustering of events in a small region on the sky.
-As we have an estimate of the per event uncertainty available we assume a symmetric two dimensional gaussian distribtion or a symmetric Kent or van-Mises distribution \needsCite{Kent paper, van-Mises paper} for the per event spatial distribution.
-The van-Mises distribution is the pendant of a symmetric two dimensional gaussian but correctly normalized on the sphere.
-For small event uncertainties both distributions are virtually indistinguishable and the easier to grasp gaussian is used here \needsTODO{show or ref to plot of sigma vs kappa; Maybe explain both PDFs more?}.
-As we search for point sources, the distribution of a source position is fixed on the sky.
-The resulting spatial signal distribution can thus be expressed as a convolution of the gaussian per event part and a delta distribution:
+\subsubsection*{Spatial distributions}
+The most important part in the search for neutrino point sources is the spatial clustering of events around a point on the sky.
+We have an estimate of the per event uncertainty available from the reconstruction likelihood fit which is constructed assuming a symmetric, two dimensional Gaussian distribution describing the reconstruction uncertainty.
+Alternatively the same value can be transformed and used for a symmetric Kent or van-Mises distribution \needsCite{Kent paper, van-Mises paper} for the per event spatial distribution instead.
+The van-Mises distribution is the pendant of a symmetric two dimensional Gaussian but correctly normalized on the sphere and is useful for larger uncertainties for example when investigating cascade-like events.
+For tracks the good angular resolution of about \SI{1}{\degree} justifies the use of the simpler and more familiar Gaussian distribution as both distributions become virtually indistinguishable for small uncertainties.
+\needsTODO{show or ref to plot of sigma vs kappa; Maybe explain both PDFs more?}.
+In general as we search for point sources at known or a-priori fixed positions \needsCite{coenders, allsky scan}, the distribution of a source position is fixed.
+The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source can thus be expressed as a convolution of the Gaussian per event part and a delta distribution for the source position:
 \begin{equation}
   \begin{aligned}
     S^S(\vec{x}_i, \vec{x}_{\mathrm{src},j}) &=
@@ -128,15 +161,40 @@ The resulting spatial signal distribution can thus be expressed as a convolution
       \mperiod
   \end{aligned}
 \end{equation}
+Assuming Gaussian extended sources would follow the same scheme and a simple analytic solution for the convolution of two Gaussian distributions exist.
+We will later show a slightly different approach allowing the source position to vary without the need to assume extended sources.
 
 The spatial background distribution is constructed similarly to the signal case above.
-Because we have a detector at the south pole the distribution is assumed to be declination $\delta$ dependent only.
-This dependency can be constructed by histogramming experimental data and yields
+Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination $\delta$ dependent only.
+This dependency is written in a general form here and can for example be constructed by histogramming experimental data, which is described later in more detail.
+This yields
 \begin{equation}
   B^S(\delta_i) = \frac{1}{2\pi} \cdot P(\sin\delta_i)
   \mperiod
 \end{equation}
-where the first factor is the uniform distribution in right-ascension and the latter indicating the often alternatively used dependence on $\sin\delta$.
+for the background spatial distribution, where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on $\sin\delta$.
+Note that the background distribution is only depending on the event position because background should have no correlation with any source by design.
+
+\subsubsection*{Energy distributions}
+In addition to the spatial clustering the event's energy can also provide a powerful separation argument.
+As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2.2}$ \needsCite{latest ICRC Aachen diffuse? Or generic -2?}, higher energy events are more likely to originate from a extraterrestrial source rather than having been created in the atmosphere.
+The energy dependence can only be taken into account with energy proxies which estimate the true neutrino energy $E_\nu$.
+Formally we can note that as a integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
+\begin{equation}
+  S^E(E_i, \delta_i|\gamma) =
+    \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
+\end{equation}
+where $\gamma$ is the shape parameter of the assumed signal power law flux.
+
+For background we can do the same, substituting the flux model to one describing the atmospheric neutrino background
+\begin{equation}
+  B^E(E_i, \delta_i|\phi_\mathrm{BG}) =
+    \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\phi_\mathrm{BG}) \d{E_\nu}
+    \mperiod
+\end{equation}
+
+In practice the integrals can be obtained using histograms in declination and energy proxy from simulations for signal and from simulations or measured data for background.
+
 
 
 \section{Time dependent Likelihood}
