@@ -112,9 +112,18 @@
 \usepackage{scrlayer-scrpage}  % KOMA layout modifications
 
 %------------------------------------------------------------------------------
+%-- Todo notes (put .sty in $($kpsewhich -var-value TEXMFHOME)/tex/latex)
+%------------------------------------------------------------------------------
+\usepackage{mytodonotes}
+
+%------------------------------------------------------------------------------
+%-- Use realtiv paths for standalone compiling subchapters
+%------------------------------------------------------------------------------
+\usepackage{import}
+
+%------------------------------------------------------------------------------
 %-- Custom commands
 %------------------------------------------------------------------------------
-
 \renewcommand{\d}[1]{\mathrm{d}#1}
 \newcommand{\dd}[2]{\frac{\d{#1}}{\d{#2}}}
 \newcommand{\deldel}[2]{\frac{\partial #1}{\partial #2}}
@@ -124,7 +133,3 @@
 \newcommand{\mintertext}[1]{\quad\text{#1}\quad}
 
 \DeclareMathOperator{\rect}{rect}
-
-% Debug
-\newcommand{\needsCite}[1]{\textcolor{orange}{[CITE: #1]}}
-\newcommand{\needsTODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
