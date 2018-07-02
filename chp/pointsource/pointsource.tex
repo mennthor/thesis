@@ -1,16 +1,4 @@
 \chapter{Point source searches with IceCube neutrinos}
-
-\FIXME{Methods are described in details here}
-
-\FIXME{General introduction: Scenario, unbinned Likelihood, signal and background contributions. Possible connection to multimessenger recap. Sample description and characterization in analysis part.}
-
-\begin{itemize}
-  \item Derive special methods from general extended likelihood
-  \item handle case of stacking and multiple independent data samples for both cases
-  \item Handle source fitting in the time dependent case
-  \item statistics framework, frequentist p-values, a-priori sensitivity, chi2 method
-\end{itemize}
-
 In this chapter we derive the unbinned Likelihood search methods often used for IceCube point source searches and in this thesis as well to identify point like neutrino sources.
 
 Astrophysical neutrinos carrying information about source physics is one of the main goals of IceCube.
@@ -37,7 +25,7 @@ The extended Likelihood \CITE{Barlow book} and the corresponding logarithmic ext
 where the constant term $\ln(N!)$ is dropped in the logarithmic version.
 Here $\lambda$ is the expected number of events and $N$ the number of measured events following a Poisson counting distribution.
 The per event model distribution $P_i$, normalized to integral 1, describes the Likelihood of each event under the assumed model and how likely it contributes to the expectation.
-The use of the Poisson term is justified by a renormalization of the per event distributions to include the total number of measured events which is not fixed for multiple experiments of the same kind but may fluctuate around an expectation value.
+The use of the Poisson term is justified by a re-normalization of the per event distributions to include the total number of measured events which is not fixed for multiple experiments of the same kind but may fluctuate around an expectation value.
 
 The tested hypotheses are encoded in the description of the models $P$.
 To obtain a fairly general expression we can derive the point source special cases from, we can split the expectation model in multiple classes by splitting the expectation and the models accordingly:
@@ -126,7 +114,11 @@ As seen above we have to distinguish all best fit parameters from both hypothese
 
 In the following sections we see how specific model choices for the signal and background distributions and approximating assumptions transform the above expression to commonly known forms in time dependent and time integrated point source analyses.
 
-\subsection{Per event distributions}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% General method to get the PDFs, not the used implementation
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Per event distributions}
 The introduced per event distributions $S_i, B_i$ are similar for both the time dependent and independent Likelihoods and follow the conventions for most point source searches in IceCube \CITE{Braun paper. Maybe both for time dep. / indep. searches.}.
 These distributions introduce the separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a-priori knowledge, defining signal- and background-like regions in the parameter space.
 The better these distributions are able to separate signal and background regions the more sensitive the analysis becomes.
@@ -142,13 +134,13 @@ We can then write the signal and background contributions as independent product
 \end{align}
 where $\gamma$ is the shape parameter of an assumed signal flux proportional to a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux.
 
-\subsubsection*{Spatial distributions}
+\subsection{Spatial distribution}
 The most important part in the search for neutrino point sources is the spatial clustering of events around a point on the sky.
 We have an estimate of the per event uncertainty available from the reconstruction likelihood fit which is constructed assuming a symmetric, two dimensional Gaussian distribution describing the reconstruction uncertainty.
 Alternatively the same value can be transformed and used for a symmetric Kent or van-Mises distribution \CITE{Kent paper, van-Mises paper} for the per event spatial distribution instead.
 The van-Mises distribution is the pendant of a symmetric two dimensional Gaussian but correctly normalized on the sphere and is useful for larger uncertainties for example when investigating cascade-like events.
 For tracks the good angular resolution of about \SI{1}{\degree} justifies the use of the simpler and more familiar Gaussian distribution as both distributions become virtually indistinguishable for small uncertainties.
-\TODO{show or ref to plot of sigma vs kappa; Maybe explain both PDFs more?}.
+\FIXME{Appendix: Show or ref to plot of sigma vs kappa}
 In general as we search for point sources at known or a-priori fixed positions \CITE{coenders, allsky scan}, the distribution of a source position is fixed.
 The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source can thus be expressed as a convolution of the Gaussian per event part and a delta distribution for the source position:
 \begin{equation}
@@ -163,10 +155,11 @@ The resulting spatial signal distribution describing the probability of an event
       \mperiod
   \end{aligned}
 \end{equation}
-Assuming Gaussian extended sources would follow the same scheme and a simple analytic solution for the convolution of two Gaussian distributions exist.
+Assuming Gaussian extended sources would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exist.
 
 The spatial background distribution is constructed similarly to the signal case above.
 Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination dependent only.
+This may break down for time scales so small, that the earths' rotation doesn't smear out the slightly asymmetric distribution in azimuth angle, which can then be used as a drop-in replacement, but holds better the larger the regarded time windows get.
 This dependency is written in a general form here and can for example be constructed by histogramming experimental data, which is described later in more detail.
 This yields
 \begin{equation}
@@ -176,7 +169,7 @@ This yields
 for the background spatial distribution, where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on $\sin\delta$.
 Note that the background distribution is only depending on the event position because background should have no correlation with any source by definition.
 
-\subsubsection*{Energy distributions}
+\subsection{Energy distribution}
 In addition to the spatial clustering the event's energy can also provide a powerful separation argument.
 As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2.2}$ \CITE{latest ICRC Aachen diffuse? Or generic -2?}, higher energy events are more likely to originate from a extraterrestrial source rather than having been created in the atmosphere.
 The energy dependence can only be taken into account with energy proxies which estimate the true neutrino energy $E_\nu$.
@@ -196,29 +189,39 @@ For background we can do the same, substituting the flux model to one describing
 
 In practice the integrals may be obtained using histograms in declination and energy proxy from simulations for signal and from simulations or measured data for background.
 
+\subsection{Time dependency}
+To test for time dependent emission models, we can also include time dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $S_{i,k}^T(t_i, t_k)$ which depend on each events time and it's occurrence relative to the sources' time stamps.
+The assumption is then, that each source only emits neutrinos as given by $S_{i,k}^T(t_i, t_k)$.
+The background can in general also be time dependent to account e.g. for seasonal variations in the detector rate.
 
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Special case GRB LLH
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time dependent Likelihood}
-To test for time dependent emission we alter our Likelihood similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after searching for emission from a Gamma Ray Burst catalog. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
-The assumption is, that transient sources have a well defined time window over which neutrino emission might occur.
-Here we additionally use non-overlapping time windows so that each source is unique in its own time window.
+To test for time dependent emission in this analysis, we alter the general extended Likelihood to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
+This includes explicit assumptions about the temporal source emission PDFs and simplifications of the general Likelihood formula introduced before.
+The simplifications need to be applied mainly because when choosing small time windows the analysis deals with a very low amount of leftover events.
+Therefore we need to reduce the number of free parameters as much as possible without introducing too much a-priori assumptions to stick to a rather general search method, because the source types themselves are unknown.
 
-To account for that, the signal and background PDFs are chosen to include a time part, which is in the most simple case a rectangle function, having only a non-zero contribution at the GRB time windows:
+Here, a very general assumption about the source emission is used by choosing rectangle functions for the time windows, having only a non-zero contribution within pre-defined source time windows
 \begin{align}
-  S_{i,k}^T &= \rect\left(\frac{t_i - \frac{T_k^1-T_k^0}{2}}
-                              {T_k^1-T_k^0}\right) \\
-  B_{i,k}^T &= \rect\left(\frac{t_i - \frac{T_k^1-T_k^0}{2}}
-                              {T_k^1-T_k^0}\right)
+  S_{i,k}^T &= \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
+                              {t_k^1-t_k^0}\right) \\
+  B_{i,k}^T &= \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
+                              {t_k^1-t_k^0}\right)
   \mcomma
 \end{align}
-which will be used later.
+which effectively cuts out a subset of events around the sources time stamps.
+The most simple case is then to have each source in its own, non-overlapping time window so that each source has a unique set of events belonging to it, which is the case in this analysis.
 
-The other important simplification is that we don't fit the background expectations, but rather fix them from the integrated off-time data rate over the range of the background time PDFs.
-This decreases the number of parameters to fit for, unifies the background estimators
+One important simplification of the general Likelihood we apply here is that we don't fit the background expectations, but rather fix them from the integrated off-time data rate over the range of the background time PDFs.
+This decreases the number of parameters to fit for, because it unifies and fixes the background estimators to
 \begin{equation}
   \hat{\lambda}_{k,B} = \hat{\lambda}_{k,B}^{(0)} = \Braket{\lambda_{k,B}}
+  \mperiod
 \end{equation}
-and the test statistic turns to
+The test statistic then turns to the simpler form
 \begin{equation}
   \frac{1}{2}\Lambda
   = -\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
@@ -229,137 +232,121 @@ and the test statistic turns to
   \mperiod
 \end{equation}
 
-In the following we adapt to the standard notation and use $n$ instead of $\lambda$ for the Poisson expectations.
+The last Likelihood simplification we perform, in necessity that we don't want to fit a large number of free parameters to very few events in a low background analysis, is to fix the relative signal expectations of each source a-priori and only fit for the total expectation
+\begin{equation}
+  \lambda_{k,S} = n_S \cdot w_k
+\end{equation}
+with a free global signal strength parameter $n_S$ and weights $w_k$ normalized so that
+\begin{equation}
+  \sum_{k=1}^{N_\text{srcs}} w_k = 1
+  \mperiod
+\end{equation}
+The test statistic can then be expressed by
+\begin{equation}
+  \frac{1}{2}\Lambda
+  = -\hat{n}_S +
+    \sum_{i=1}^N \ln\left(
+      \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
+           {\sum_{k=1}^{N_\text{srcs}}\Braket{\lambda_{k,B}} B_{i,k}}
+      + 1 \right)
+  \mperiod
+\end{equation}
+
+The a-priori fixed weight resemble the expectation from a single source at the detector.
+They can therefore depend on the explicitly chosen source emission model and the detection efficiency depending on the source location in the detector.
+Note that the a-priori chosen weights must match the true emission scenario as much as possible to obtain a good analysis sensitivity.
+If the true scenario differs from the assumed weights, very little can be obtained from the analysis.
 
 
 \subsection{Single sample stacking case}
-The test statistic for a single sample now has the form
+Here we show, that the assumption of independent time windows for the sources simplifies the test statistic further to a form that better resembles the independence by rearranging to an explicit sum of logarithms.
+
+Starting from the test statistic from above
 \begin{equation}
   \frac{1}{2}\Lambda
-  = -\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
+  = -\hat{n}_S +
     \sum_{i=1}^N \ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} S_{i,k}}
+      \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
            {\sum_{k=1}^{N_\text{srcs}}\Braket{\lambda_{k,B}} B_{i,k}}
       + 1 \right)
+  \mcomma
+\end{equation}
+and from the definition of the unique time windows, we see that each event $i$ can only contribute to a single source $k$.
+The event belongs to the source in which time window it falls or to no source at all, where the time windows are defined as above
+\begin{equation}
+  T_k(t_i) \coloneqq \left(
+    \frac{t_i - \frac{t_k^1-t_k^0}{2}} {t_k^1-t_k^0}
+  \right)
   \mperiod
-\label{equ:TS}
 \end{equation}
-\TODO{Make notation consistent, use correct background per source.}
-
+The stacking sum then turns to
 \begin{align}
   \frac{1}{2}\Lambda
-  = -\hat{n}_S + \sum_{i=1}^N \ln\left(\frac{\hat{n}_S\bar{S}_i}{\Braket{n_B} B_i} + 1\right) \mcomma
+  &= -\hat{n}_S +
+    \sum_{i=1}^N \ln\left(
+      \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}
+            \delta_{\{i,k|T_k(t_i)\neq 0\}}}
+           {\sum_{k=1}^{N_\text{srcs}}\Braket{\lambda_{k,B}} B_{i,k}
+            \delta_{\{i,k|T_k(t_i)\neq 0\}}}
+      + 1 \right) \\
+  &= -\hat{n}_S +
+    \sum_{i=1}^N \ln\left(
+      \frac{\hat{n}_S \left[0+\dots+0+ w_{k*} S_{i,k*} +0+\dots+0\right]}
+           {\left[0+\dots+0+ \Braket{\lambda_{k*,B}} B_{i,k*} +0+\dots+0\right]}
+      + 1 \right) \\
+  &= -\hat{n}_S +
+    \sum_{i=1}^N \sum_{k=1}^{N_\text{srcs}} \ln\left(
+      \frac{\hat{n}_S w_k S_{i,k}}{\Braket{\lambda_{k,B}} B_{i,k}}
+      + 1 \right) \mcomma \\
 \end{align}
-
-where $\hat{n}_S$ is the best fit $n_S$ under the full parameter space and $\bar{S}_i$ the stacked signal PDFs per event at each source $k$
+where $k*$ mean the $k$ that fulfils the condition $T_k(t_i)\neq 0$ and in the last step we used that
 \begin{equation}
-  \bar{S}_i = \sum_{k=1}^{N_\text{srcs}} w_k^\text{D} w_k^\text{T} S_{i,k} \mperiod
+   \ln\left(
+      \frac{\hat{n}_S w_{k\neq k*} S_{i,k\neq k*}}{\Braket{\lambda_{k\neq k*,B}} B_{i,k\neq k*}}
+      + 1 \right) = \ln(0 + 1) = 0 \mperiod
 \end{equation}
-The detector weights $w^\text{D}$ and intrinsic source weights $w^\text{T}$ are normalized such that
-\begin{equation}
-  \sum_{k=1}^{N_\text{srcs}} w^\text{D}_k w^\text{T}_k = 1 \mcomma
-\end{equation}
-where it doesn't matter if $w^\text{D}$ or $w^\text{T}$ have been normalized on their own or not.
 
-For a single sample and assuming non-overlapping GRB time windows, we can move the sum over the signal PDFs in eq.~(\ref{equ:TS}) outside the logarithm
-\begin{align}
-  \frac{1}{2}\Lambda
-    &= -\hat{n}_S + \sum_{i=1}^N \ln\left(\frac{\hat{n}_S\bar{S}_i}
-                                               {\Braket{n_B} B_i} + 1\right) \\
-    &= -\hat{n}_S + \sum_{i=1}^N \ln\left(
-          \frac{\hat{n}_S\sum_{k=1}^{N_\text{srcs}}
-                w_k^\text{D}w_k^\text{T}S_{i,k}}
-               {\Braket{n_B} B_i} + 1\right) \mcomma \\
-  \intertext{utilizing that each GRB has it's unique time window, we see that each event $i$ can only contribute to a single GRB, so that}
-    &= -\hat{n}_S + \sum_{i=1}^N \ln\left(
-          \frac{\hat{n}_S\sum_{k=1}^{N_\text{srcs}}
-                w_k^\text{D}w_k^\text{T}S_{i,k}\delta_{i\in k}}
-               {\Braket{n_B} B_i} + 1\right) \mcomma \\
-  \intertext{where $\delta_{i\in k}$ is $1$ only if event $i$ falls into the region of GRB $k$, otherwise $0$, so we get}
-    &= -\hat{n}_S + \sum_{i=1}^N \ln\left(
-          \frac{\hat{n}_S
-                \left[0 + \dots + 0 +
-                      w_k^\text{D}w_k^\text{T}S_{i,k} +
-                      0 + \dots + 0\right]}
-               {\Braket{n_B} B_i} + 1\right) \mperiod \\
-  \intertext{Because $\ln(0+1) = \ln(1) = 0$ we can use this to move the sum outside the logarithm}
-    &= -\hat{n}_S + \sum_{k=1}^{N_\text{srcs}}\sum_{i=1}^N \ln\left(
-          \frac{\hat{n}_S w_k^\text{D}w_k^\text{T}S_{i,k}}
-               {\Braket{n_B} B_i} + 1\right)  \label{equ:single_stack} \\
-  \intertext{which, as a crosscheck, expands to the correct expression again:}
-    &= -\hat{n}_S + \sum_{i=1}^N \ln\left[
-          \ln(1) + \dots + \ln(1) +
-          \left( \frac{\hat{n}_S w_k^\text{D}w_k^\text{T}S_{i,k}}
-                      {\Braket{n_B} B_i} + 1\right) +
-          \ln(1) + \dots + \ln(1) \right] \\
-    &= -\hat{n}_S + \sum_{i=1}^N \ln\left[ \left(
-          \frac{\hat{n}_S w_k^\text{D}w_k^\text{T}S_{i\in k}}
-               {\Braket{n_B} B_i} + 1\right) \right] \mperiod
-\end{align}
-
-In the following we'll see, that eq.~(\ref{equ:single_stack}) is already the form we can use to stack over multiple samples.
-
+\subsection{A-priori weight selection}
+\TODO{Describe weight selection for within a single sample in the most general form here and specialize later. The weighting across samples is done in the multi sample chapter and has nothing to do with the weighting in one sample alone.}
 
 \subsection{Multiple samples stacking case}
+To test more sources in the unique time window scenario we need to test data at the times at which the source events occurred.
+Because after each year of taking IceCube data there may be a change in the data taking procedure, we need to able to include these samples in one Likelihood test.
+Because of different detector settings, the expectations for otherwise equal sources might change, which we have to consider in an additional weighting scheme.
+The reasoning is quite similar to the stacking case for the single sample Likelihood from before.
 
-Now if we add another sample, we can just sum up the individual Likelihoods, because they are independent:
+If we add another sample, we can just sum up the individual Likelihoods, because the tested datasets are independent, which yields the combined test statistic
 \begin{align}
   \frac{1}{2}\Lambda
-    &= \frac{1}{2} \sum_{j=1}^{N_\text{sam}} \Lambda_j(\hat{n}_{S,j}) \\
-    &= \sum_{j=1}^{N_\text{sam}} \left[
-        -\hat{n}_{S,j} + \sum_{k\in j}\sum_{i=1}^{N_j} \ln\left(
-          \frac{\hat{n}_{S,j} w_{k,j}^\text{D}w_{k,j}^\text{T}S_{i,k,j}}
-               {\Braket{n_B} B_{i,j}} + 1
-        \right)
-      \right] \\
-    &=  -\hat{n}_S + \sum_{j=1}^{N_\text{sam}}
-          \sum_{k\in j}\sum_{i=1}^{N_j} \ln\left(
-            \frac{\hat{n}_S w_j w_{k,j}^\text{D}w_{k,j}^\text{T}S_{i,k,j}}
-                 {\Braket{n_B} B_{i,j}} + 1
-        \right) \mperiod
-\label{equ:multi_TS}
+  &= \frac{1}{2} \sum_{j=1}^{N_\text{sam}} \Lambda_j(\hat{n}_{S,j}) \\
+  &= \sum_{j=1}^{N_\text{sam}} \left[ -\hat{n}_{S,j} +
+    \sum_{i=1}^N \sum_{k=1}^{N_\text{srcs}} \ln\left(
+      \frac{\hat{n}_{S,j} w_k S_{i,k}}{\Braket{\lambda_{k,B}} B_{i,k}}
+      + 1 \right) \right]\mcomma \\
 \end{align}
-Here we have individual $n_{S,j}$ signal parameters and GRBs can exclusively fall in only one of the $N_\text{sam}$ samples.
-This is indicated by the sum $\sum_{k\in j}$ over GRBs now only running over all GRBs included in sample $j$ and the number of events are now the numbers $N_j$ per sample.
-Also the PDFs $S_{i,k,j}$ and $B_{i,j}$ are taken with respect to the sample the source and corresponding events fall into because the PDFs can change depending on the event selection, etc.
-Finally, $w_{k,j}^\text{D} w_{k,j}^\text{T}$ are now normalized separately within the sample, so that
+where we have individual free $n_{S,j}$ signal parameters and the weights $w_k$ are normalized per sample.
+Again we can use a-priori information about the expected number of signal events originating from each sample and re-introduce a global free signal strength parameter $n_S$ with
 \begin{equation}
-  \sum_{k\in j} w_{k,j}^\text{D} w_{k,j}^\text{T}
-  = \sum_{k\in j} \hat{w}_k^\text{D} \hat{w}_k^\text{T} \cdot
-    \frac{1}{\sum_{m\in j} \hat{w}_m^\text{D} \hat{w}_m^\text{T}}
-  = 1
-  \mperiod
-  \label{equ:multi_norm}
+  n_{S,j} = w_j n_S \mperiod
 \end{equation}
-
-In the last step in eq.~(\ref{equ:multi_TS}) we introduced a weight $w_j$ with
+To obtain the a-priori weights $w_j$ we use the law of total probability \CITE{What to cite here? Casella Berger again or Blobel?}
 \begin{equation}
-  \sum_{j=1}^{N_\text{sam}} w_j = 1 \mcomma
+  w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k) \mcomma
 \end{equation}
-that scales $\hat{n}_S$ to $\hat{n}_{S,j} = \hat{n}_S w_j$.
-We need this to insert the correctly scaled single sample LLH parameters $\hat{n}_{S,j}$ which are in general smaller than the combined $\hat{n}_S$.
-
-To obtain the weights $w_j$ we use the law of total probability
-\begin{equation}
-  w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j| k)\cdot P(k) \mcomma
-\label{equ:tot_prob}
-\end{equation}
-where $P(j)$ is the probability of getting a signal contribution $\hat{n}_S w_j$ from sample $j$.
-$P(j|k)$ is the probability of getting signal from source $k$ from sample $j$, normalized over all samples:
+where $P(j)$ is the probability of getting a signal contribution $n_S w_j$ from sample $j$ and $P(j|k)$ is the probability of getting signal from source $k$ within sample $j$, normalized over all samples
 \begin{equation}
   \sum_{j=1}^{N_\text{sam}} P(j|k) = 1 \mperiod
 \end{equation}
-$P(k)$ is the probability of getting signal from source $k$ at all, normalized over all sources separately:
+$P(k)$ is the probability of getting signal from source $k$ at all within any sample, separately normalized over all sources separately
 \begin{equation}
   \sum_{k=1}^{N_\text{srcs}} P(k) = 1 \mperiod
 \end{equation}
-While eq.~(\ref{equ:tot_prob}) holds in more general cases we can use the assumption about our non-overlapping GRBs to simplify the expression.
-We use matrix notation for eq.~(\ref{equ:tot_prob}) to better illustrate that:
+These relations can be written down in matrix notation
 \begin{equation}
-  \vec{w} =
+  \begin{pmatrix} w_1 \\ \vdots \\ w_{N_\text{sam}} \end{pmatrix} =
     \begin{pmatrix}
       P(j=0|k=0) & \dots & P(j=0|k=N_\text{srcs}) \\
-      \vdots & \vdots & \vdots \\
+      \vdots & \ddots & \vdots \\
       P(j=N_\text{sam}|k=0) & \dots & P(j=N_\text{sam}|k=N_\text{srcs})
     \end{pmatrix} \cdot
     \begin{pmatrix}
@@ -367,89 +354,58 @@ We use matrix notation for eq.~(\ref{equ:tot_prob}) to better illustrate that:
     \end{pmatrix} \mperiod
 \end{equation}
 
-Because each GRB is assumed to be non-overlapping, each column can only have a single entry which is $1$ after normalization per column.
-Each row may contain several entries which in sum are then the number of GRBs per sample.
-The probabilities $P(k)$ can be obtained from the detection efficiency of the detector at the GRB position in the sample they fall into and are normalized over all sources (see eq.~(\ref{equ:multi_example}) for an example):
+For the special case treated here, with each source having it's unique time window and also falling exclusively in a single sample each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
+The probabilities $P(k)$ can be obtained by using the un-normalized $n_S$ splitting weights for each sample $\tilde{w}_k$ and re-normalize them over all sources in all samples
 \begin{equation}
-  \sum_{k=1}^{N_\text{srcs}} P(k)
-    = \sum_{k=1}^{N_\text{srcs}} w^\text{D}_k w^\text{T}_k \cdot
-      \frac{1}{\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-    = 1
-  \mperiod
+  P(k) = \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m} \mperiod
 \end{equation}
-
-Because the matrix $P(j|k)$ has only entries with either $1$ or $0$, the weights $w_j$ are effectively the sum over the detection efficiencies of all GRBs falling in sample $j$
-\begin{equation}
-  w_j = \sum_{k\in j} w^\text{D}_k w^\text{T}_k
-        \frac{1}{\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-      \mperiod
-\end{equation}
-$w^\text{D}_k$ and $w^\text{T}_k$ must not be confused with the weights $w_{k,j}^\text{D}$ and $w_{k,j}^\text{T}$ which are normalized per sample $j$.
-
-But the numerators of the weights $w_j$ are now exactly the normalization of the $w_{k,j}^\text{D}$, $w_{k,j}^\text{T}$ in each sample, as previously seen in eq.~(\ref{equ:multi_norm}):
-\begin{equation}
-  \text{norm}(\{w_{k,j}^\text{D}w_{k,j}^\text{T}\})
-    = \sum_{k\in j} w^\text{D}_k w^\text{T}_k
-    = w_j \cdot \sum_{k=1}^{N_\text{srcs}} w^\text{D}_k w^\text{T}_k
-  \mperiod
-\end{equation}
-
-So if we plug the $w_j$ back in to the test statistic (\ref{equ:multi_TS}) we get
+Because of the special matrix properties used here, the explicit weights $w_j$ then turn out to be global re-normalizations of the un-normalized single sample weights $\tilde{w}_k$ with
 \begin{align}
-  \frac{1}{2}\Lambda &=
-    -\hat{n}_S + \sum_{j=1}^{N_\text{sam}}
-            \sum_{k\in j}\sum_{i=1}^{N_j} \ln\left(
-              \frac{\hat{n}_S w_j w_{k,j}^\text{D}w_{k,j}^\text{T}S_{i,k,j}}
-                   {\Braket{n_B} B_{i,j}} + 1 \right) \\
-    &= -\hat{n}_S + \sum_{j=1}^{N_\text{sam}}
-            \sum_{k\in j}\sum_{i=1}^{N_j} \ln\left(
-              \frac{\hat{n}_S \left[
-                      \frac{\sum_{l\in j} w^\text{D}_l w^\text{T}_l }
-                           {\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-                      \right] w_{k,j}^\text{D}w_{k,j}^\text{T}S_{i,k,j}}
-                   {\Braket{n_B} B_{i,j}} + 1 \right)
-       \mperiod \\
-  \intertext{The numerator of $w_j$ now cancels the per sample normalization of $w_{k,j}^\text{D}$ and $w_{k,j}^\text{T}$ and we get}
-    &= -\hat{n}_S + \sum_{j=1}^{N_\text{sam}}
-            \sum_{k\in j}\sum_{i=1}^{N_j} \ln\left(
-              \frac{\hat{n}_S \left[
-                      \frac{ w_k^\text{D}w_k^\text{T} }
-                           {\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-                      \right] S_{i,k,j}}
-                   {\Braket{n_B} B_{i,j}} + 1 \right)
+  w_j
+    &= \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k) \\
+    &= \sum_{k=1}^{N_\text{srcs}}
+      \delta_{\{k,j|T_j(t_k)\neq 0\}} \cdot
+      \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m}
 \end{align}
+where $T_j$ is a unique rectangle function for each sample, equally used as the rectangle function utilized to describe the unique time windows per source in each sample.
 
-If we now apply the same arguments about mutually exclusive GRBs as done in the first chapter, we can combine the sums over $j$ and $k$ and also just sum over all combined events in all samples $i$.
-We then get the test statistic for multiple samples and multiple sources as
+Now the numerator turns out to be exactly the per sample normalization of the per sample splitting weights which is the sum of all weights for the subset of all sources that actually are in the sample.
+The full multi-sample test statistic then reads
 \begin{equation}
   \frac{1}{2}\Lambda
-  = -\hat{n}_S + \sum_{k=1}^{N_\text{srcs}}\sum_{i=1}^{N} \ln\left(
-        \frac{\hat{n}_S \left[
-                \frac{ w_k^\text{D}w_k^\text{T} }
-                     {\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-                \right] S_{i,k}}
-             {\Braket{n_B} B_{i, k}} + 1 \right)
-   \mcomma
-   \label{equ:multi_stack}
+  = -\hat{n}_S +
+    \sum_{j=1}^{N_\text{sam}} \sum_{i=1}^N \sum_{k=1}^{N_\text{srcs}}
+    \ln\left(
+      \frac{
+        \hat{n}_{S}
+        \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m} S_{i,k}}
+      {\Braket{\lambda_{k,B}} B_{i,k}} + 1 \right)
+  \mcomma
 \end{equation}
-where the index $k$ now means that we have to evaluate the PDFs and the weights with the configuration for the specific sample the GRB is belonging to.
+where $\tilde{w}_k$ are the un-normalized weights per source with respect to the expected signal in their corresponding sample and are normalized over all source expectations in all samples regarded.
+This expression nicely demonstrates the circumstances here, namely that each source is independent of each other source and lies completely in a single data sample, so the whole underlying Likelihood fully factorizes in events, sources and samples.
 
-\subsection{Summary}
-We have explored two ways to construct a stacking GRB LLH with multiple samples:
-\begin{enumerate}
-  \item Construct the single sample LLHs normalizing all weights as shown in the first chapter in combination with the multiply LLH in eq.~(\ref{equ:multi_TS}).
-  Then we need to introduce sample weights $w_j$ for $\hat{n}_s$, so that
-  \begin{equation}
-    w_j = \sum_{k\in j} w^\text{D}_k w^\text{T}_k
-          \frac{1}{\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-  \end{equation}
-  These weights re-normalize the per sample weights so they are regarding different efficiencies across samples.
+\subsection{FIXME}
+\FIXME{Appendix: LLH minimization for the special cases ns = 0,1,2?}
+\FIXME{Describe statistics framework, frequentist p-values, a-priori sensitivity, chi2 method or later in the actua results section?}
 
-  \item Alternatively we can also use form eq.~(\ref{equ:single_stack}), which is exactly the same as the later derived multi year form eq.~(\ref{equ:multi_stack}).
-  For these we can simply get all our detector weights for the corresponding year and also need to use the correct PDFs for each source.
-  Then the weights are normalized over all samples.
-\end{enumerate}
 
+
+% \subsection{Summary}
+% We have explored two ways to construct a stacking GRB LLH with multiple samples:
+% \begin{enumerate}
+%   \item Construct the single sample LLHs normalizing all weights as shown in the first chapter in combination with the multiply LLH in eq.~(\ref{equ:multi_TS}).
+%   Then we need to introduce sample weights $w_j$ for $\hat{n}_s$, so that
+%   \begin{equation}
+%     w_j = \sum_{k\in j} w^\text{D}_k w^\text{T}_k
+%           \frac{1}{\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
+%   \end{equation}
+%   These weights re-normalize the per sample weights so they are regarding different efficiencies across samples.
+
+%   \item Alternatively we can also use form eq.~(\ref{equ:single_stack}), which is exactly the same as the later derived multi year form eq.~(\ref{equ:multi_stack}).
+%   For these we can simply get all our detector weights for the corresponding year and also need to use the correct PDFs for each source.
+%   Then the weights are normalized over all samples.
+% \end{enumerate}
 
 % \subsection{How \lstinline|grbllh| does it}
 % In \lstinline|grbllh| we do something similar to eq.~(\ref{equ:multi_stack}): \begin{equation}
@@ -511,108 +467,108 @@ We have explored two ways to construct a stacking GRB LLH with multiple samples:
 %   \label{equ:multi_example}
 % \end{align}
 
-\section{Time integrated Likelihood}
+% \section{Time integrated Likelihood}
 
-\section{Single sample stacking case}
-Here we show, that the standard PS stacking case for a single sample emerges from the same extended LLH principle as in the GRB LLH case.
-We start again with the general test statistic
-\begin{equation}
-  \frac{1}{2}\Lambda
-  = -\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
-                                      \hat{\lambda}_{k,B} -
-                                      \hat{\lambda}_{k,S}^{(0)}\right) +
-    \sum_{i=1}^N \ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}\left(
-          \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
-          {\sum_{m=1}^{N_\text{srcs}}\left(
-            \hat{\lambda}_{m,B}^{(0)} B_{i,m}
-          \right)}
-        \right)
-  \mperiod
-\end{equation}
+% \section{Single sample stacking case}
+% Here we show, that the standard PS stacking case for a single sample emerges from the same extended LLH principle as in the GRB LLH case.
+% We start again with the general test statistic
+% \begin{equation}
+%   \frac{1}{2}\Lambda
+%   = -\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
+%                                       \hat{\lambda}_{k,B} -
+%                                       \hat{\lambda}_{k,S}^{(0)}\right) +
+%     \sum_{i=1}^N \ln\left(
+%       \frac{\sum_{k=1}^{N_\text{srcs}}\left(
+%           \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
+%           {\sum_{m=1}^{N_\text{srcs}}\left(
+%             \hat{\lambda}_{m,B}^{(0)} B_{i,m}
+%           \right)}
+%         \right)
+%   \mperiod
+% \end{equation}
 
-For the time independent case we have a lot more background than signal events for a whole year and we may approximate
-\begin{equation}
-  \sum_{k=1}^{N_\text{srcs}} \lambda_{k,S} + \lambda_{k,B} \approx
-  \sum_{k=1}^{N_\text{srcs}} \lambda_{k,B}^{(0)} \approx N
-\end{equation}
-so we neglect the small fraction of signal events in the Poisson fluctuation of the sample.
-This cancels the terms in front of the event sum and leaves us with
-\begin{equation}
-  \frac{1}{2}\Lambda
-  = \sum_{i=1}^N \ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}\left(
-          \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
-          {\sum_{m=1}^{N_\text{srcs}}\left(
-            \hat{\lambda}_{m,B}^{(0)} B_{i,m}
-          \right)}
-        \right)
-  \mperiod
-\end{equation}
+% For the time independent case we have a lot more background than signal events for a whole year and we may approximate
+% \begin{equation}
+%   \sum_{k=1}^{N_\text{srcs}} \lambda_{k,S} + \lambda_{k,B} \approx
+%   \sum_{k=1}^{N_\text{srcs}} \lambda_{k,B}^{(0)} \approx N
+% \end{equation}
+% so we neglect the small fraction of signal events in the Poisson fluctuation of the sample.
+% This cancels the terms in front of the event sum and leaves us with
+% \begin{equation}
+%   \frac{1}{2}\Lambda
+%   = \sum_{i=1}^N \ln\left(
+%       \frac{\sum_{k=1}^{N_\text{srcs}}\left(
+%           \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
+%           {\sum_{m=1}^{N_\text{srcs}}\left(
+%             \hat{\lambda}_{m,B}^{(0)} B_{i,m}
+%           \right)}
+%         \right)
+%   \mperiod
+% \end{equation}
 
-The background PDF in the standard PS case only dependents on the event location regardless of the source positions, because the background is assumed to come diffusely from the atmosphere.
-This means all background estimators are the same for each source per event
-\begin{equation}
-  \hat{\lambda}_{k,B} = \frac{1}{N_\text{srcs}} \hat{\lambda}_B
-  \quad\text{and}\quad
-  B_{i,k} = B_i
-\end{equation}
-and we can simplify the test statistic to
-\begin{equation}
-  \frac{1}{2}\Lambda
-  = \sum_{i=1}^N\ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} S_{i,k} +
-            \hat{\lambda}_{B} B_i}
-           {N B_i}
-    \right)
-  \mperiod
-\end{equation}
+% The background PDF in the standard PS case only dependents on the event location regardless of the source positions, because the background is assumed to come diffusely from the atmosphere.
+% This means all background estimators are the same for each source per event
+% \begin{equation}
+%   \hat{\lambda}_{k,B} = \frac{1}{N_\text{srcs}} \hat{\lambda}_B
+%   \quad\text{and}\quad
+%   B_{i,k} = B_i
+% \end{equation}
+% and we can simplify the test statistic to
+% \begin{equation}
+%   \frac{1}{2}\Lambda
+%   = \sum_{i=1}^N\ln\left(
+%       \frac{\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} S_{i,k} +
+%             \hat{\lambda}_{B} B_i}
+%            {N B_i}
+%     \right)
+%   \mperiod
+% \end{equation}
 
-For the last step we make sure, that our Poisson condition stays satisfied by demanding
-\begin{equation}
-  \sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} + \hat{\lambda}_B \approx N
-  \Leftrightarrow
-  \hat{\lambda}_B = N - \sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S}
-\end{equation}
+% For the last step we make sure, that our Poisson condition stays satisfied by demanding
+% \begin{equation}
+%   \sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} + \hat{\lambda}_B \approx N
+%   \Leftrightarrow
+%   \hat{\lambda}_B = N - \sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S}
+% \end{equation}
 
-where we also used the standard PS large sample approximation from above.
-With this we can cancel the $N$ and rename $\lambda$ to $n$ and see the familiar standard PS stacking formula:
-\begin{align}
-  \frac{1}{2}\Lambda
-  &= \sum_{i=1}^N\ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}n_{k,S} S_{i,k} +
-            \left(N-\sum_{k=1}^{N_\text{srcs}}n_{k,S}\right) B_i}
-           {N B_i}
-    \right)  \\
-  &= \sum_{i=1}^N\ln\left(
-      \frac{\sum_{k=1}^{N_\text{srcs}}n_{k,S} S_{i,k}}
-           {N B_i} -
-      \frac{\sum_{k=1}^{N_\text{srcs}}n_{k,S}}{N} + 1
-    \right)
-  \mperiod
-\end{align}
+% where we also used the standard PS large sample approximation from above.
+% With this we can cancel the $N$ and rename $\lambda$ to $n$ and see the familiar standard PS stacking formula:
+% \begin{align}
+%   \frac{1}{2}\Lambda
+%   &= \sum_{i=1}^N\ln\left(
+%       \frac{\sum_{k=1}^{N_\text{srcs}}n_{k,S} S_{i,k} +
+%             \left(N-\sum_{k=1}^{N_\text{srcs}}n_{k,S}\right) B_i}
+%            {N B_i}
+%     \right)  \\
+%   &= \sum_{i=1}^N\ln\left(
+%       \frac{\sum_{k=1}^{N_\text{srcs}}n_{k,S} S_{i,k}}
+%            {N B_i} -
+%       \frac{\sum_{k=1}^{N_\text{srcs}}n_{k,S}}{N} + 1
+%     \right)
+%   \mperiod
+% \end{align}
 
-Sometimes we say, simply replace the signal term with a weighted sum over all signal classes to get the stacking case.
-This is only possible in the case of only fitting a single $n_S$ parameter and fixing some weights $w_k$, splitting $n_{k,S} = n_S w_k$ with
-\begin{equation}
-  \sum_{k=1}^{N\text{srcs}} w_k = 1
-\end{equation}
-a-priori.
-Then we get the following form
-\begin{align}
-  \frac{1}{2}\Lambda
-  &= \sum_{i=1}^N\ln\left(
-      \frac{n_S}{N}\left(
-        \frac{\sum_{k=1}^{N_\text{srcs}}w_k S_{i,k}}{B_i} - 1
-      \right) + 1
-    \right)  \\
-  &= \sum_{i=1}^N\ln\left(
-      \frac{n_S}{N}\left(\frac{S_i^\text{tot}}{B_i} - 1\right) + 1
-    \right)
-  \mperiod
-\end{align}
+% Sometimes we say, simply replace the signal term with a weighted sum over all signal classes to get the stacking case.
+% This is only possible in the case of only fitting a single $n_S$ parameter and fixing some weights $w_k$, splitting $n_{k,S} = n_S w_k$ with
+% \begin{equation}
+%   \sum_{k=1}^{N\text{srcs}} w_k = 1
+% \end{equation}
+% a-priori.
+% Then we get the following form
+% \begin{align}
+%   \frac{1}{2}\Lambda
+%   &= \sum_{i=1}^N\ln\left(
+%       \frac{n_S}{N}\left(
+%         \frac{\sum_{k=1}^{N_\text{srcs}}w_k S_{i,k}}{B_i} - 1
+%       \right) + 1
+%     \right)  \\
+%   &= \sum_{i=1}^N\ln\left(
+%       \frac{n_S}{N}\left(\frac{S_i^\text{tot}}{B_i} - 1\right) + 1
+%     \right)
+%   \mperiod
+% \end{align}
 
-\section{Multiple samples stacking case}
-Generalize the GRB weights here, as done by mhuber.
+% \section{Multiple samples stacking case}
+% Generalize the GRB weights here, as done by mhuber.
 
-\listofnotes
+% \listofnotes
