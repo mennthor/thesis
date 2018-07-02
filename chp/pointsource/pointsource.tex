@@ -1,18 +1,18 @@
 \chapter{Point source searches with IceCube neutrinos}
-In this chapter we derive the unbinned Likelihood search methods often used for IceCube point source searches and in this thesis as well to identify point like neutrino sources.
-
-Astrophysical neutrinos carrying information about source physics is one of the main goals of IceCube.
-To identify an astrophysical neutrino signal from a specific source on the sky we need to measure an excess of events from that direction.
-In general we cannot distinguish atmospheric from extraterrestrial neutrino signals on a per event basis.
-Instead it is possible to search from a sample based point-of-view by measuring deviations for an ensemble of events regarding to a known background expectation.
+In this chapter the unbinned Likelihood search methods used for multiple IceCube point source searches are derived.
+To identify an astrophysical neutrino signal from a specific source location on the sky an excess of events from that direction needs to be identified.
+In general it cannot be distinguished between atmospheric and the sought after extraterrestrial neutrinos on a per event basis.
+Instead it is possible to search from a sample based point-of-view by measuring deviations for an ensemble of events with respect to a known background expectation.
 A simple method could be to define a fixed search region around a direction from which signal is expected, count the number of measured events and compare them to number of events from a background expectation in the region.
-If the measured number of events is significantly higher than the expected number of background events we may have found a signal from that direction.
+\CITE{Li Ma Paper.}
+If the measured number of events is significantly higher than the expected number of background events that may be a hint for a signal from that direction.
 
-Here we follow a similar approach but in a more advanced form, incorporating multiple event information to increase the detection sensitivity.
-Also the simple search region, often also called a binned approach, is replaced with an unbinned version on a per event basis, which has the advantage of avoiding hard search region boundaries which can delicately drop the sensitivity of the approach.
-We start from a general unbinned, extended Likelihood approach and process through the special cases used here to carry out the time dependent and independent searches.
-Particular cases handling multiple years of data from different detector configurations and multiple sources for the so called stacking case are derived from the basis forms.
-In the following we note a single event with index $i$, a source with index $k$ and a data sample with index $j$.
+Here the followed approach is similar but used in a more advanced form, incorporating multiple event informations to increase the detection sensitivity.
+Also the usage of pre-defined search regions, often also called a binned approach, is replaced with an unbinned version on a per event basis.
+This has the advantage of avoiding hard search region boundaries which can drop the sensitivity of the approach if e.g. an unknown source lies directly at the border of such a region.
+Starting from a general unbinned, extended Likelihood approach, the special cases used in this analysis to carry out a time dependent stacking search for point-like sources are derived.
+Particular cases handling multiple years of data from different detector configurations and multiple sources for the so called stacking case are derived from the basis form.
+In the following a single event is noted with index $i$, a source with index $k$ and a data sample with index $j$.
 
 \section{Extended unbinned Likelihood}
 The extended Likelihood \CITE{Barlow book} and the corresponding logarithmic extended Likelihood function is defined as
@@ -24,11 +24,11 @@ The extended Likelihood \CITE{Barlow book} and the corresponding logarithmic ext
 \end{equation}
 where the constant term $\ln(N!)$ is dropped in the logarithmic version.
 Here $\lambda$ is the expected number of events and $N$ the number of measured events following a Poisson counting distribution.
-The per event model distribution $P_i$, normalized to integral 1, describes the Likelihood of each event under the assumed model and how likely it contributes to the expectation.
-The use of the Poisson term is justified by a re-normalization of the per event distributions to include the total number of measured events which is not fixed for multiple experiments of the same kind but may fluctuate around an expectation value.
+The per event model distribution $P_i$, normalized to integral $1$ over the defined parameter space, describes the Likelihood of each event under the assumed model and how likely it contributes to the expectation.
+The use of the Poisson term is justified by a re-normalization of the per event distributions to include the total number of measured events which is not fixed for multiple experiments of the same kind but may fluctuate around an unknown expectation value.
 
 The tested hypotheses are encoded in the description of the models $P$.
-To obtain a fairly general expression we can derive the point source special cases from, we can split the expectation model in multiple classes by splitting the expectation and the models accordingly:
+To obtain a fairly general expression to derive the point source special cases from, the expectation model can be split in multiple classes by splitting the expectation and the models accordingly
 \begin{equation}
   \lambda = \sum_{k=1}^{N_\text{classes}} \lambda_k \geq 0
   \mintertext{and}
@@ -36,8 +36,8 @@ To obtain a fairly general expression we can derive the point source special cas
          \sum_{k=1}^{N_\text{classes}} \lambda_k P_{i,k}
   \mperiod
 \end{equation}
-The single $\lambda_k$ can be negative but their sum must not because it is still a Poisson expectation parameter.
-Additionally we normalized the new split model over all classes and arrive at the form
+The single $\lambda_k$ can be negative but their sum must not, because it is still a Poisson expectation parameter.
+Additionally the new split model is normalized over all classes to arrive at the form
 \begin{equation}
   \ln\mathcal{L}(\{\lambda_k\})
   = -\sum_{k=1}^{N_\text{classes}} \lambda_k +
@@ -46,8 +46,8 @@ Additionally we normalized the new split model over all classes and arrive at th
   \mperiod
 \end{equation}
 
-To specialize more, we want to test a signal hypothesis against a background one for $N_\text{srcs}$ sources in general per event $i$.
-We thus expand the above expression to include $N_\text{srcs}$ signal and $N_\text{srcs}$ background parameters and the corresponding distributions $S_{i,k}$ and $B_{i,k}$:
+To specialize more, it is usually desired to test a signal hypothesis against a background one, for $N_\text{srcs}$ sources in general, for each event $i$.
+The above expression is thus expanded to include $N_\text{srcs}$ signal and $N_\text{srcs}$ background parameters and the corresponding distributions $S_{i,k}$ and $B_{i,k}$:
 \begin{equation}
   \ln\mathcal{L}(\{\lambda_{k,S}\}, \{\lambda_{k,B}\})
   = -\sum_{k=1}^{N_\text{srcs}}\left(\lambda_{k,S}+\lambda_{k,B}\right) +
@@ -55,7 +55,7 @@ We thus expand the above expression to include $N_\text{srcs}$ signal and $N_\te
       \lambda_{k,S} S_{i,k}+\lambda_{k,B} B_{i,k}\right)\right)
   \mcomma
 \end{equation}
-and from the Poisson condition we still have the constrain
+and from the Poisson condition there is still the constrain
 \begin{equation}
   \sum_{k=1}^{N_\text{srcs}}\left(\lambda_{k,S}+\lambda_{k,B}\right) \geq 0
   \mperiod
@@ -89,7 +89,7 @@ The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H
   \mperiod
 \end{equation}
 
-Here we introduce $\hat{\lambda}_{k,S/B}$ which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
+Here the parameters $\hat{\lambda}_{k,S/B}$ were introduced, which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
 This leads to the test statistic
 \begin{equation}
   \begin{aligned}
@@ -110,87 +110,101 @@ This leads to the test statistic
   \end{aligned}
 \end{equation}
 which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \CITE{Wilk paper and/or statistic book}.
-As seen above we have to distinguish all best fit parameters from both hypotheses in general, differentiating $\hat{\lambda}_{k,B}^{(0)}$ from the null hypothesis which are not the same as $\hat{\lambda}_{k,B}$ from the composite hypothesis.
+As seen above, all best fit parameters from both hypotheses have to be distinguished in general, differentiating $\hat{\lambda}_{k,B}^{(0)}$ from the null hypothesis which are not the same as $\hat{\lambda}_{k,B}$ from the composite hypothesis.
 
-In the following sections we see how specific model choices for the signal and background distributions and approximating assumptions transform the above expression to commonly known forms in time dependent and time integrated point source analyses.
+In the following sections specific model choices for the signal and background distributions and approximating assumptions are shown, to transform the above expression to commonly known forms also used for the time dependent search in this thesis.
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% General method to get the PDFs, not the used implementation
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Per event distributions}
-The introduced per event distributions $S_i, B_i$ are similar for both the time dependent and independent Likelihoods and follow the conventions for most point source searches in IceCube \CITE{Braun paper. Maybe both for time dep. / indep. searches.}.
-These distributions introduce the separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a-priori knowledge, defining signal- and background-like regions in the parameter space.
+The introduced per event distributions $S_i, B_i$ are the functions that actually define the tested hypothesis of the analysis.
+Depending on their structure they can describe a single point source search, a stacking search for searching at various source positions at once or a template search, where a whole spatial region is tested for neutrino emission over the expectation.
+The used PDFs are usually similar for all analysis types and the conventions applied for most point source searches in IceCube are followed here \CITE{Braun paper. Maybe both for time dep. / indep. searches.}.
+
+The per-event distributions introduce the main separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a-priori knowledge in defining signal- and background-like regions in the tested parameter space.
 The better these distributions are able to separate signal and background regions the more sensitive the analysis becomes.
 A common approach with known good separation power is to combine contributions from spatial clustering and energy information, where the first one is necessary for the tested hypotheses and the latter providing additional information under certain assumptions of signal flux shapes.
-We can then write the signal and background contributions as independent products of a spatial and an energy part as
+For time dependent analysis an extra time dependent part is introduced.
+
+For the time dependent analysis implemented here, the signal and background contributions can be written as independent products of a spatial, an energy and a time dependent part as
 \begin{align}
-  S_{i,j} &= S(\vec{x}_i, \vec{x}_{\mathrm{src},j}, E_i | \gamma)
-    = S^S(\vec{x}_i, \vec{x}_{\mathrm{src},j})\cdot
-      S^E(E_i, \delta_i | \gamma) \\
+  S_{i,k}
+    &= S(\vec{x}_i, \vec{x}_{\mathrm{src},k}, E_i | \gamma)
+     = S^S(\vec{x}_i, \vec{x}_{\mathrm{src},k}) \cdot
+       S^E(E_i, \delta_i | \gamma) \cdot
+       S^T(t_i, t_k) \\
   \intertext{and}
-  B_i &= B(\delta_i, E_i | \phi_\mathrm{BG})
-    = B^S(\delta_i) \cdot B^E(E_i, \delta_i | \phi_\mathrm{BG})
+  B_i
+    &= B(\delta_i, E_i | \phi_\mathrm{BG})
+     = B^S(\delta_i) \cdot
+       B^E(E_i, \delta_i | \phi_\mathrm{BG}) \cdot
+       B^T(t_i, t_k)
 \end{align}
-where $\gamma$ is the shape parameter of an assumed signal flux proportional to a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux.
+where $\gamma$ is the shape parameter of an signal flux usually assumed to be a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux describing the background flux dependency.
+The event times $t_i$ and source times $t_k$ define the time dependent emission model.
 
 \subsection{Spatial distribution}
 The most important part in the search for neutrino point sources is the spatial clustering of events around a point on the sky.
-We have an estimate of the per event uncertainty available from the reconstruction likelihood fit which is constructed assuming a symmetric, two dimensional Gaussian distribution describing the reconstruction uncertainty.
-Alternatively the same value can be transformed and used for a symmetric Kent or van-Mises distribution \CITE{Kent paper, van-Mises paper} for the per event spatial distribution instead.
+For data samples used in point source searches there is an reconstructed estimate of the per event uncertainty available.
+This estimator is built from the positional reconstruction likelihood fit and is constructed assuming a symmetric, two dimensional Gaussian distribution describing the reconstruction uncertainty \CITE{Paraboloid}.
+Alternatively the same value can be transformed and used for a symmetric Kent distribution \CITE{Kent paper} for the per event spatial distribution instead.
 The van-Mises distribution is the pendant of a symmetric two dimensional Gaussian but correctly normalized on the sphere and is useful for larger uncertainties for example when investigating cascade-like events.
 For tracks the good angular resolution of about \SI{1}{\degree} justifies the use of the simpler and more familiar Gaussian distribution as both distributions become virtually indistinguishable for small uncertainties.
 \FIXME{Appendix: Show or ref to plot of sigma vs kappa}
-In general as we search for point sources at known or a-priori fixed positions \CITE{coenders, allsky scan}, the distribution of a source position is fixed.
-The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source can thus be expressed as a convolution of the Gaussian per event part and a delta distribution for the source position:
+In general the joint probability for an event $i$ to spatially originate from a source $k$ can be obtained by a convolution of the two separate spatial PDFs.
+In a search for point sources at known positions \CITE{coenders, allsky scan}, the distribution of a source position is represented by a delta distribution.
+The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source can thus be expressed as a convolution of the Gaussian per event part and a delta distribution for the fixed source position
 \begin{equation}
   \begin{aligned}
-    S^S(\vec{x}_i, \vec{x}_{\mathrm{src},j}) &=
+    S^S(\vec{x}_i, \vec{x}_{\mathrm{src},k}) &=
       \int_\Omega \frac{1}{2\pi \sigma_i^2}
       \exp\left(-\frac{|\vec{x}-\vec{x}_i|^2}{2\sigma_i^2}\right) \cdot
-      \delta(\vec{x}_{\mathrm{src},j} - \vec{x}) \d{\vec{x}} \\
+      \delta(\vec{x}_{\mathrm{src},k} - \vec{x}) \d{\vec{x}} \\
       &= \frac{1}{2\pi \sigma_i^2}
-         \exp\left(-\frac{|\vec{x}_{\mathrm{src},j}-
+         \exp\left(-\frac{|\vec{x}_{\mathrm{src},k}-
                           \vec{x}_i|^2}{2\sigma_i^2}\right)
       \mperiod
   \end{aligned}
 \end{equation}
-Assuming Gaussian extended sources would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exist.
+Assuming extended sources with a Gaussian density profile would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exist, resulting in a substitution of $\sigma_i \rightarrow \sqrt{\sigma_i^2 + \sigma_{\text{src},k}^2}$ \CITE{Gaussian convolution}.
 
 The spatial background distribution is constructed similarly to the signal case above.
 Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination dependent only.
-This may break down for time scales so small, that the earths' rotation doesn't smear out the slightly asymmetric distribution in azimuth angle, which can then be used as a drop-in replacement, but holds better the larger the regarded time windows get.
-This dependency is written in a general form here and can for example be constructed by histogramming experimental data, which is described later in more detail.
-This yields
+This may break down for time scales so small, that the earth's rotation doesn't smear out the slightly asymmetric distribution in azimuth angle, which can then be used as a drop-in replacement, but holds better the larger the regarded time windows get.
+This dependency is written in a general form here and can for example be constructed by constructing histograms of experimental data, which is described later in more detail.
+The background spatial distribution can then be written as
 \begin{equation}
   B^S(\delta_i) = \frac{1}{2\pi} \cdot P(\sin\delta_i)
-  \mperiod
+  \mcomma
 \end{equation}
-for the background spatial distribution, where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on $\sin\delta$.
+where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on $\sin\delta$.
 Note that the background distribution is only depending on the event position because background should have no correlation with any source by definition.
 
 \subsection{Energy distribution}
-In addition to the spatial clustering the event's energy can also provide a powerful separation argument.
+In addition to the spatial clustering the event's energy can also provide a powerful separation argument and lead to a large improvement in sensitivity \CITE{Braun Paper}.
 As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2.2}$ \CITE{latest ICRC Aachen diffuse? Or generic -2?}, higher energy events are more likely to originate from a extraterrestrial source rather than having been created in the atmosphere.
-The energy dependence can only be taken into account with energy proxies which estimate the true neutrino energy $E_\nu$.
-Formally we can note that as a integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
+The energy dependence can only be taken into account with energy estimators of the the true neutrino energy $E_\nu$.
+Formally that can be written as a integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
 \begin{equation}
   S^E(E_i, \delta_i|\gamma) =
     \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
+    \mcomma
 \end{equation}
-where $\gamma$ is the shape parameter of the assumed signal power law flux.
+where $\gamma$ is the shape parameter of an assumed signal power law flux.
 
-For background we can do the same, substituting the flux model to one describing the atmospheric neutrino background
+For background the same reasoning applies and the flux model is substituted for one describing the atmospheric neutrino background instead
 \begin{equation}
   B^E(E_i, \delta_i|\phi_\mathrm{BG}) =
     \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\phi_\mathrm{BG}) \d{E_\nu}
     \mperiod
 \end{equation}
 
-In practice the integrals may be obtained using histograms in declination and energy proxy from simulations for signal and from simulations or measured data for background.
+In practice the integrals may be obtained using histograms in declination and an energy estimator from simulations for signal and from simulations or measured data for background.
 
 \subsection{Time dependency}
-To test for time dependent emission models, we can also include time dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $S_{i,k}^T(t_i, t_k)$ which depend on each events time and it's occurrence relative to the sources' time stamps.
+To test for time dependent emission models, also time dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $B_{i,k}^T(t_i, t_k)$ which depend on each events time and it's occurrence relative to the sources' temporal occurrence can be included.
 The assumption is then, that each source only emits neutrinos as given by $S_{i,k}^T(t_i, t_k)$.
 The background can in general also be time dependent to account e.g. for seasonal variations in the detector rate.
 
@@ -199,29 +213,29 @@ The background can in general also be time dependent to account e.g. for seasona
 % %% Special case GRB LLH
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time dependent Likelihood}
-To test for time dependent emission in this analysis, we alter the general extended Likelihood to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
+To test for time dependent emission in this analysis, the general extended Likelihood is altered to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
 This includes explicit assumptions about the temporal source emission PDFs and simplifications of the general Likelihood formula introduced before.
 The simplifications need to be applied mainly because when choosing small time windows the analysis deals with a very low amount of leftover events.
-Therefore we need to reduce the number of free parameters as much as possible without introducing too much a-priori assumptions to stick to a rather general search method, because the source types themselves are unknown.
+Therefore the number of free parameters needs to be reduced as much as possible without introducing too much a-priori assumptions to stick to a rather general search method, because the source types themselves are unknown.
 
-Here, a very general assumption about the source emission is used by choosing rectangle functions for the time windows, having only a non-zero contribution within pre-defined source time windows
-\begin{align}
-  S_{i,k}^T &= \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
-                              {t_k^1-t_k^0}\right) \\
-  B_{i,k}^T &= \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
+Here, a rather general assumption about the source emission is used by choosing rectangle functions for the time windows, having only a non-zero contribution within pre-defined source time windows
+\begin{equation}
+  S_{i,k}^T = B_{i,k}^T = T_k(t_i) \coloneqq
+    \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
                               {t_k^1-t_k^0}\right)
   \mcomma
-\end{align}
-which effectively cuts out a subset of events around the sources time stamps.
+\end{equation}
+which effectively cuts out a subset of events around the sources time stamps $t_k$ and the corresponding time interval around each source $[t_k^0, t_k^1]$.
 The most simple case is then to have each source in its own, non-overlapping time window so that each source has a unique set of events belonging to it, which is the case in this analysis.
+Note that no separation power stems from these time PDFs, they are merely used to reduce the background rate under the assumption of a temporally concentrated emission.
 
-One important simplification of the general Likelihood we apply here is that we don't fit the background expectations, but rather fix them from the integrated off-time data rate over the range of the background time PDFs.
+One important simplification of the general Likelihood that is applied, is that the background expectations are not fitted, but rather fixed from the integrated off-time data rate over the range of the background time PDFs.
 This decreases the number of parameters to fit for, because it unifies and fixes the background estimators to
 \begin{equation}
   \hat{\lambda}_{k,B} = \hat{\lambda}_{k,B}^{(0)} = \Braket{\lambda_{k,B}}
   \mperiod
 \end{equation}
-The test statistic then turns to the simpler form
+The test statistic then turns to the form
 \begin{equation}
   \frac{1}{2}\Lambda
   = -\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
@@ -232,7 +246,7 @@ The test statistic then turns to the simpler form
   \mperiod
 \end{equation}
 
-The last Likelihood simplification we perform, in necessity that we don't want to fit a large number of free parameters to very few events in a low background analysis, is to fix the relative signal expectations of each source a-priori and only fit for the total expectation
+The last Likelihood simplification performed, in necessity to that a large number of free parameters cannot be fitted to very few events in a low background analysis, is to fix the relative signal expectations of each source a-priori and only fit for the total expectation
 \begin{equation}
   \lambda_{k,S} = n_S \cdot w_k
 \end{equation}
@@ -252,14 +266,15 @@ The test statistic can then be expressed by
   \mperiod
 \end{equation}
 
-The a-priori fixed weight resemble the expectation from a single source at the detector.
+The a-priori fixed weights resemble the expectation from a each single source at the detector.
 They can therefore depend on the explicitly chosen source emission model and the detection efficiency depending on the source location in the detector.
-Note that the a-priori chosen weights must match the true emission scenario as much as possible to obtain a good analysis sensitivity.
-If the true scenario differs from the assumed weights, very little can be obtained from the analysis.
+Note that the a-priori chosen weights should match the true, but usually unknown, emission scenario as much as possible to obtain a good analysis sensitivity.
+If the true scenario strongly differs from the assumed weights, very little can be obtained from the analysis \CITE{Rameez thesis}.
 
 
 \subsection{Single sample stacking case}
-Here we show, that the assumption of independent time windows for the sources simplifies the test statistic further to a form that better resembles the independence by rearranging to an explicit sum of logarithms.
+Shown here is, that the assumption of independent time windows for the sources simplifies the test statistic further.
+The expression can be rearranged to an explicit sum of logarithms, that better resembles the uniqueness of each source in it's time window.
 
 Starting from the test statistic from above
 \begin{equation}
@@ -271,10 +286,10 @@ Starting from the test statistic from above
       + 1 \right)
   \mcomma
 \end{equation}
-and from the definition of the unique time windows, we see that each event $i$ can only contribute to a single source $k$.
+and from the definition of the unique time windows, it can be seen that each event $i$ can only contribute to a single source $k$.
 The event belongs to the source in which time window it falls or to no source at all, where the time windows are defined as above
 \begin{equation}
-  T_k(t_i) \coloneqq \left(
+  T_k(t_i) \coloneqq \rect \left(
     \frac{t_i - \frac{t_k^1-t_k^0}{2}} {t_k^1-t_k^0}
   \right)
   \mperiod
@@ -297,25 +312,26 @@ The stacking sum then turns to
   &= -\hat{n}_S +
     \sum_{i=1}^N \sum_{k=1}^{N_\text{srcs}} \ln\left(
       \frac{\hat{n}_S w_k S_{i,k}}{\Braket{\lambda_{k,B}} B_{i,k}}
-      + 1 \right) \mcomma \\
+      + 1 \right) \mcomma
 \end{align}
-where $k*$ mean the $k$ that fulfils the condition $T_k(t_i)\neq 0$ and in the last step we used that
+where $k*$ mean the $k$ that fulfils the condition $T_k(t_i)\neq 0$ and in the last step it is used that
 \begin{equation}
    \ln\left(
       \frac{\hat{n}_S w_{k\neq k*} S_{i,k\neq k*}}{\Braket{\lambda_{k\neq k*,B}} B_{i,k\neq k*}}
-      + 1 \right) = \ln(0 + 1) = 0 \mperiod
+      + 1 \right) = \ln(0 + 1) = 0
+      \mperiod
 \end{equation}
 
 \subsection{A-priori weight selection}
 \TODO{Describe weight selection for within a single sample in the most general form here and specialize later. The weighting across samples is done in the multi sample chapter and has nothing to do with the weighting in one sample alone.}
 
 \subsection{Multiple samples stacking case}
-To test more sources in the unique time window scenario we need to test data at the times at which the source events occurred.
-Because after each year of taking IceCube data there may be a change in the data taking procedure, we need to able to include these samples in one Likelihood test.
-Because of different detector settings, the expectations for otherwise equal sources might change, which we have to consider in an additional weighting scheme.
+To add more sources in the unique time window scenario, data at the times at which the source events occurred needs to be tested.
+Because after each year of taking IceCube data there may be a change in the data taking procedure, these changes must be included in the expectations for the samples used in the single Likelihood test.
+These differences can be considered in an additional weighting scheme.
 The reasoning is quite similar to the stacking case for the single sample Likelihood from before.
 
-If we add another sample, we can just sum up the individual Likelihoods, because the tested datasets are independent, which yields the combined test statistic
+To add another sample, the individual Likelihoods can be summed up, because the tested datasets are independent, which yields the combined test statistic
 \begin{align}
   \frac{1}{2}\Lambda
   &= \frac{1}{2} \sum_{j=1}^{N_\text{sam}} \Lambda_j(\hat{n}_{S,j}) \\
@@ -324,24 +340,28 @@ If we add another sample, we can just sum up the individual Likelihoods, because
       \frac{\hat{n}_{S,j} w_k S_{i,k}}{\Braket{\lambda_{k,B}} B_{i,k}}
       + 1 \right) \right]\mcomma \\
 \end{align}
-where we have individual free $n_{S,j}$ signal parameters and the weights $w_k$ are normalized per sample.
-Again we can use a-priori information about the expected number of signal events originating from each sample and re-introduce a global free signal strength parameter $n_S$ with
+where individual free $n_{S,j}$ signal parameters are introduced and the weights $w_k$ are normalized per sample.
+Again, a-priori information about the expected number of signal events originating from each sample can be used and a global free signal strength parameter $n_S$ is used with
 \begin{equation}
-  n_{S,j} = w_j n_S \mperiod
+  n_{S,j} = w_j n_S
+  \mperiod
 \end{equation}
-To obtain the a-priori weights $w_j$ we use the law of total probability \CITE{What to cite here? Casella Berger again or Blobel?}
+To obtain the a-priori weights $w_j$ the law of total probability is applied \CITE{What to cite here? Casella Berger again or Blobel?}
 \begin{equation}
-  w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k) \mcomma
+  w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k)
+  \mcomma
 \end{equation}
 where $P(j)$ is the probability of getting a signal contribution $n_S w_j$ from sample $j$ and $P(j|k)$ is the probability of getting signal from source $k$ within sample $j$, normalized over all samples
 \begin{equation}
-  \sum_{j=1}^{N_\text{sam}} P(j|k) = 1 \mperiod
+  \sum_{j=1}^{N_\text{sam}} P(j|k) = 1
+  \mperiod
 \end{equation}
-$P(k)$ is the probability of getting signal from source $k$ at all within any sample, separately normalized over all sources separately
+Additionally, $P(k)$ is the probability of getting signal from source $k$ at all within any sample, separately normalized over all sources separately
 \begin{equation}
-  \sum_{k=1}^{N_\text{srcs}} P(k) = 1 \mperiod
+  \sum_{k=1}^{N_\text{srcs}} P(k) = 1
+  \mperiod
 \end{equation}
-These relations can be written down in matrix notation
+These relations can also be written in a concise matrix notation
 \begin{equation}
   \begin{pmatrix} w_1 \\ \vdots \\ w_{N_\text{sam}} \end{pmatrix} =
     \begin{pmatrix}
@@ -351,13 +371,15 @@ These relations can be written down in matrix notation
     \end{pmatrix} \cdot
     \begin{pmatrix}
       P(k=0) \\ \vdots \\ P(k=N_\text{srcs})
-    \end{pmatrix} \mperiod
+    \end{pmatrix}
+  \mperiod
 \end{equation}
 
-For the special case treated here, with each source having it's unique time window and also falling exclusively in a single sample each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
+For the special case treated here, with each source having it's unique time window and also falling exclusively in a single sample, each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
 The probabilities $P(k)$ can be obtained by using the un-normalized $n_S$ splitting weights for each sample $\tilde{w}_k$ and re-normalize them over all sources in all samples
 \begin{equation}
-  P(k) = \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m} \mperiod
+  P(k) = \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m}
+  \mperiod
 \end{equation}
 Because of the special matrix properties used here, the explicit weights $w_j$ then turn out to be global re-normalizations of the un-normalized single sample weights $\tilde{w}_k$ with
 \begin{align}
@@ -366,10 +388,11 @@ Because of the special matrix properties used here, the explicit weights $w_j$ t
     &= \sum_{k=1}^{N_\text{srcs}}
       \delta_{\{k,j|T_j(t_k)\neq 0\}} \cdot
       \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m}
+  \mcomma
 \end{align}
 where $T_j$ is a unique rectangle function for each sample, equally used as the rectangle function utilized to describe the unique time windows per source in each sample.
 
-Now the numerator turns out to be exactly the per sample normalization of the per sample splitting weights which is the sum of all weights for the subset of all sources that actually are in the sample.
+Now the numerator turns out to be exactly the per sample normalization of the per sample splitting weights, which is the sum of all weights for the subset of all sources that actually are in the sample.
 The full multi-sample test statistic then reads
 \begin{equation}
   \frac{1}{2}\Lambda
