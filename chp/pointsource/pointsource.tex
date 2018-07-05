@@ -42,7 +42,7 @@ Additionally the new split model is normalized over all classes to arrive at the
   \ln\mathcal{L}(\{\lambda_k\})
   = -\sum_{k=1}^{N_\text{classes}} \lambda_k +
     \sum_{i=1}^N \ln\left(\sum_{k=1}^{N_\text{classes}}
-      \lambda_k P_{i,m} \right)
+      \lambda_k P_{i,k} \right)
   \mperiod
 \end{equation}
 
@@ -98,7 +98,7 @@ This leads to the test statistic
        2\ln(\mathcal{L}_0(\{\hat{\lambda}^{(0)}_{k,B}\})) \\
     &= -2\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
                                          \hat{\lambda}_{k,B} -
-                                         \hat{\lambda}_{k,S}^{(0)}\right) +
+                                         \hat{\lambda}_{k,B}^{(0)}\right) +
       2\sum_{i=1}^N \ln\left(
         \frac{\sum_{k=1}^{N_\text{srcs}}\left(
             \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
@@ -323,13 +323,28 @@ where $k*$ mean the $k$ that fulfils the condition $T_k(t_i)\neq 0$ and in the l
 \end{equation}
 
 \subsection{A-priori weight selection}
-The a-priori weights for the expected signal of source in a specific sample should match the true emission model as close as possible.
+The a-priori weights for the expected signal of source in a specific sample should match the true emission model as closely as possible.
 Note that the weights resemble the expected flux at the detector.
-For example, an IceCube like detector that only measures the northern sky, all weights for sources on the southern sky would be zero, regardless of the true intrinsic emission strength.
+For example, an IceCube like detector that only measures the northern sky, all weights for sources on the southern sky would be zero, regardless of the true intrinsic emission strength because no signal is ever detected.
 
-To construct these
+To construct the weights, that actually distribute the total signal to the expected contribution from each source, signal simulation can be used to estimate the signal efficiencies.
+Depending on the assumed per event PDFs, the weights might dependent on any source or any event parameter.
+For the spatial term, the weights are dependent only on the source positions and the signal response of the detector at their positions.
+The assumption that IceCube is right-ascension symmetric yields source declination dependent stacking weights.
+When using time information the weights also depend on the current events time.
+Because the expected source emissions can, and usually do vary in time, the signal expectation can change for each event.
+Because in the usual construction, each events energy PDF doesn't depend on any source parameter, the weights are also not derived from an energy parameter.
 
-\TODO{Describe weight selection for within a single sample in the most general form here and specialize later. The weighting across samples is done in the multi sample chapter and has nothing to do with the weighting in one sample alone.}
+Assuming a spatial and temporal dependence on source parameters the general $n_S$ splitting weight per source $k$ would then be
+\begin{equation}
+  w_k = w(\vec{x}_k, t, t_k) = w^S(\vec{x}_k)\cdot w^T(t, t_k)
+  \mcomma
+\end{equation}
+where $t$ can be any point in time.
+Because we only evaluate the weights for the specific events times, weights are then only evaluated at $t=t_i$.
+
+In the special case treated here, having sources unique in their time windows, the weight calculation simplifies to the spatial, source declination dependent part only, because only one source at a time has an emission expectation, so the normalized time dependent weights are $w_k^T = 1$ for each source.
+The general case would be to get the time dependent weights for each event from the time signal PDF per source and then normalizing over all contributions.
 
 \subsection{Multiple samples stacking case}
 To add more sources in the unique time window scenario, data at the times at which the source events occurred needs to be tested.
@@ -380,6 +395,13 @@ These relations can also be written in a concise matrix notation
     \end{pmatrix}
   \mperiod
 \end{equation}
+The unnormalized signal expectation values can be obtained in each sample by calculating the expected number of events from a signal simulation which usually differs for each detector configuration and sample selection criteria.
+These values can then be used to normalize the matrix per column and construct the $P(K)$ vector by summing over each columns per source $k$.
+
+The most complex weighting case in this scenario would be multiple sources with time PDFs overlapping in their emission region and also leaking into another data sample.
+The formalism above still applies, and the sample splitting weighs can be obtained by integrating the time emission PDFs per sample to obtain the relative emission strength for the source portions lying in each sample.
+These are then multiplied with the usual declination dependent weights per sample to form the $P(j|k)$ entries of the above matrix.
+The weighting within each sample wouldn't be affected and is still valid as explained in the previous section.
 
 For the special case treated here, with each source having it's unique time window and also falling exclusively in a single sample, each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
 The probabilities $P(k)$ can be obtained by using the un-normalized $n_S$ splitting weights for each sample $\tilde{w}_k$ and re-normalize them over all sources in all samples
@@ -416,7 +438,7 @@ This expression nicely demonstrates the circumstances here, namely that each sou
 
 \subsection{FIXME}
 \FIXME{Appendix: LLH minimization for the special cases ns = 0,1,2?}
-\FIXME{Describe statistics framework, frequentist p-values, a-priori sensitivity, chi2 method or later in the actua results section?}
+\FIXME{Describe statistics framework, frequentist p-values, a-priori sensitivity, chi2 method or later in the actual results section?}
 
 
 
