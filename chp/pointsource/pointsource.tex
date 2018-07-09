@@ -346,6 +346,8 @@ Because we only evaluate the weights for the specific events times, weights are 
 In the special case treated here, having sources unique in their time windows, the weight calculation simplifies to the spatial, source declination dependent part only, because only one source at a time has an emission expectation, so the normalized time dependent weights are $w_k^T = 1$ for each source.
 The general case would be to get the time dependent weights for each event from the time signal PDF per source and then normalizing over all contributions.
 
+\FIXME{Add explicit weight calculation using general eff. area formula.}
+
 \subsection{Multiple samples stacking case}
 To add more sources in the unique time window scenario, data at the times at which the source events occurred needs to be tested.
 Because after each year of taking IceCube data there may be a change in the data taking procedure, these changes must be included in the expectations for the samples used in the single Likelihood test.
