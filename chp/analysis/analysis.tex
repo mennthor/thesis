@@ -15,7 +15,64 @@ This should give proper orientation for the steps necessary to reproduce the ana
 
 \section{Per event distribution modelling}
 \subsection*{Spatial PDF}
+Here the spatial signal PDF is modelled using a two dimensional, symmetric Kent distribution, to match the per event uncertainties $\sigma_i$ and a proper normalization on the unit sphere.
+The PDF is
+\begin{equation}
+  f(\Psi|\kappa)
+  = \frac{4\pi \sinh\kappa}{\kappa}\exp\left(\kappa(\cos(\Psi)-1)\right)
+  \mcomma
+\end{equation}
+where
+\begin{equation}
+  \Psi_{i,k}
+  = \cos(\delta_k)\cos(\delta_i)\cos(\alpha_k - \alpha_i) +
+    \sin(\delta_k)\sin(\delta_i)
+\end{equation}
+is the space angle between the positions of source $k$ and event $i$ in equatorial coordinates $\delta, \alpha$.
+Instead of using the Gaussian uncertainty $\sigma$ directly, the Kent distribution uses $\kappa \approx \sfrac{1}{\sigma^2}$ which holds up to $\sigma \approx \SI{40}{\degree}$ \CITE{relation kappa sigma}\FIXME{plot in appendix?}.
+The Kent distribution is used here, because it is correctly normalized on the sphere and virtually indistinguishable for small angle uncertainties as tracks usually have.
+
+Background PDFs are constructed in equatorial coordinates as well and the distribution is estimated from data, using the off time data set only to avoid signal contamination.
+By using equatorial coordinates, the right-ascension distribution is assumed to be flat, which translates to a flat distribution in local azimuth coordinates.
+This holds well for larger time windows in which the detector rotation relative to the sky smooths out any irregularities in the local azimuth PDF.
+For smaller time windows the assumption may break down, and alternatively a local background PDF can be used as a drop in replacement.
+Here the PDF is only declination independent and can be written as
+\begin{equation}
+  f(\delta_i|t_k) = \frac{1}{2\pi}\cdot P(\delta|t_k)
+\end{equation}
+where $t_k$ is the time of source $k$ used to account for varying background strengths due to seasonal variations \CITE{seasonal variations}\FIXME{explain 1, 2 sentences to seas. var.?}.
+
+To build a custom background PDF for each source in its respective sample, first all events in each sample are binned in $\sin(\delta)$ in $20$ bins, with $14$ more densely spaced bins around the horizon region defined as $\delta\in[\SI{-30}{\degree}, \SI{30}{\degree}]$.
+In this region the selection models are usually switched between dedicated models for the northern and southern sky are used and the finer resolution helps to catch the resolution features in the distributions.
+To capture the time dependence of the declination dependent background rate, the rate is calculated by using the runtime information from the samples.
+Due to a lack of proper run time information, the run lengths are estimates from data by subtracting the earliest from the latest event time per bin \footnote{This overestimates the background rate, because the earliest and latest events can only be close to the real run times, which yields a slightly less performance of this analysis.}.
+The rate information is smoothed by re-binning the per run rate bins using a monthly binning.
+
+To get a continuous model for the background expectation per bin, a model
+\begin{equation}
+  f(t)
+  = \mathcal{A}\cdot
+    \sin\left(\frac{2\pi}{T}\left(t - t_0\right)\right) + R_0
+\end{equation}
+is fitted to the re-binned time bin centres.
+The free parameters are amplitude $\mathcal{A}$ and average rate $R_0$ both in $\si{\per\s}$.
+For the fit in each bin the period length $T$ is fixed to $365$ days, the natural scale for the seasonal variations and the time offset $t_0$ is fixed from a fit with more statistics using the whole data set \TODO{Add rate plots to app.}.
+
+Having obtained the set of discrete background expectations from the $2$ fit parameters per rate model, a smoothing spline is used to continuously model the fit parameter dependence on declination \TODO{err. scans in the app.?}.
+Finally, to get the background PDFs per source, the set of rate model parameters is read off from the built splines on a fine $\sin(\delta)$ grid and plugged into the rate model above.
+For each parameter set the model is integrated over the sources time window to obtain an average background PDF per source.
+To evaluate the PDf for each events' declination an interpolating spline is used to include the dense grid in a continuous model.
+
 \subsection*{Energy PDF}
+The energy PDFs introduce a significant amount of separation power compared to using the spatial clustering only \CITE{Braun Paper}.
+The integral values
+\begin{equation}
+  \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
+\end{equation}
+can be found using simulation if the conditional probabilities $P(E_i,\delta_i|E_\nu)E$ are analytically unknown.
+This is done by directly estimating the convolved integral values, here using a two dimensional histogram in $\sin(\delta)$ and in $\log_{10}$ of an energy proxy variable with $30$ equidistant bins between $\lfloor \min\log_{10}(E_\text{proxy}) \rfloor$ and $\lceil \max\log_{10}(E_\text{proxy}) \rceil$.
+\TODO{Link to plot in app.}.
+
 \subsection*{Temporal PDF}
 
 \section{Background estimation and stacking weights}
@@ -29,7 +86,7 @@ The spatial reconstruction information for the high energy starting events are o
 The local event coordinates on the other hand are converted to equatorial coordinates beforehand, because they can be directly compared to source objects that are  usually described in equatorial coordinates \CITE{equ. coords.}.
 To become computationally feasible, also the reconstruction maps for the HESE events need to be converted to allow an fast to evaluate equatorial representation.
 
-The used HEALPix maps use an internal coordinate to pixel number conversion scheme, with $\Theta\in[0, \pi]$ and $\varphi\in[0, 2\pi]$, that is easily identifiably with the local detector coordinates zenith $\theta\in[0, \pi]$ and azmuth $\alpha\in[0, 2\pi]$, so the local maps directly represent local coordinates for each pixel \TODO{HEALPix coords in appendix?}.
+The used HEALPix maps use an internal coordinate to pixel number conversion scheme, with $\Theta\in[0, \pi]$ and $\varphi\in[0, 2\pi]$, that is easily identifiably with the local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\alpha\in[0, 2\pi]$, so the local maps directly represent local coordinates for each pixel \TODO{HEALPix coords in appendix?}.
 The conversion to equatorial coordinates depends on the source times which fixes the detector location relative to the equatorial coordinate system.
 Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies with time.
 To avoid recalculating local map coordinates to equatorial coordinates at runtime, pre-transformed maps in equatorial coordinates are computed once beforehand.
