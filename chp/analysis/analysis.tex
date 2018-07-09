@@ -1,7 +1,7 @@
 \chapter{Analysis}
 
-This chapter should give the actual implementation and choices for the formulas in the point source theory chapter.
-This should be oriented on the analysis node chapters.
+This chapter gives an overview over the actual implementation and choices for the formulas in the point source theory chapter.
+This should give proper orientation for the steps necessary to reproduce the analysis results.
 
 \begin{itemize}
   \item Describe how HESE maps are build, systematic smearing
@@ -11,3 +11,49 @@ This should be oriented on the analysis node chapters.
   \item Systematic tests: Signal found
   \item Show sensitivity, signal injection, bg injection, ref to MRichman
 \end{itemize}
+
+
+\section{Per event distribution modelling}
+\subsection*{Spatial PDF}
+\subsection*{Energy PDF}
+\subsection*{Temporal PDF}
+
+\section{Background estimation and stacking weights}
+
+\section{Note on LLH minimization}
+
+\section{Trial generation}
+
+\section{HESE reconstruction map handling}
+The spatial reconstruction information for the high energy starting events are originally scanned in local detector coordinates zenith and azimuth.
+The local event coordinates on the other hand are converted to equatorial coordinates beforehand, because they can be directly compared to source objects that are  usually described in equatorial coordinates \CITE{equ. coords.}.
+To become computationally feasible, also the reconstruction maps for the HESE events need to be converted to allow an fast to evaluate equatorial representation.
+
+The used HEALPix maps use an internal coordinate to pixel number conversion scheme, with $\Theta\in[0, \pi]$ and $\varphi\in[0, 2\pi]$, that is easily identifiably with the local detector coordinates zenith $\theta\in[0, \pi]$ and azmuth $\alpha\in[0, 2\pi]$, so the local maps directly represent local coordinates for each pixel \TODO{HEALPix coords in appendix?}.
+The conversion to equatorial coordinates depends on the source times which fixes the detector location relative to the equatorial coordinate system.
+Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies with time.
+To avoid recalculating local map coordinates to equatorial coordinates at runtime, pre-transformed maps in equatorial coordinates are computed once beforehand.
+The convention used to efficiently map from HEALPix coordinates to equatorial ones is chosen to $\delta = \sfrac{\pi}{2} - \Theta$ and $\alpha = \varphi$.
+
+This mapping is not bijective though, because $\delta \approx \theta - \sfrac{\pi}{2}$ is only an approximation and the number of pixels in each $\Theta$ band changes depending on whether being close to the poles or to the horizon.
+So sometimes two pixels are mapped to one, which means that another pixel stays empty, because the number of pixels is fixed.
+To overcome this, the mapping is done in reverse by transforming the exact pixel coordinates from a map in equatorial convention back to local coordinates.
+Then the local map is interpolated to the new pixel location and that value is stored in the equatorial map.
+The maximum error that can happen this way is in the order of a single pixel offset because the above approximation between zenith and declination holds closely enough.
+
+The transformed maps are then converted back to linear PDF space by exponentiating the map and smeared with a one degree symmetric Gaussian kernel to approximately account for unknown systematics.
+The smoothing introduces some numerical error because it is done in spherical harmonics space which has to be truncated numerically.
+The artefacts are removed by normalizing the smoothed maps to have an integral value of $\sum_{i=1}^{N_\text{pix}} \d{A_\text{pix}} = 1$ over the unit sphere and setting the resulting map to zero outside the $6\sigma$ level.
+Due to a lack of a proper test statistic, the likelihood value for the $6\sigma$ level is obtained from Wilks' theorem with
+\begin{equation}
+  \text{thresh} =
+    \max(\mathcal{L}_\text{map})\cdot
+    \left(1 - \int_0^{6^2}\chi^2_{2}(x)\d{x}\right)
+  \mperiod
+\end{equation}
+The resulting maps can be used as spatial PDF maps and are sampled for the performance estimation.
+
+\section{Performance estimation}
+
+\section{Post trial method}
+
