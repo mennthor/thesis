@@ -51,11 +51,11 @@ The rate information is smoothed by re-binning the per run rate bins using a mon
 To get a continuous model for the background expectation per bin, a model
 \begin{equation}
   f(t)
-  = \mathcal{A}\cdot
+  = A\cdot
     \sin\left(\frac{2\pi}{T}\left(t - t_0\right)\right) + R_0
 \end{equation}
 is fitted to the re-binned time bin centres.
-The free parameters are amplitude $\mathcal{A}$ and average rate $R_0$ both in $\si{\per\s}$.
+The free parameters are amplitude $A$ and average rate $R_0$ both in $\si{\per\s}$.
 For the fit in each bin the period length $T$ is fixed to $365$ days, the natural scale for the seasonal variations and the time offset $t_0$ is fixed from a fit with more statistics using the whole data set \TODO{Add rate plots to app.}.
 
 Having obtained the set of discrete background expectations from the $2$ fit parameters per rate model, a smoothing spline is used to continuously model the fit parameter dependence on declination \TODO{err. scans in the app.?}.
@@ -64,7 +64,7 @@ For each parameter set the model is integrated over the sources time window to o
 To evaluate the PDf for each events' declination an interpolating spline is used to include the dense grid in a continuous model.
 
 \subsection*{Energy PDF}
-The energy PDFs introduce a significant amount of separation power compared to using the spatial clustering only \CITE{Braun Paper}.
+The energy PDFs introduces a significant amount of separation power compared to using the spatial clustering only \CITE{Braun Paper}.
 The integral values
 \begin{equation}
   \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
@@ -72,6 +72,20 @@ The integral values
 can be found using simulation if the conditional probabilities $P(E_i,\delta_i|E_\nu)E$ are analytically unknown.
 This is done by directly estimating the convolved integral values, here using a two dimensional histogram in $\sin(\delta)$ and in $\log_{10}$ of an energy proxy variable with $30$ equidistant bins between $\lfloor \min\log_{10}(E_\text{proxy}) \rfloor$ and $\lceil \max\log_{10}(E_\text{proxy}) \rceil$.
 \TODO{Link to plot in app.}.
+
+To directly obtain the needed signal over background ration $S^E / B^E$ for the test statistic formula, two histograms with the same binning are used, one with using data to obtain the background PDF and the signal one with using signal simulation weighted to the assumed power law with index $\gamma = 2$.
+For bins missing either or both data or simulation entries, the ratio is not valid.
+To obtain reasonable ratios a two step strategy is used.
+First the outermost energy bins per $\sin(\delta)$ column is filled with the lowest, at small energies, or highest, at high energies, ratio value per column.
+The invalid ratios are then linearly interpolated from the previously valid and new edge values.
+To smooth out unexpected high ratios coming from limited statistics, the ratio is required to monotonically increase in each $\sin(\delta)$ column, which is valid only for the fixed power law and energy range chosen here.
+To get a continuous representation of the ratio, a linear, regular grid interpolater is fitted to the ratios.
+No extra smoothing e.g. with a Gaussian kernel is applied here.
+
+A more general strategy could be to fill missing values conservatively to lowest non-zero entry per signal and background histogram and then taking the ratio.
+To smooth fluctuations a smoothing spline could be fitted to the ratio histogram using the statistical errors as smoothing conditions.
+This would also automatically yield analytic derivatives in both axis, which could be handy when fitting more parameters than the single signal strength.
+\TODO{Put plots in app.}
 
 \subsection*{Temporal PDF}
 
