@@ -14,6 +14,8 @@ Starting from a general unbinned, extended Likelihood approach, the special case
 Particular cases handling multiple years of data from different detector configurations and multiple sources for the so called stacking case are derived from the basis form.
 In the following a single event is noted with index $i$, a source with index $k$ and a data sample with index $j$.
 
+\FIXME{Describe statistics framework, frequentist p-values, a-priori sensitivity, chi2 method or later in the actual results section?}
+
 \section{Extended unbinned Likelihood}
 The extended Likelihood \CITE{Barlow book} and the corresponding logarithmic extended Likelihood function is defined as
 \begin{equation}
@@ -346,13 +348,36 @@ Because we only evaluate the weights for the specific events times, weights are 
 In the special case treated here, having sources unique in their time windows, the weight calculation simplifies to the spatial, source declination dependent part only, because only one source at a time has an emission expectation, so the normalized time dependent weights are $w_k^T = 1$ for each source.
 The general case would be to get the time dependent weights for each event from the time signal PDF per source and then normalizing over all contributions.
 
-For actually calculating the expected number of events $N$ at detector level and for the final sample event selection from an intrinsic neutrino flux $\Phi$
+For actually calculating the expected number of events $N$ at detector level and for the final sample event selection from an intrinsic neutrino flux $\phi$
 \begin{equation}
-  A_eff
+  N
+  = T\cdot\int_0^\infty\int_\Omega
+    A_\text{eff}(E,\Omega)\cdot\phi(E,\Omega) \,\d{E}\d{\Omega}
 \end{equation}
 is used.
-$A_\text{eff}$
-\FIXME{Add explicit weight calculation using general eff. area formula.}
+$A_\text{eff}$ is the hypothetical detector surface area which would yield the same number of observed events if it would detect $\SI{100}{\percent}$ of the incoming flux compared to the real detector and the applied event selection and maps an intrinsic flux to event counts detected at detector level.
+$A_\text{eff}$ is typically in units $\si{\m\squared}$, the flux $\phi$ in \si{\per\GeV\per\m\squared\per\second\per\steradian} and the detector livetime $T$ in $\si{\second}$.
+When using a a time integrated fluence $\Phi$ model the livetime is obsolete and the number of events read
+\begin{equation}
+  N
+  = \int_0^\infty\int_\Omega
+    A_\text{eff}(E,\Omega)\cdot\Phi(E,\Omega) \,\d{E}\d{\Omega}
+  \mperiod
+\end{equation}
+The expected number of events for a given source declination can then be obtained by integrating over the energy only, getting the number of events per declination.
+The normalized weights per source in a single sample can be constructed by
+\begin{equation}
+  w^S(\vec{x}_k)
+  = \frac
+      {
+        \int_0^\infty A_\text{eff}(E,\Omega_k)\cdot\Phi(E,\Omega_k)\,\d{E}
+      }
+      {
+        \sum_{m=1}^{N_\text{srcs}}
+        \int_0^\infty A_\text{eff}(E,\Omega_m)\cdot\Phi(E,\Omega_m)\,\d{E}
+      }
+  \mperiod
+\end{equation}
 
 \subsection{Multiple samples stacking case}
 To add more sources in the unique time window scenario, data at the times at which the source events occurred needs to be tested.
@@ -443,12 +468,6 @@ The full multi-sample test statistic then reads
 \end{equation}
 where $\tilde{w}_k$ are the un-normalized weights per source with respect to the expected signal in their corresponding sample and are normalized over all source expectations in all samples regarded.
 This expression nicely demonstrates the circumstances here, namely that each source is independent of each other source and lies completely in a single data sample, so the whole underlying Likelihood fully factorizes in events, sources and samples.
-
-\subsection{FIXME}
-\FIXME{Appendix: LLH minimization for the special cases ns = 0,1,2?}
-\FIXME{Describe statistics framework, frequentist p-values, a-priori sensitivity, chi2 method or later in the actual results section?}
-
-
 
 % \subsection{Summary}
 % We have explored two ways to construct a stacking GRB LLH with multiple samples:
