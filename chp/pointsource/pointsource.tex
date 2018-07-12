@@ -138,7 +138,7 @@ For the time dependent analysis implemented here, the signal and background cont
        S^E(E_i, \delta_i | \gamma) \cdot
        S^T(t_i, t_k) \\
   \intertext{and}
-  B_i
+  B_{i,k}
     &= B(\delta_i, E_i | \phi_\mathrm{BG})
      = B^S(\delta_i) \cdot
        B^E(E_i, \delta_i | \phi_\mathrm{BG}) \cdot
@@ -178,10 +178,10 @@ This may break down for time scales so small, that the earth's rotation doesn't 
 This dependency is written in a general form here and can for example be constructed by constructing histograms of experimental data, which is described later in more detail.
 The background spatial distribution can then be written as
 \begin{equation}
-  B^S(\delta_i) = \frac{1}{2\pi} \cdot P(\sin\delta_i)
+  B^S(\delta_i) = \frac{1}{2\pi} \cdot P(\sin(\delta_i))
   \mcomma
 \end{equation}
-where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on $\sin\delta$.
+where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on $\sin(\delta)$.
 Note that the background distribution is only depending on the event position because background should have no correlation with any source by definition.
 
 \subsection{Energy distribution}
