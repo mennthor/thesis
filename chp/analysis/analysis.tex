@@ -105,13 +105,36 @@ This also means that no extra sensitivity is coming from the temporal term, it i
 The estimates of the number of background events per source $\Braket{\lambda_{k,B}}$ are not fitted in this analysis, but fixed from a-priori estimates on data.
 The values are obtained by fitting the sinus rate model to the whole off time data on the whole sky, again using monthly bins.
 \TODO{plots in app.}
-The rate model for each sample is then integrated over each sources time window in that sample to obtain the average number of background events.
-Again, the amplitudes are quite flat, so the exact integral is almost the same here as just using the product of time window length and average rate.
+The rate model for each sample is then integrated over each sources time window in that sample, to obtain the average number of background events.
+Again, the amplitudes are quite flat, so the exact integral is almost the same as just using the product of time window length and average rate.
 
-The a-priori fixed stacking weight should resemble the expected signal emission as closely as possible to the true case, otherwise the analysis' sensitivity will drop significantly.
+The a-priori fixed stacking weights should resemble the expected signal emission as closely as possible to the true case, otherwise the analysis' sensitivity will drop significantly.
 Because this analysis makes no explicit assumption on the emission model, the weights are computed using a generic power law with index $\gamma=2$.
-\FIXME{Explicit nexpected formula with oneweights, connection to point source effA formula.}
-
+The expression using the effective area to compute the expected events from a signal fluence can be constructed using signal simulation.
+For this, a simulation weight, usually called OneWeight\footnote{Which is used in a slight modification, namely the weight used in code is already divided by the number of generated simulation events $\text{OneWeight}\rightarrow\text{OneWeight}/N_\text{gen}$.} in IceCube
+, can be used to estimate the number of events per declination.
+The OneWeight per event $i$ is defined as \CITE{oneweight finley?}
+\begin{align}
+  \text{OneWeight}_i
+  &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
+                       \Phi_\text{gen}(E_i)\d{E}\d{\Omega}
+                       }{\Phi_\text{gen}(E_i)}A_\text{gen} \\
+  &= p_\text{int}\frac{\int_{E_0}^{E_1}\Phi_\text{gen}(E_i)\d{E}}
+                      {\Phi_\text{gen}(E_i)}
+    A_\text{gen}\Omega_\text{gen}
+  \mcomma
+\end{align}
+where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the surface and the solid angle over which the initial neutrinos are injected.
+In the last step the integration over $\Omega$ is carried out, because usually the injection fluence is only energy dependent.
+By this definition OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$.
+The signal efficiency weight for each source in a specific sample can then be obtained by histogramming
+\begin{equation}
+  w_i = \Phi(E_{\nu,i})\frac{\text{OneWeight}_i}{\Delta\Omega}
+  \mperiod
+\end{equation}
+Here an equidistant binning is used so that at least $100$ events are in each bins.
+To obtain a smooth representation of the expected events per declination function, a smoothing spine is fitted to the bin centres.
+\FIXME{Plot in app.}
 
 \section{Note on LLH minimization}
 
