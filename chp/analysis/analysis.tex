@@ -96,7 +96,7 @@ The time PDFs are simple rectangle functions
 \end{equation}
 for both signal and background.
 For signal this is a rather generic choice for an unknown emission process.
-For background we could more accurately use the same sinus function rate model used for the spatial PDFs.
+For background the same sinus function rate model used for the spatial PDFs could more accurately be used.
 But as the amplitudes are small, even at the largest time window the resulting PDF would be virtually indistinguishable from a uniform distribution.
 So for code simplicity simple rectangle model is used for the background PDF.
 This also means that no extra sensitivity is coming from the temporal term, it is merely there to select events within the time windows and alters the amount of total background contribution which is almost zero for the smallest and grows approximately linearly for larger time windows.
@@ -146,34 +146,40 @@ Below are the analytic solutions for zero, one and two events with the single sa
 The same reasoning holds for the multi sample likelihood where only a bit more bookkeeping is necessary to entangle the contributions from each single sample Likelihood.
 
 As a reminder, the single sample test statistic that is fitted is
-\begin{align}
+\begin{equation}
+  \frac{1}{2}\Lambda = -n_S + \sum_{i=1}^N \ln\left(n_S \cdot R_i + 1\right)
+\end{equation}
+where
+\begin{equation}
+  R_i = \frac{\sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
+             {\sum_{k=1}^{N_\text{srcs}}\Braket{\lambda_{k,B}} B_{i,k}}
+\end{equation}
+is introduced as a short-cut for the fixed signal over background ratios per event $i$.
+The gradient in the single fit parameter $n_S$ then reads
+\begin{equation}
+  \frac{1}{2}\deldel{\Lambda}{n_S}
+  = -1 + \sum_{i=1}^N \frac{R_i}{n_S R_i + 1}
+  \mperiod
+\end{equation}
+
+For zero events the case is trivial because the \enquote{fit} is directly zero, as under fluctuations for $n_S < 0$ are excluded in this analysis and it is only fitted for over-fluctuations.
+This might result in slightly worse sensitivity and limits due to compressing the complete test statistic in a delta peak at $\Lambda=0$.
+Though, for code and fit procedure simplicity this is accepted in this analysis. \CITE{Thorstens wiki page??}
+For zero events, no sum term is surviving and the analytic solution is
+\begin{equation}
   \frac{1}{2}\Lambda
-  &= -\hat{n}_S +
-    \sum_{i=1}^N \ln\left(
-      \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
-           {\sum_{k=1}^{N_\text{srcs}}\Braket{\lambda_{k,B}} B_{i,k}}
-      + 1 \right) \\
-  &= -n_S + \sum_{i=1}^N \ln\left(n_S \cdot R_i + 1\right)
-\end{align}
-where $R_i$ is introduced as a shortcut for the fixed signal over background ratios per data configuration, which has the gradient in the single fit parameter $n_S$
-\begin{equation}
-  \frac{1}{2}\deldel{\lambda}{n_S}
-  = -1 + \sum_{i=1}^N \frac{R_i}{n_S\cdot R_i + 1} \mcomma
+  = -n_S \quad\Rightarrow\quad \hat{n}_S = 0\mintertext{,} \hat{\Lambda} = 0
+  \mperiod
 \end{equation}
 
-For zero event the case is trivial because the \enquote{fit} is directly zero -- we don't allow $n_S < 0$ in this analysis and only fit for over-fluctuations -- because no sum term is surviving
-\begin{equation}
-  \frac{1}{2}\Lambda = -n_S \Rightarrow \hat{n}_S
-  = 0, \hat{\Lambda} = -2 \mperiod
-\end{equation}
-
-For a single surviving event, a single sum term is left and we have to solve the linear equation in the gradient and re-insert in the likelihood to obtain the best fit $n_S$ and $\Lambda$.
+For a single surviving event, a single sum term is left and the linear equation needs to be solved for $\hat{n}_S$ in the gradient and re-inserted in the likelihood to obtain the best fit $\Lambda$.
 The best fit $n_S$ is
 \begin{equation}
   0 = -1 + \frac{R_1}{n_S\cdot R_1 + 1}
-    \Leftrightarrow \hat{n}_S = \frac{R_1 - 1}{R_1}
+    \quad\Rightarrow\quad \hat{n}_S = \frac{R_1 - 1}{R_1}
+  \mcomma
 \end{equation}
-which gets us
+which yields
 \begin{equation}
   \frac{1}{2}\hat{\Lambda}
     = -\hat{n}_S + \ln\left( \hat{n}_S \cdot R_1 + 1 \right)
@@ -181,29 +187,96 @@ which gets us
 \end{equation}
 for the best fit test statistic value.
 
-The last analytic case handled is the one with two events left, which leaves us with a quadratic equation to solve.
-For $n_S$ we get
+The last analytic case handled is the one with two events left, which leaves a quadratic equation to solve in $\hat{n_S}$.
 \begin{align}
   0 &= -1 + \frac{R_1}{n_S\cdot R_1 + 1} + \frac{R_2}{n_S\cdot R_2 + 1} \\
-  0 &= \Leftrightarrow n_S^2 + n_S \left(\frac{R_1 + R_2}{R_1 R_2} - 1\right) +
+  \Leftrightarrow
+  0 &= n_S^2 + n_S \left(\frac{R_1 + R_2}{R_1 R_2} - 1\right) +
        \frac{1}{R_1 R_2} - \frac{R_1 + R_2}{R_1 R_2}
 \end{align}
-and with the shortcut $\frac{R_1 + R_2}{R_1 R_2} \def \tilde{c}$ the best fit is obtained solving the quadratic equation
+and with the short-cut $\frac{R_1 + R_2}{R_1 R_2} \coloneq\tilde{c}$, the best fit is obtained solving the quadratic equation
 \begin{equation}
   \hat{n}_S = —\frac{1}{2}\tilde{c} + 1 + \sqrt{\frac{\tilde{c}^2}{4} + 1 - \frac{1}{R_1 R_2}}
 \end{equation}
-The negative solution always resembles the fit for $n_S < 0$ and is not considered here.
-Re-inserting into $\Lambda$ gives us the best fit which is not further simplified here
+The solution with the negative sign always resembles the fit for $n_S < 0$ and is not considered here.
+Re-inserting into $\Lambda$ yields the best fit test statistic
 \begin{equation}
   \frac{1}{2}\hat{\Lambda} = -\hat{n}_S +
                              \ln\left( \hat{n}_S \cdot R_1 + 1 \right) +
                              \ln\left( \hat{n}_S \cdot R_2 + 1 \right)
+  \mperiod
 \end{equation}
 
-With the help of Mathematica we can also show, that for two events it is event sufficient to only compute the solution if the sum of both signal over background ratios is $R_1 + R_2 > 1$.
-
-
 \section{Trial generation}
+The Likelihood ratio test performs a discrimination between the null hypothesis that only diffuse background is present in the data versus the alternative, that also signal is mixed in.
+In order to decide whether a fit on actual data shows a significant signal, the behaviour or test statistic of pure background needs to be known.
+The distribution is generally unknown when no further assumption like the validity of Wilks' theorem is assumed.
+It can be empirically estimated though, from sampling background like data and testing the hypotheses multiple times in pseudo experiments.
+This builds a distribution of test statistic values the final fit on data can be compared against.
+To estimate the analysis' performance beforehand, simulated signal can be injected into the pseudo background events.
+
+\subsection*{Background trials}
+To obtain background like pseudo event samples, background is re-sampled in this analysis to avoid bias from mismatching simulation data.
+Re-sampling data either assumes, that only a fraction of the sample is made from true signal events, or only a fraction of off region data is used.
+The first case assumes that, when scrambled the few signal events, if present, don't interfere with the larger portion of background like events.
+The latter case can only use a fraction of the data and is only convenient to use, if a large and representative number of events survive after cutting out signal regions.
+Here the latter approach is used because the 22 sources only cover a small fraction of the full livetime.
+Trials are generated and PDF are build using only the off data, holding the data from the largest time windows back for the actual unblinding.
+
+To generate a single fake background sample for a single trial run, the PDFs described before are sampled to match the built models.
+First, for each source the number of background events to inject on the whole sky is drawn from a Poisson distribution with the expected number of background events.
+For the requested number of events, the $\sin(\delta)$ PDF is sampled so a different declination dependence is sampled for each source, according to the models.
+The sampling is done by re-sampling the existing data events by re-weighting them to the current declination PDF.
+Right-ascension values are randomly assigned between $0$ and $2\pi$ to match the assumed flat model.
+Next, new times are sampled from the previously built rate models per source.
+The sampling is done uniformly because the time windows are too short to explore the slight non-uniformity of the rate model.
+Technically it is not correct to sample right-ascension and times independently because one fully determines the other.
+But as the time and right-ascension PDF are assumed to uniform and independent a-priori, it doesn't matter here.
+The other used attributes as the energy and spatial resolution proxy are kept from each re-sampled data event.
+\FIXME{Re-sampled events in app.?}
+
+Each generated pseudo data set is then fitted with the Likelihood to build the test statistic distribution for pure background.
+It is important, to not tweak the seed for the fit parameter but to leave the seed selection routine equal for all trials.
+Otherwise a bias is obtained because the fitter might perform better or worse for a special scenario.
+
+For this analysis $10^8$ trials with pure background pseudo data were done to built an independent test statistic per time window.
+The high number of trials are necessary to compensate for the low background in the smaller time windows.
+For the smallest time window order of $1$ event is expected as background on the whole sky.
+This makes it extremely rare to find an event in the vicinity of the tested sources.
+And if so, the event gets a high test statistic value if it is sufficiently close to the source or has a high energy.
+The test statistic therefore has a lot of trials which fit to exactly zero.
+\FIXME{Insert number here}
+With larger time windows this effect gets less severe and more events are available to obtain test statistics with less zero trials.
+The larger the time windows get the more the shape of the test statistic resembles the $\Chi^2_1$ distribution expected from Wilks' theorem.
+\FIXME{BG TS plots in app.}
+
+The number of generated trials allow to use the samples directly as an empirical PDF representation up to about $3\sigma$, which leaves approximately $\num{270000}$ events in the tails for robust quantile estimation.
+$10^8$ samples allow to empirically estimate the distribution up to about $5.7\sigma$, but with very poor statistics.
+To make the p-value estimation more robust for large test statistic values, the tail of each time windows test statistic is fitted with an exponential distribution.
+To find a robust set of exponential PDF parameters, an exponential is fitted to the tail of the distribution with a threshold scanned on a grid between $3.5\sigma$ and $4.5\sigma$.
+The best fit is selected using a Kolmogorov-Smirnov test \CITE{KS Test} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $1\sigma$ level.
+This yields quite robust tails even in the smallest time windows.
+For the larger time windows, the $\Chi^2_1$ like form of the distributions are naturally described by the exponential.
+An independent set of trials is used to verify the validity of the tail fits.\FIXME{Attach plot}
+The resulting PDFs are then a hybrid made from the empirical distribution and the exponential tail smoothly describing the distribution tails and are used to estimate p-values for further fits.
+\FIXME{Plots in app.}
+
+\subsection*{Signal trials}
+To estimate the analysis' performance and to compute limits or constrains for a specific choice of a source flux model, signal like events need to be tested.
+Because we don't know which and if any events in the data are true signal, these events have to be taken from simulation.
+Using the already known weighting scheme, any source emission scenario can be modelled.
+The injection mode should mimic the emission scenario to obtain realistic estimates.
+The general approach is to select a pool of simulated events from a region close to the source that shall be simulated.
+This can for example be done by selecting events
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER\HIERWEITER
+
+The signal simulation weighted to a per-burst emission scenario
 
 
 \section{HESE reconstruction map handling}
