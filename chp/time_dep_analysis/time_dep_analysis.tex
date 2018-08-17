@@ -74,6 +74,33 @@ This is done by directly estimating the convolved integral values, here using a 
 \TODO{Link to plot in app.}.
 
 To directly obtain the needed signal over background ration $S^E / B^E$ for the test statistic formula, two histograms with the same binning are used, one with using data to obtain the background PDF and the signal one with using signal simulation weighted to the assumed power law with index $\gamma = 2$.
+The number of events are obtained using OneWeight as shown before for the signal simulation histogram
+\begin{equation}
+  N(\Delta E, \Delta\delta)
+  = \sum_{(i|E_{\nu,i}\in\Delta E, \delta_i\in\Delta\delta)}
+    \frac{\text{OneWeight}'_i \cdot \Phi(E_i)}{\Delta\Omega}
+  \mcomma
+\end{equation}
+where OneWeight$'$ is a slight modification OneWeight, it is already divided by the number of total generated simulation events $\text{OneWeight}'\coloneqq\text{OneWeight}/N_\text{gen}$, where $N_\text{gen}$ is the total for all particle types combined and $\Phi$ is also the combined neutrino plus anti-neutrino fluence.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For this, a simulation weight, usually called OneWeight\footnote{Which is used in a slight modification, namely the weight used in code is already divided by the number of generated simulation events $\text{OneWeight}\rightarrow\text{OneWeight}/N_\text{gen}$.} in IceCube, is used to estimate the number of events per declination.
+% The OneWeight per event $i$ is defined as \CITE{oneweight finley?}
+% \begin{align}
+%   \text{OneWeight}_i
+%   &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
+%                        \Phi_\text{gen}(E_i)\d{E}\d{\Omega}
+%                        }{\Phi_\text{gen}(E_i)}A_\text{gen} \\
+%   &= p_\text{int}\frac{\int_{E_0}^{E_1}\Phi_\text{gen}(E_i)\d{E}}
+%                       {\Phi_\text{gen}(E_i)}
+%     A_\text{gen}\Omega_\text{gen}
+%   \mcomma
+% \end{align}
+% where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the surface and the solid angle over which the initial neutrinos are injected.
+% In the last step the integration over $\Omega$ is carried out, because usually the injection fluence is only energy dependent.
+% By this definition OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 For bins missing either or both data or simulation entries, the ratio is not valid.
 To obtain reasonable ratios a two step strategy is used.
 First the outermost energy bins per $\sin(\delta)$ column is filled with the lowest, at small energies, or highest, at high energies, ratio value per column.
@@ -111,30 +138,24 @@ Again, the amplitudes are quite flat, so the exact integral is almost the same a
 
 The a-priori fixed stacking weights should resemble the expected signal emission as closely as possible to the true case, otherwise the analysis' sensitivity will drop significantly.
 Because this analysis makes no explicit assumption on the emission model, the weights are computed using a generic power law with index $\gamma=2$.
-The expression using the effective area to compute the expected events from a signal fluence can be constructed using signal simulation.
-For this, a simulation weight, usually called OneWeight\footnote{Which is used in a slight modification, namely the weight used in code is already divided by the number of generated simulation events $\text{OneWeight}\rightarrow\text{OneWeight}/N_\text{gen}$.} in IceCube
-, can be used to estimate the number of events per declination.
-The OneWeight per event $i$ is defined as \CITE{oneweight finley?}
-\begin{align}
-  \text{OneWeight}_i
-  &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
-                       \Phi_\text{gen}(E_i)\d{E}\d{\Omega}
-                       }{\Phi_\text{gen}(E_i)}A_\text{gen} \\
-  &= p_\text{int}\frac{\int_{E_0}^{E_1}\Phi_\text{gen}(E_i)\d{E}}
-                      {\Phi_\text{gen}(E_i)}
-    A_\text{gen}\Omega_\text{gen}
-  \mcomma
-\end{align}
-where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the surface and the solid angle over which the initial neutrinos are injected.
-In the last step the integration over $\Omega$ is carried out, because usually the injection fluence is only energy dependent.
-By this definition OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$.
-The signal efficiency weight for each source in a specific sample can then be obtained by histogramming
+This also implies that sources are assumed to emit the same intrinsic flux, which is a strong assumption but justified in a sense that it is a non-specialised assumption with regard to that the underlying source types are unknown.
+
+The declination dependent signal efficiency weight for each source in a specific sample can be obtained by histogramming the declination values from measured off-time data weighted with
 \begin{equation}
-  w_i = \Phi(E_{\nu,i})\frac{\text{OneWeight}_i}{\Delta\Omega}
-  \mperiod
+  w_i = \Phi(E_{\nu,i})\frac{\text{OneWeight}'_i}{\Delta\Omega}
+  \mcomma
 \end{equation}
+where $\Phi(E_{\nu,i})$ is the combined fluence of both neutrinos and anti-neutrinos the simulation shall be weighted to and the already explained simulation OneWeight.
+If a flux per particle type $p$ is used $\Phi(E_{\nu,i}, p)$, then an additional factor $f_p$ for the OneWeight needs to be considered which gives the fraction of simulated particle types – usually $f_p=0.5$, so that $\text{OneWeight}\rightarrow\text{OneWeight}/f_p$ \CITE{nugen docs?}.
+
 Here an equidistant binning is used so that at least $100$ events are in each bins.
-To obtain a smooth representation of the expected events per declination function, a smoothing spine is fitted to the bin centres.
+To obtain a smooth representation of the expected events per declination function, a smoothing spline is fitted to the histogram bin centres.
+For reasonable boundary conditions, the values at the outermost bin edges are linearly extrapolated from the next two inner centre values.
+The smoothing spline is created using a least squares minimization.
+The weights are the inverse $\sqrt(N_i)$ Poisson errors of each bin $i$ and the least squares sum constraint is set to the number of bins, so that the usual $\chi^2 / \text{dof} \approx 1$ holds.
+This gives a stable and reasonable estimation of the number of events per declination from the given Monte Carlo simulation.
+From this spline the signal efficiency weights are read off for each source location.
+For each sample this procedure is repeated and the source weights are taken from the spline belonging to the sample they fall into.
 \FIXME{Plot in app.}
 
 
@@ -207,6 +228,7 @@ Re-inserting into $\Lambda$ yields the best fit test statistic
   \mperiod
 \end{equation}
 
+
 \section{Trial generation}
 The Likelihood ratio test performs a discrimination between the null hypothesis that only diffuse background is present in the data versus the alternative, that also signal is mixed in.
 In order to decide whether a fit on actual data shows a significant signal, the behaviour or test statistic of pure background needs to be known.
@@ -263,14 +285,51 @@ The resulting PDFs are then a hybrid made from the empirical distribution and th
 
 \subsection*{Signal trials}
 To estimate the analysis' performance and to compute limits or constrains for a specific choice of a source flux model, signal like events need to be tested.
-Because we don't know which and if any events in the data are true signal, these events have to be taken from simulation.
+Because neither is known which and if any events in the data are true signal, these events have to be taken from simulation.
 Using the already known weighting scheme, any source emission scenario can be modelled.
 The injection mode should mimic the emission scenario to obtain realistic estimates.
-The used approach is to select a pool of simulated signal events from a region close to the source that shall be simulated so representative events are used from existing simulation.
 
-HIERWEITER
+The used simulation approach is to select a pool of simulated signal events from a region close to the source that shall be simulated.
+These events get rotated to the desired location using the true simulation coordinates.
+This assures that representative events are used from existing simulation.
+The signal simulation is weighted to a per-burst emission to describe the tested emission scenario.
+Per-burst emission means that the total number of expected signal events is independent of the emission time window, which is reflected by the rectangle function PDFs in the Likelihood.
+To correctly insert events corresponding to a desired target flux, the already shown weighting scheme using OneWeight is used
+\begin{equation}
+  w_{i,k} = w_k^{(\text{tot})}\frac{\text{OneWeight}'_i \cdot \Phi(E_{\nu,i})}{\Omega_k}
+  \mperiod
+\end{equation}
+where $k$ indices the source the event was selected from and $w_k^{(\text{tot})}$ the combined source weight.
+The diffuse fluence $\Phi(E_{\nu,i})$ is normalized to a point source fluence by dividing out the selection solid angle $\Omega_k$ and is left with units $\si{\per\GeV\per\cm\squared}$.
+Events can be selected for multiple sources, if their selection regions overlap.
+All weights for each event in the whole pool of events then get normalized
+\begin{equation}
+  w^\text{sample}
+  = \sum_{k=1}^{N_\text{srcs}} \sum_{(i|\Omega_i \in \Omega_k)} w_{i,k}
+  \mcomma
+\end{equation}
+so the weights are prepared for a weighted random choice sampling procedure.
 
-The signal simulation is weighted to a per-burst emission scenario to describe
+Usually the injection is set up to rotate the true event coordinates to the source locations and use the reconstructed coordinates in the Likelihood testing.
+Here, this would overestimate the sensitivity because of the unknown source locations in this analysis.
+As the source positions themselves are taken from reconstructed high energy neutrinos, they too have an spatial reconstruction uncertainty.
+It is possible to take this uncertainties into account in the Likelihood formulation, which yields to much more complicated fit procedure and requires a lot of neutrino events to test against, because per source two new parameters are introduced.
+In this time dependent analysis this is not possible due to low statistics in the small time windows tested here.
+However in the limit calculation this lack of information can be incorporated by simulating these uncertainties during the signal injection.
+
+The whole process is then done as follows.
+For each source the pool of simulation events is selected in a declination band around the best fit source positions, which are also tested against in the Likelihood formulation.
+The bandwidth upper and lower borders around each source are chosen by scanning the $3\sigma$ contour from the corresponding source prior map selecting events between the minimum and maximum declinations from the contour line.
+For all selected events the injection weights are computed using OneWeight and the target fluence as shown above.
+For the actual injection during trial sampling the prepared pool is sampled randomly across all sources.
+The number of events drawn in total is given as a Poisson mean number of signal events and gives Poisson fluctuation around that value for each trial.
+To account for the unknown source positions, new point-like source positions are drawn for each trial.
+The positions are drawn independently from each sources reconstruction prior PDF map, so that the most likely position is still the tested best fit position.
+All drawn events are rotated to their new source position in their true spatial coordinates.
+Lastly new time attributes are chosen from a uniform distribution for each sources time window for all events drawn for each source.
+The sampled events are finally stripped from all Monte Carlo truth information, appended to the background data also drawn for the trial and the Likelihood is fitted to create a test statistic with signal included.
+This injection mode worsens the analysis performance and limits but represents a more realistic performance estimation in light of the unknown but constrained source positions.
+\TODO{Include src injection plot?}
 
 
 \section{HESE reconstruction map handling}
@@ -304,7 +363,53 @@ The resulting maps can be used as spatial PDF maps and are sampled for the perfo
 
 
 \section{Performance estimation}
+The a-priori question asked here is, how much signal would be needed from the source collection in order to obtain a given significance in the final analysis.
+For this the performance is estimated by injecting a mean number of events for a given grid of mean signal strength values and doing a number of trials at each grid point.
+Each trial the actual number of injected signal events is drawn from a Poisson distribution with the current mean.
+These trials are used to obtain Neyman upper limits \CITE{Neyman paper(s)} for the needed fluence strength.
 
+After creating a test statistic for all tested signal strengths, a generic $\chi^2$ CDF is fit to the discrete points.
+While not having a justified connection to the distributions, the function is variable enough to smoothly interpolate the sampled points.
+This way the desired performance values over a given test statistic value from pure background trials can easily be obtained from the well behaved $\chi^2$ CDF.
+
+The advantage of this method is, that trials can be reused to evaluate multiple performance definitions if the statistics are high enough.
+Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively 90\% signal over zero background test statistic, 90\% signal over $3\sigma$ background test statistic and for discovery potential 90\% over $5\sigma$ was used here. The usual 50\% above $5\sigma$ yield to better discovery potential than sensitivity on first sight, which may be slightly confusing on first sight, so the 90\% definition was used.}.
+Another advantage is, that the whole Neyman grid construction can be visually inspected to see if any errors occurred during the minimization or trial generation \TODO{Neyman grid in app.}.
+\TODO{Maybe make FC limits from trials by applying FC weighting scheme.}
+Errors on the limits or bounds obtained from the fitted $\chi^2$ CDF could be obtained via trial bootstrapping and refitting, but is neglected here due to the high number of trials done per grid point and the dense grid itself.
+
+A given true, mean injection strength can be converted to the actual intrinsic fluence at the sources.
+This conversion follows straight from the weighting relation between the fluence and the weights, as shown earlier
+\begin{align}
+  N &= \sum_{k=1}^{N_\text{srcs}} \sum_{(i|\Omega_i \in \Omega_k)}
+    w_k^{(\text{tot})}\frac{\text{OneWeight}'_i\cdot\Phi_0\cdot f(E_{\nu,i})}
+                           {\Omega_k} \\
+  &= \Phi_0 \cdot
+      \sum_{k=1}^{N_\text{srcs}}
+      \sum_{(i|\Omega_i \in \Omega_k)} \tilde{w}_{k,i} \\
+  &\coloneqq \Phi_0 \cdot \sum_{k=1}^{N_\text{srcs}} F_k = \Phi_0 \cdot F
+  \mcomma
+\end{align}
+where the outermost sum is added to sum up each source contribution and $\tilde{w}_{k,i}$ is the whole physics weight without the proper fluence normalization.
+The sum over $\tilde{w}_{i,k}$, $F$, then has all the properties of the final fluence except the proper normalization.
+This relation connects events $N$ at the detector and intrinsic fluence strength $\Phi_0$ and can also be given per source
+\begin{align}
+  \Phi_0(N) = \frac{N}{F}
+    &\mintertext{and per source}
+    \Phi_0^k(N) = \hat{w}_k^\text{src} \cdot \Phi_0(N)
+    \mcomma \\
+  \intertext{where $\hat{w}_k^\text{src}$ are the normalized intrinsic source weights. Ging from intrinsic flux to events yields}
+  N(\Phi_0) = \Phi_0 \cdot F
+    &\mintertext{and per source}
+    N(\Phi_0) = \Phi_0 \cdot F_k
+  \mperiod
+\end{align}
+$\Phi_0$ is to be understood as the fluence normalization at a given, fixed energy, here at $\SI{1}{\GeV}$.
+Another usual convention is to use the normalization at $\SI{100}{\TeV}$ which doesn't change the physics result, but simply shifts the pivot point of the underlying unbroken power law to higher energies.
+\TODO{Show chi2 fits, show time win vs. perf. curves}
 
 \section{Post trial method}
+HIERWEITER
+
+\section{Results}
 
