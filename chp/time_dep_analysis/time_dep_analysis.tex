@@ -1,15 +1,43 @@
 \chapter{Time dependent analysis}
 
+This analysis is searching for a stacked lower energy neutrino contribution at the HESE track event positions, which are treated as transient sources.
+A generic search in time emission models is done by testing for 21 generic box time windows increasing in logarithmic time from two seconds to five days, symmetrically around all sources.
+
+\FIXME{Longer summary of time dependent source searches!}
+For the physics motivation: IceCube couldn’t find a significant point source so far despite many different analysis and efforts. Prominent examples relevant for this is search are the and the , both with no significant results.
+
+\FIXME{Robust physics scenario motivation}
+But the HESE events on their own show a clear astrophysical signal and therefore should originate from some sources. This analysis test if there is any clustering of lower energy neutrino events around the HESE locations.
+
+\FIXME{Formulate in sentences}
+The analysis method is a time dependent unbinned likelihood approach similar to the so called “GRB Likelihood”. Key features used here are:
+\begin{enumerate}
+  \item Background is modelled using scrambled data
+  \item Using time dependent spatial background PDFs
+  \item Energy PDF is estimated from data and MC with fixed index $E^{-2}$ power law
+\end{enumerate}
+For source and test data we use:
+\begin{enumerate}
+  \item Source dataset: 6 years HESE track events, IC79 - IC86, 2015.
+  \item Test dataset: 5 years PS tracks (IC79 - IC86, 2014) + 1 year GFU (IC86, 2015)
+\end{enumerate}
+
+The available data for six years of muon neutrino track events is split in a \enquote{blind} on-time data part and a leftover off-time data part.
+The on-time data consists of all events which times fall within any of the times of the largest time window considered around any source.
+This data is only used to for the final result to avoid a bias with potential signal events in the process of creating the necessary Likelihood PDFs.
+The off-time data part has no relevance for the final result as all events are outside any tested time window.
+It is thus used as a representative background sample for construction of the Likelihood models and the background trials.
+This is a valid approach here, because the cut-out signal regions are small compared to the total sample livetime.
+
 This chapter gives an overview over the actual implementation and choices for the formulas in the point source theory chapter.
 This should give proper orientation for the steps necessary to reproduce the analysis results.
 
+\TODO{Maybe explain:}
 \begin{itemize}
-  \item Describe how HESE maps are build, systematic smearing
   \item Used parameter space
-  \item How PDFs and trials are done exactly
   \item Explain details how fitter was used, the seed was found, signal injection, BG injection, BG rate description
   \item Systematic tests: Signal found
-  \item Show sensitivity, signal injection, bg injection, ref to MRichman
+  \item Show sensitivity, signal injection, bg injection, ref to MRichman?
 \end{itemize}
 
 
@@ -127,6 +155,74 @@ For background the same sinus function rate model used for the spatial PDFs coul
 But as the amplitudes are small, even at the largest time window the resulting PDF would be virtually indistinguishable from a uniform distribution.
 So for code simplicity simple rectangle model is used for the background PDF.
 This also means that no extra sensitivity is coming from the temporal term, it is merely there to select events within the time windows and alters the amount of total background contribution which is almost zero for the smallest and grows approximately linearly for larger time windows.
+
+In this analysis, 21 time windows are tested, from $\SI{2}{\second}$ to $\SI{5}{\day}$.
+This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray and Fast Radio Burst or tidal disruption events \FIXME{Look up correct values}\CITE{Paper on GRB, TDE scales}.
+The time windows are spaced symmetrically around each source.
+All sources are given the same time window and all time windows are tested independently of each other.
+This is done to avoid an unstable resource consuming fitting of the time window size but comes at the cost of an additional trial factor for testing multiple windows and selecting the best one.
+The time window intervals can be found in table~(\ref{tab:time_windos}).
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{
+    % https://tex.stackexchange.com/questions/291786
+    % 1st set of ID DeltaT, 3 cols, last 2 combined with square brackets
+    r  % Integer ID < 10
+    >{{[}}                 % Add square bracket before column
+    S[table-format = -2.1,table-space-text-pre={[}]
+    @{,\,}                 % Add comma and thin-space between the columns
+    S[table-format = -2.1,table-space-text-post={]}]
+    <{{]}}                 % Add square bracket after column
+    % 2nd set of ID DeltaT
+    r
+    >{{[}}
+    S[table-format = -4.1,table-space-text-pre={[}]
+    @{,\,}
+    S[table-format = -4.1,table-space-text-post={]}]
+    <{{]}}
+    % 3rd set of ID DeltaT
+    r
+    >{{[}}
+    S[table-format = -6.1,table-space-text-pre={[}]
+    @{,\,}
+    S[table-format = -6.1,table-space-text-post={]}]
+    <{{]}}
+  }
+    \toprule
+    {ID} & \multicolumn{2}{c}{$\Delta T$ in \si{\s}} &  % Center ID and DeltaT
+      {ID} & \multicolumn{2}{c}{$\Delta T$ in \si{\s}} &
+      {ID} & \multicolumn{2}{c}{$\Delta T$ in \si{\s}} \\
+    \midrule
+     1 &      -1.0 &      +1.0 &
+       8 &     -73.6 &     +73.6 &
+      15 &   -5421.4 &   +5421.4 \\
+     2 &      -1.8 &      +1.8 &
+       9 &    -136.0 &    +136.0 &
+      16 &  -10019.3 &  +10019.3 \\
+     3 &      -3.4 &      +3.4 &
+      10 &    -251.4 &    +251.4 &
+      17 &  -18516.6 &  +18516.6 \\
+     4 &      -6.3 &      +6.3 &
+      11 &    -464.7 &    +464.7 &
+      18 &  -34220.4 &  +34220.4 \\
+     5 &     -11.6 &     +11.6 &
+      12 &    -858.9 &    +858.9 &
+      19 &  -63242.4 &  +63242.4 \\
+     6 &     -21.5 &     +21.5 &
+      13 &   -1587.3 &   +1587.3 &
+      20 & -116877.5 & +116877.5 \\
+     7 &     -39.8 &     +39.8 &
+      14 &   -2933.5 &   +2933.5 &
+      21 & -216000.0 & +216000.0 \\
+    \bottomrule
+  \end{tabular}
+  \caption{
+    Used time windows $\Delta T = [T_0, T_1]$ in seconds relative to each source events' detection time in the time dependent analysis.
+    Each time window is tested independently from the others and all sources share the same time window length in a single set-up.
+  }
+  \label{tab:time_windos}
+\end{table}
 
 
 \section{Background estimation and stacking weights}
@@ -272,6 +368,19 @@ With larger time windows this effect gets less severe and more events are availa
 The larger the time windows get the more the shape of the test statistic resembles the $\chi^2_1$ distribution expected from Wilks' theorem.
 \FIXME{BG TS plots in app.}
 
+Note that signal under fluctuations are not regarded here, which mean that any values $n_S < 0$ are truncated at $n_S=0$.
+This yields to a compactification of under fluctuating trials at a test statistic value of zero.
+This behaviour is more severe for smaller time windows, as background has not much chance to look like signal, so the amount of under fluctuations is much larger then the expected 50\% for pure background.
+Another way to look at this is, that for Wilks' theorem to hold and for getting about 50\% under as well as over fluctuations, both the signal and background PDFs must be equally well sampled.
+If the time windows are small, then the pure chance of having any event close by any source is small, so the signal PDF is almost never sampled in the signal like region.
+This leads to a lot of trials with test statistic values of zero the more, the smaller the time window.
+Here, for the smallest time window over 99\% of all trials have a test statistic value of zero.
+For the largest time window the ratio about 71\% of all trials come with a zero test statistic value.
+This is not a problem, but rather leads to a worsening of performance estimation and limits, the worse the more zero trials there are.
+This is because of the compactification to zero, the limits can only start at values with a higher test statistic value than zero for a meaningful estimate.
+For example, if there are 99\% zero trials, then the smallest meaningfull confidence that can be applied is about $2.5\sigma$ which leads to larger or worse limits than necessary.
+On the other hand, the small time windows have such a low background, that any number of somewhat signal-like events showing up, will lead to a high and close-to-detection significance.
+
 The number of generated trials allow to use the samples directly as an empirical PDF representation up to about $3\sigma$, which leaves approximately $\num{270000}$ events in the tails for robust quantile estimation.
 $10^8$ samples allow to empirically estimate the distribution up to about $5.7\sigma$, but with very poor statistics.
 To make the p-value estimation more robust for large test statistic values, the tail of each time windows test statistic is fitted with an exponential distribution.
@@ -282,6 +391,8 @@ For the larger time windows, the $\chi^2_1$ like form of the distributions are n
 An independent set of trials is used to verify the validity of the tail fits.\FIXME{Attach plot}
 The resulting PDFs are then a hybrid made from the empirical distribution and the exponential tail smoothly describing the distribution tails and are used to estimate p-values for further fits.
 \FIXME{Plots in app.}
+
+For the larger time windows, as the test statistic is approaching the expected behaviour of a $\chi^2$, the PDF could also be described using the ansatz from the usual time integrated analyses with a split PDF
 
 \subsection*{Signal trials}
 To estimate the analysis' performance and to compute limits or constrains for a specific choice of a source flux model, signal like events need to be tested.
@@ -304,7 +415,7 @@ The diffuse fluence $\Phi(E_{\nu,i})$ is normalized to a point source fluence by
 Events can be selected for multiple sources, if their selection regions overlap.
 All weights for each event in the whole pool of events then get normalized
 \begin{equation}
-  w^\text{sample}
+  w^\text{sampling}
   = \sum_{k=1}^{N_\text{srcs}} \sum_{(i|\Omega_i \in \Omega_k)} w_{i,k}
   \mcomma
 \end{equation}
@@ -386,8 +497,8 @@ This conversion follows straight from the weighting relation between the fluence
                            {\Omega_k} \\
   &= \Phi_0 \cdot
       \sum_{k=1}^{N_\text{srcs}}
-      \sum_{(i|\Omega_i \in \Omega_k)} \tilde{w}_{k,i} \\
-  &\coloneqq \Phi_0 \cdot \sum_{k=1}^{N_\text{srcs}} F_k = \Phi_0 \cdot F
+      \sum_{(i|\Omega_i \in \Omega_k)} \tilde{w}_{k,i}
+  \coloneqq \Phi_0 \cdot \sum_{k=1}^{N_\text{srcs}} F_k = \Phi_0 \cdot F
   \mcomma
 \end{align}
 where the outermost sum is added to sum up each source contribution and $\tilde{w}_{k,i}$ is the whole physics weight without the proper fluence normalization.
@@ -409,7 +520,89 @@ Another usual convention is to use the normalization at $\SI{100}{\TeV}$ which d
 \TODO{Show chi2 fits, show time win vs. perf. curves}
 
 \section{Post trial method}
-HIERWEITER
+IN this analysis the Likelihood is only fitted for the single signal strength parameter $n_S$.
+Nevertheless multiple time windows are tested, because a possible true time window size is unknown.
+By doing the grid scan in 21 different time windows, a trial factor needs to be regarded \CITE{LLH methods for HE Phys?}.
+The trial factor accounts for the fact, that multiple options are trialed and a-posteriori the best one is chosen as the final result.
+The connection to Wilks' theorem here is, that it says, that the differences in free parameters comparing the alternative and null hypothesis is the degree of freedom of the resulting $\chi^2$ test statistic.
+By fitting for two parameters, adding in the time window length for example, the test statistic would end up with higher degrees of freedom, thus incorporating a trial factor automatically.
+This needs to be included by hand here for doing the fit manually by trialing multiple discrete time windows in the whole allowed parameter space.
+
+The procedure to finally obtain a trial corrected result is a follows.
+As in the end the best out of 21 time windows is picked, a bunch of pure background trials need to be run, simulating this behaviour, to know the effect on the final result on data.
+Opposing to the background trials per time window as shown before, here the trials are created correlated as is the case with real data in the end.
+The largest time window is used to create a pseudo sample of pure background events.
+This sample is then fitted with the 21 different time window Likelihoods and all fit results are recorded per trial.
+Here $\num{1e6}$ post trials are done to have a robust estimate even for higher significances without having to assume some underlying distribution to fit against.
+
+The recorded results are then transformed to pre-trial p-values using the per time window background test statistics.
+For each trial the best p-value is chosen and a new post-trial test statistic is build from these p-values.
+For the final result, the single fit for each time window is undergoing the same procedure and the best pre-trial p-value is inserted into the post-trial distribution to obtain the final result significance.
+\TODO{Plots of post trial ts, and relation pre <-> post trial pval.}
 
 \section{Results}
+The so far held back on-time data, containing all events within any of the largest time windows around any source are used to do a single fit per time window with the prepared Likelihood models.
+This yields 21 fit results, one for each time window with a single pre-trial p-value for each one.
+Afterwards the post-trial significance is calculated by selecting the best p-value and comparing it to the post-trial test statistic constructed above.
 
+No significant excess of neutrinos is seen in the stacked search around the 22 proposed HESE events taken as source positions.
+Table~(\ref{tab:time_dep_results}) summarizes the pre-trial fit results.
+The best pre-trial fit was achieved for the largest time window $[-2.5, 2-5]$ days centred around each source with a pre-trial p-value $\num{0.068}$ and a best fit test statistic of $\num{1.84}$ and $\num{2.32}$ signal-like events.
+The final, trial corrected p-value is then $\num{0.30}$ corresponding to $\num{1.03}\sigma$, obtained by inserting the smallest pre-trial value in the survival function of the empirical post-trial distribution.
+\TODO{Show TS plots with result line.}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{
+    % ID n_S Lambda pval
+    r
+    S[table-format = -1.0,table-space-text-pre={[}]
+    S[table-format = -1.0,table-space-text-post={]}]
+    S[table-format = -1.0,table-space-text-post={]}]
+    % 2nd set of ID DeltaT
+    r
+    S[table-format = -1.0,table-space-text-pre={[}]
+    S[table-format = -1.0,table-space-text-post={]}]
+    S[table-format = -1.0,table-space-text-post={]}]
+    % 3rd set of ID DeltaT
+    r
+    S[table-format = -1.2,table-space-text-pre={[}]
+    S[table-format = -1.2,table-space-text-post={]}]
+    S[table-format = -1.3,table-space-text-post={]}]
+  }
+    \toprule
+    {ID} & {$\hat{n}_S$} & $\Lambda$ & $p$ &
+      {ID} & {$\hat{n}_S$} & $\Lambda$ & $p$ &
+      {ID} & {$\hat{n}_S$} & $\Lambda$ & $p$ \\
+    \midrule
+     1 & 0    & 0    & 1     &
+       8 & 0    & 0    & 1     &
+      15 & 0    & 0    & 1     \\
+     2 & 0    & 0    & 1     &
+       9 & 0    & 0    & 1     &
+      16 & 0    & 0    & 1     \\
+     3 & 0    & 0    & 1     &
+      10 & 0    & 0    & 1     &
+      17 & 0    & 0    & 1     \\
+     4 & 0    & 0    & 1     &
+      11 & 0    & 0    & 1     &
+      18 & 0    & 0    & 1     \\
+     5 & 0    & 0    & 1     &
+      12 & 0    & 0    & 1     &
+      19 & 0    & 0    & 1     \\
+     6 & 0    & 0    & 1     &
+      13 & 0    & 0    & 1     &
+      20 & 0    & 0    & 1     \\
+     7 & 0    & 0    & 1     &
+      14 & 0    & 0    & 1     &
+      21 & 2.32 & 1.84 & 0.068 \\
+    \bottomrule
+  \end{tabular}
+  \caption{
+    Results of the time dependent stacking search with HESE events as sources.
+    The fit results per time window performed on held back on-time data is shown.
+    All p-values $p$ are pre-trial.
+    The most significant, and only non-zero, result for the largest time window 21 needs to be trial corrected.
+  }
+  \label{tab:time_dep_results}
+\end{table}
