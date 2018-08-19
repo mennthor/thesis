@@ -66,7 +66,7 @@ This holds well for larger time windows in which the detector rotation relative 
 For smaller time windows the assumption may break down, and alternatively a local background PDF can be used as a drop in replacement.
 Here the PDF is only declination independent and can be written as
 \begin{equation}
-  f(\delta_i|t_k) = \frac{1}{2\pi}\cdot P(\delta|t_k)
+  f(\delta_i|t_k) = \frac{1}{2\pi}\cdot P(\delta_i|t_k)
 \end{equation}
 where $t_k$ is the time of source $k$ used to account for varying background strengths due to seasonal variations \CITE{seasonal variations}\FIXME{explain 1, 2 sentences to seas. var.?}.
 
@@ -106,7 +106,7 @@ The number of events are obtained using OneWeight as shown before for the signal
 \begin{equation}
   N(\Delta E, \Delta\delta)
   = \sum_{(i|E_{\nu,i}\in\Delta E, \delta_i\in\Delta\delta)}
-    \frac{\text{OneWeight}'_i \cdot \Phi(E_i)}{\Delta\Omega}
+    \frac{\text{OneWeight}'_i \cdot \Phi(E_i)}{\Delta\delta \Delta E}
   \mcomma
 \end{equation}
 where OneWeight$'$ is a slight modification OneWeight, it is already divided by the number of total generated simulation events $\text{OneWeight}'\coloneqq\text{OneWeight}/N_\text{gen}$, where $N_\text{gen}$ is the total for all particle types combined and $\Phi$ is also the combined neutrino plus anti-neutrino fluence.
