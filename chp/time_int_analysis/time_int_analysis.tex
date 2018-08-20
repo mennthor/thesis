@@ -2,11 +2,13 @@
 
 Another analysis was performed to test for a potential steady flux scenario from the HESE event positions.
 This may be seen as the special case to the previous analysis using time windows as large as all samples combined across all sources.
+The computing part is done using the \lstinline!skylab! \CITE{skylab, coenders phd} module which is a versatile tool for performing various types of time integrated point source searches in IceCube.
+Therefore the technical details of the implementation can be reviewed in the module description and only a short summary focusing on the key differences to the time dependent search is given in this chapter.
 
 \FIXME{Physics introduction and reference to blazar stackings and 7yr PS search}
 
 \FIXME{Short overview over the method and differences to the time dep ana.}
-The method used in this analysis is similar to the previous one and uses the same Likelihood mechanism as derived in the dedicated chapter using different approximations suitable for large statistics samples and a steady source scenario.
+The method used in this analysis is similar to the previous one and uses the same Likelihood mechanism as derived in the dedicated chapter using different approximations suitable for large statistics samples and a steady source scenario \CITE{Could cite aachen 6yr 100 astro evts on 100k atmo}.
 The fact that all sources are assumed to contribute to the common neutrino flux at all times throughout all samples simplifies the construction of background PDFs and the process of trial generation.
 Nevertheless the background PDFs are still constructed from the data sample.
 In this case, this is justified by the assumption of having a low amount of signal in the sample and the spatial scrambling of the event positions in right-ascension to ensure any potential signal clustering is removed.
@@ -33,7 +35,7 @@ As seasonal variations are smoothed out in the whole sample livetime, it is suff
 \end{equation}
 This is done by histogramming the data events in sine of declination and fitting an interpolating spline through the resulting bin centre points to have a smooth and continuous representation of the PDF available.
 Again for being consistent with the commonly used PDFs in IceCube, the binning is chosen a bit different than in the previous analysis, which makes almost no difference in the used PDF \TODO{compariosn plot?}.
-The binning set-up can be looked up in the \lstinline!skylab! \CITE{skylab} module which collects the shared settings for the datasets.
+The binning set-up can be looked up in the \lstinline!skylab! module which collects the shared settings for the datasets.
 
 \subsection*{Energy PDF}
 The energy PDF needs to be build evaluated for multiple power laws at runtime because the second fit parameter is the spectral index of the assumed source flux.
@@ -47,16 +49,88 @@ For signal simulation the number of events per bin can be computed using the mod
     \frac{\text{OneWeight}'_i \cdot \phi(E_i|\gamma)}{\Delta\delta \Delta E}
   \mcomma
 \end{equation}
-where now the spectral index $\gamma$ can vary for each source flux hypothesis and each sample livetime needs to regarded to adapt the expected number of signal events accordingly.
+where now the spectral index $\gamma$ can vary for each source flux hypothesis and each sample livetime needs to be regarded to adapt the expected number of signal events for each sample accordingly.
 The slightly different binning can again be looked up in the \lstinline!skylab! module.
 
+To cache the energy PDF dependency on the spectral index, the signal over background ratios are built for each $\gamma$ on a grid, which is constrained in the interval $[1, 4]$ to to cover very hard as well as very soft energy spectra.
+The stack of histograms is then used to create a one dimensional spline in the $\gamma$ direction to obtain a continuous description and get the needed derivative for the fit in analytic form as well.
+The needed splines are cached during runtime to avoid repeat construction for the same declinations and energies.
+\TODO{Example hists like on GFU wiki}.
+A less complicated method would be to use multi dimensional, three in this case, splines directly to parametrize the PDF.
+The advantage would be to have a single description of the PDF and obtain analytic gradients in all directions automatically.
 
-\section{Background estimation and stacking weights}
-Weights are same, but discuss differences in binning
 
+\section{Stacking and multi sample weights}
+Because of the free spectral index, the source weights and the multi sample $n_S$ split weights both depend on the current spectral index and have to be re-evaluated each time the index changes.
+This happens similar to the procedure in the time dependent analysis, but the signal simulation needs to respect the sample livetime $T$ and the current spectral index $\gamma$ for the assumed power law flux $\phi$ in the weights
+\begin{equation}
+  w_i = T\cdot \phi(E_{\nu,i}|\gamma)\frac{\text{OneWeight}'_i}{\Delta\Omega}
+  \mperiod
+\end{equation}
+An interpolating spline is used to describe the histogram continuously.
+Note, that the weights depend on the spectral and thus the splines change when changing the index as well.
+Though using the same spline per sample, the difference in stacking and sample split weights is the normalization procedure.
+Stacking weights only consider how a given signal is split according to the expectation within one sample and are normalized accordingly
+\begin{equation}
+  \sum_{k=1}^{N_\text{src}} w_{k,j} = 1
+  \mcomma
+\end{equation}
+whereas the $n_S$ sample split weights $w_j$ follow the normalization rule from the aforementioned law of total probabilities
+\begin{equation}
+  \sum_{j=1}^{N_\text{sam}} w_j
+  = \sum_{j=1}^{N_\text{sam}} \sum_{k=1}^{N_\text{src}} P(j|k)\cdot P(k) = 1
+  \mperiod
+\end{equation}
+\TODO{Gamma vs ns split weights for a sample}
 
 \section{Note on LLH minimization}
-Maybe discuss derivative in ns and gamma?
+The extra fit parameter $\gamma$ makes it necessary to calculate an additional analytic gradient $\partial{\gamma}$ to avoid costly Likelihood evaluations for numeric gradient calculations and more exact gradients.
+Coming from the multi sample Likelihood, the gradients are
+\begin{align}
+  \deldel{(-2\ln\Lambda)}{n_S}
+  &= \deldel{}{n_S}\left\{
+      2\sum_{j=1}^{N_\text{sam}} \left[
+        \sum_{i=1}^{N_j} \ln\left(
+          \frac{n_S}{N_j}\left( R_{i,j} - 1 \right) + 1
+        \right)
+      \right]
+    \right\} \\
+  &= 2\sum_{j=1}^{N_\text{sam}} \left[
+      \sum_{i=1}^{N_j}
+        \frac{R_{i,j} - 1}{n_S\left( R_{i,j} - 1 \right) + N_j}
+      \right] \\
+  \intertext{for $n_S$ and}
+  \deldel{(-2\ln\Lambda)}{\gamma}
+  &= \deldel{}{\gamma}\left\{
+      2\sum_{j=1}^{N_\text{sam}} \left[
+        \sum_{i=1}^{N_j} \ln\left(
+          \frac{n_S}{N_j}\left( R_{i,j} - 1 \right) + 1
+        \right)
+      \right]
+    \right\} \\
+  &= 2\sum_{j=1}^{N_\text{sam}} \left[
+      \sum_{i=1}^{N_j}
+        \frac{n_S}{n_S\left( R_{i,j} - 1 \right) + N_j}\cdot
+        \deldel{R_{i,j}}{\gamma}
+      \right] \\
+\end{align}
+for $\gamma$ respectively, where
+\begin{equation}
+  R_{i,j} = R_{i,j}(\gamma)
+  \coloneqq \frac{\sum_{k=1}^{N_\text{srcs}}(w_j(\gamma)
+                  w_{k,j}(\gamma) S_{i,k,j}(\gamma))}{B_{i,j}}
+\end{equation}
+was introduced for a shorter notation.
+The $\partial{\gamma}$ derivatives of the signal over background ratios $R_{i,j}$ can be evaluated using the analytic spline derivatives used to construct the  weights and PDFs and the application of the product derivation rule
+\begin{equation}
+  \deldel{R_{i,j}}{\gamma}
+  = \frac{1}{B_{i,j}}\cdot\sum_{k=1}^{N_\text{srcs}}\left(
+      \deldel{w_j}{\gamma} w_{k,j} S_{i,k,j} +
+      w_j \deldel{w_{k,j}}{\gamma} S_{i,k,j} +
+      w_j w_{k,j} \deldel{S_{i,k,j}}{\gamma}
+    \right)
+  \mperiod
+\end{equation}
 
 
 \section{Trial generation}
