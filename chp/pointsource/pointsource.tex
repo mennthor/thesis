@@ -84,18 +84,17 @@ The alternative hypothesis $H_1$ is constructed by using the full Likelihood par
 
 The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H_0$ against the alternative $H_1$ is defined as \CITE{Casella Berger Book}
 \begin{equation}
-  \ln\Lambda = \ln\left(\frac{\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)}
+  \ln\hat{\Lambda} = \ln\left(\frac{\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)}
                           {\sup_{\theta \in \Theta} \mathcal{L}(\theta)}\right)
   = \ln\left(\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)\right) -
     \ln\left(\sup_{\theta \in \Theta} \mathcal{L}(\theta)\right)
   \mperiod
 \end{equation}
-
-Here the parameters $\hat{\lambda}_{k,S/B}$ were introduced, which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
+where $\hat{\Lambda}$ means the single test statistic value after finding the supremum of both nominator and denominator.
 This leads to the test statistic
 \begin{equation}
   \begin{aligned}
-    -2\ln\Lambda
+    -2\ln\hat{\Lambda}
     &= 2\ln(\mathcal{L}_1(\{\hat{\lambda}_{k,S/B}\})) -
        2\ln(\mathcal{L}_0(\{\hat{\lambda}^{(0)}_{k,B}\})) \\
     &= -2\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
@@ -112,6 +111,7 @@ This leads to the test statistic
   \end{aligned}
 \end{equation}
 which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \CITE{Wilk paper and/or statistic book}.
+Here the parameters $\hat{\lambda}_{k,S/B}$ were introduced, which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
 As seen above, all best fit parameters from both hypotheses have to be distinguished in general, differentiating $\hat{\lambda}_{k,B}^{(0)}$ from the null hypothesis which are not the same as $\hat{\lambda}_{k,B}$ from the composite hypothesis.
 
 In the following sections specific model choices for the signal and background distributions and approximating assumptions are shown, to transform the above expression to commonly known forms also used for the time dependent search in this thesis.
@@ -239,7 +239,7 @@ This decreases the number of parameters to fit for, because it unifies and fixes
 \end{equation}
 The test statistic then turns to the form
 \begin{equation}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   = -2\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
       2\sum_{i=1}^N \ln\left(
         \frac{\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} S_{i,k}}
@@ -260,7 +260,7 @@ with a free global signal strength parameter $n_S$ and weights $w_k$ normalized 
 \end{equation}
 The test statistic can then be expressed by
 \begin{equation}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   = -2\hat{n}_S +
       2\sum_{i=1}^N \ln\left(
         \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
@@ -282,7 +282,7 @@ The expression can be rearranged to an explicit sum of logarithms, that better r
 
 Starting from the test statistic from above
 \begin{equation}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   = -2\hat{n}_S +
       2\sum_{i=1}^N \ln\left(
         \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
@@ -301,7 +301,7 @@ The event belongs to the source in which time window it falls or to no source at
 \end{equation}
 The stacking sum then turns to
 \begin{align}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   &= -2\hat{n}_S +
       2\sum_{i=1}^N \ln\left(
         \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}
@@ -344,18 +344,24 @@ The reasoning is quite similar to the stacking case for the single sample Likeli
 
 To add another sample, the individual Likelihoods can be summed up, because the tested datasets are independent, which yields the combined test statistic
 \begin{align}
-  -2\ln\Lambda
-  &= \sum_{j=1}^{N_\text{sam}} -2\ln\Lambda_j(\hat{n}_{S,j}) \\
+  -2\ln\hat{\Lambda}
+  &= \sum_{j=1}^{N_\text{sam}} -2\ln\hat{\Lambda}_j(\hat{n}_{S,j}) \\
   &= \sum_{j=1}^{N_\text{sam}} \left[
         -2\hat{n}_{S,j} +
-        2\sum_{i=1}^N \sum_{k=1}^{N_\text{srcs}} \ln\left(
-          \frac{\hat{n}_{S,j} w_k S_{i,k}}{\Braket{\lambda_{k,B}} B_{i,k}}
+        2\sum_{i=1}^{N_j} \sum_{k=1}^{N_\text{srcs,j}} \ln\left(
+          \frac{\hat{n}_{S,j} w_{k,j} S_{i,k,j}}
+               {\Braket{\lambda_{k,j,B}} B_{i,k,j}}
           + 1
         \right)
       \right]
   \mcomma
 \end{align}
-where individual free $n_{S,j}$ signal parameters are introduced and the weights $w_k$ are normalized per sample.
+where individual free $n_{S,j}$ signal parameters are introduced and the stacking weights $w_{k,j}$ per source in the sample are constructed like the usual single sample stacking weights $w_k$ and are still normalized per sample
+\begin{equation}
+  \sum_{k=1}^{N_{j,\text{srcs}}} w_{k,j} = 1
+  \mperiod
+\end{equation}
+Only the number of events per sample $N_j$ and the sources falling in sample $j$ are considered for the Likelihood, weights $w_{k,j}$, PDFs $S_{i,k,j}$ and $B_{i,k,j}$ and the background expectations per source $\Braket{\lambda_{k,j,B}}$ for each sample.
 Again, a-priori information about the expected number of signal events originating from each sample can be used and a global free signal strength parameter $n_S$ is used with
 \begin{equation}
   n_{S,j} = w_j n_S
@@ -392,7 +398,7 @@ These relations can also be written in a concise matrix notation
   \mperiod
 \end{equation}
 The unnormalized signal expectation values can be obtained in each sample by calculating the expected number of events from a signal simulation which usually differs for each detector configuration and sample selection criteria.
-These values can then be used to normalize the matrix per column and construct the $P(K)$ vector by summing over each columns per source $k$.
+These values can then be used to normalize the matrix per column and construct the $P(k)$ vector by summing over each columns per source $k$.
 
 The most complex weighting case in this scenario would be multiple sources with time PDFs overlapping in their emission region and also leaking into another data sample.
 The formalism above still applies, and the sample splitting weighs can be obtained by integrating the time emission PDFs per sample to obtain the relative emission strength for the source portions lying in each sample.
@@ -400,7 +406,7 @@ These are then multiplied with the usual declination dependent weights per sampl
 The weighting within each sample wouldn't be affected and is still valid as explained in the previous section.
 
 For the special case treated here, with each source having it's unique time window and also falling exclusively in a single sample, each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
-The probabilities $P(k)$ can be obtained by using the un-normalized $n_S$ splitting weights for each sample $\tilde{w}_k$ and re-normalize them over all sources in all samples
+The probabilities $P(k)$ can be obtained by using the un-normalized source stacking weights regardless of the sample $\tilde{w}_k$ and re-normalize them over all sources in all samples
 \begin{equation}
   P(k) = \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m}
   \mperiod
@@ -408,106 +414,34 @@ The probabilities $P(k)$ can be obtained by using the un-normalized $n_S$ splitt
 Because of the special matrix properties used here, the explicit weights $w_j$ then turn out to be global re-normalizations of the un-normalized single sample weights $\tilde{w}_k$ with
 \begin{align}
   w_j
-    &= \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k) \\
-    &= \sum_{k=1}^{N_\text{srcs}}
+    &= \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k)
+    = \sum_{k=1}^{N_\text{srcs}}
       \delta_{\{k,j|T_j(t_k)\neq 0\}} \cdot
-      \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m}
+      \frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m} \\
+    &= \sum_{k=1}^{N_{j,\text{srcs}}}
+      \frac{\tilde{w}_{k,j}}{\sum_{m=1}^{N_\text{srcs}} \tilde{w}_m}
   \mcomma
 \end{align}
 where $T_j$ is a unique rectangle function for each sample, equally used as the rectangle function utilized to describe the unique time windows per source in each sample.
+$\tilde{w}_{k,j}$ are the un-normalized stacking weights per sample.
 
 Now the numerator turns out to be exactly the per sample normalization of the per sample splitting weights, which is the sum of all weights for the subset of all sources that actually are in the sample.
 The full multi-sample test statistic then reads
 \begin{equation}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   = -2\hat{n}_S +
-      2\sum_{j=1}^{N_\text{sam}} \sum_{i=1}^N \sum_{k=1}^{N_\text{srcs}}
+      2\sum_{j=1}^{N_\text{sam}} \sum_{i=1}^{N_j} \sum_{k=1}^{N_\text{srcs,j}}
       \ln\left(
-        \frac{\hat{n}_{S}\frac{\tilde{w}_k}{\sum_{m=1}^{N_\text{srcs}}
-              \tilde{w}_m} S_{i,k}}
-             {\Braket{\lambda_{k,B}} B_{i,k}}
+        \frac{\hat{n}_{S}\frac{\tilde{w}_{k,j}}{\sum_{m=1}^{N_\text{srcs}}
+              \tilde{w}_m} S_{i,k,j}}
+             {\Braket{\lambda_{k,j,B}} B_{i,k,j}}
         + 1
       \right)
   \mcomma
 \end{equation}
-where $\tilde{w}_k$ are the un-normalized weights per source with respect to the expected signal in their corresponding sample and are normalized over all source expectations in all samples regarded.
+where $\tilde{w}_{k,j}$ are the un-normalized weights per source with respect to the expected signal in their corresponding sample and are normalized over all un-normalized source expectations $\tilde{w}_m$ in all samples regarded.
 This expression nicely demonstrates the circumstances here, namely that each source is independent of each other source and lies completely in a single data sample, so the whole underlying Likelihood fully factorizes in events, sources and samples.
 
-% \subsection{Summary}
-% We have explored two ways to construct a stacking GRB LLH with multiple samples:
-% \begin{enumerate}
-%   \item Construct the single sample LLHs normalizing all weights as shown in the first chapter in combination with the multiply LLH in eq.~(\ref{equ:multi_TS}).
-%   Then we need to introduce sample weights $w_j$ for $\hat{n}_s$, so that
-%   \begin{equation}
-%     w_j = \sum_{k\in j} w^\text{D}_k w^\text{T}_k
-%           \frac{1}{\sum_{m=1}^{N_\text{srcs}} w^\text{D}_m w^\text{T}_m}
-%   \end{equation}
-%   These weights re-normalize the per sample weights so they are regarding different efficiencies across samples.
-
-%   \item Alternatively we can also use form eq.~(\ref{equ:single_stack}), which is exactly the same as the later derived multi year form eq.~(\ref{equ:multi_stack}).
-%   For these we can simply get all our detector weights for the corresponding year and also need to use the correct PDFs for each source.
-%   Then the weights are normalized over all samples.
-% \end{enumerate}
-
-% \subsection{How \lstinline|grbllh| does it}
-% In \lstinline|grbllh| we do something similar to eq.~(\ref{equ:multi_stack}): \begin{equation}
-%   \frac{1}{2}\Lambda
-%   = -\hat{n}_S + \sum_{k=1}^{N_\text{srcs}}\sum_{i=1}^{N} \ln\left(
-%         \frac{\hat{n}_S S_{i,k}}{\Braket{n_B} B_{i,k}} + 1 \right)
-%    \mcomma
-% \end{equation}
-% which means we insert the total sum of all signal expectations $\hat{n}_S$ and the sum of all background expectations $\Braket{n_B}$.
-% This has the same effect as using
-% \begin{equation}
-%   \frac{1}{2}\Lambda
-%   = -\hat{n}_S + \sum_{k=1}^{N_\text{srcs}}\sum_{i=1}^{N} \ln\left(
-%         \frac{\hat{n}_S w_k S_{i,k}}{\overline{\Braket{n_B}} B_{i, k}} + 1 \right)
-%    \mcomma
-% \end{equation}
-% where all the signal weights are
-% \begin{equation}
-%   w_k = 1/N_\text{srcs}
-% \end{equation}
-% and
-% \begin{equation}
-%   \overline{\Braket{n_B}} =
-%   \frac{1}{N_\text{srcs}}\sum_{k=1}^{N_\text{srcs}}\Braket{n_{B,k}}
-%   = \frac{\Braket{n_B}}{N_\text{srcs}}
-% \end{equation}
-% means the mean background from all source time windows.
-% So we simply use a special weighted case, where all GRBs are treated the same with respect to signal and background expectations.
-
-
-% \subsection{Example Weight Matrix}
-% An arbitrary example with 3 samples and 5 sources in total would be:
-% \begin{align}
-% \vec{w} =
-%   \begin{pmatrix}
-%     w_{j=0} \\ w_{j=1} \\ w_{j=2}
-%   \end{pmatrix} &=
-%     \begin{pmatrix}
-%       0 & 0 & 1 & 0 & 0 \\
-%       0 & 1 & 0 & 0 & 0 \\
-%       1 & 0 & 0 & 1 & 1
-%     \end{pmatrix} \cdot
-%     \begin{pmatrix}
-%       w_0^\text{D} w_0^\text{T} \\
-%       w_1^\text{D} w_1^\text{T} \\
-%       w_2^\text{D} w_2^\text{T} \\
-%       w_3^\text{D} w_3^\text{T} \\
-%       w_4^\text{D} w_4^\text{T}
-%     \end{pmatrix} \cdot
-%     \frac{1}{\sum_{k=1}^{N_\text{srcs}} w^\text{D}_k w^\text{T}_k} \\
-%     &= \begin{pmatrix}
-%         w_2^\text{D} w_2^\text{T} \\
-%         w_1^\text{D} w_1^\text{T} \\
-%         w_0^\text{D} w_0^\text{T} + w_3^\text{D} w_3^\text{T} +
-%         w_4^\text{D} w_4^\text{T}
-%       \end{pmatrix} \cdot
-%       \frac{1}{\sum_{k=1}^{N_\text{srcs}} w^\text{D}_k w^\text{T}_k}
-%     \mperiod
-%   \label{equ:multi_example}
-% \end{align}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% General method to get a-priori weights from effective areas
@@ -528,11 +462,12 @@ In the first case the stacking weights are thus independent of any source parame
 
 Assuming a spatial, temporal and spectral index $\gamma_k$ source parameter dependency the general $n_S$ splitting weight per source $k$ would then be
 \begin{equation}
-  w_k = w(\vec{x}_k, t, t_k, \gamma_k)
+  w_k^\text{det} = w(\vec{x}_k, t, t_k, \gamma_k)
   = w^{S,E}(\vec{x}_k, \gamma) \cdot w^T(t, t_k)
   \mcomma
 \end{equation}
 where $t$ can be any point in time and the spatial and spectral index dependent weights are correlated because a different index changes the declination distribution of the signal efficiency.
+The weights $w_k^\text{det}$ describe the full expected, relative detection efficiency for each source under the current data sample.
 For the time dependence, as expressions are only evaluated for the recorded events times, the weights are also only evaluated at times $t=t_i$.
 
 In the special case treated here, having sources unique in their time windows, the weight calculation simplifies to the spatial, source declination dependent part only, because only one source at a time has an emission expectation, so the normalized time dependent weights are $w_k^T = 1$ for each source.
@@ -555,7 +490,7 @@ When using a a time integrated fluence $\Phi$ model the livetime is obsolete and
 The expected number of events for a given source declination can then be obtained by integrating over the energy only, getting the number of events per declination.
 The normalized weights per source in a single sample can be constructed by
 \begin{equation}
-  w^S(\vec{x}_k)
+  w^{S,E}(\vec{x}_k, \gamma)
   = \frac
       {
         \int_0^\infty A_\text{eff}(E,\Omega_k) \cdot
@@ -570,7 +505,7 @@ The normalized weights per source in a single sample can be constructed by
 \end{equation}
 This effective area formulation holds for calculating the multi sample splitting weights as well as for the signal splitting within a single sample, because it generally calculates the detector efficiency to a given flux or fluence hypothesis.
 
-In praxis to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
+In practise to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
 The OneWeight per event $i$ is defined as \CITE{oneweight finley?, sim paper?}
 \begin{align}
   \text{OneWeight}_i
@@ -601,14 +536,15 @@ where $N_\text{gen}$ is the generated total number of events summed over both pa
 This scaling makes sure, that the physical expectation value stays the same regardless of the number of simulated events.
 The sum can also be taken across subsamples of a whole data set to obtained differential event counts, e.g. per energy or solid angle.
 
-Additional intrinsic source weights can be introduced to capture differences in expected flux or fluence from the sources themselves.
-This is decoupled from the actual detection mechanism and the weights describes above.
-The weight selection strongly depends on the used catalogue and can for example be the gamma or x-ray flux or distance weighting.
-These intrinsic source weights $w_k^\text{src}$ are independently multiplied with the corresponding detector weights $w_k$ to form the total source weights
+Additional intrinsic source weights can be introduced to capture differences in the expected, relative fluxes or fluences from the sources themselves.
+This is decoupled from the actual detection mechanism and the detector efficiency weights describes above.
+The weight selection strongly depends on the used catalogue and can for example be the gamma or x-ray flux or distance weighting \CITE{1, 2 analyses with this weighting}.
+These intrinsic source weights $w_k^\text{src}$ are independently multiplied with the corresponding detector weights $w_k^\text{det}$ to form the total source weights use in the stacking
 \begin{equation}
-  w_k^\text{(tot)} \coloneqq w_k \cdot w_k^\text{src}
+  w_k \coloneqq w_k^\text{det} \cdot w_k^\text{src}
   \mperiod
 \end{equation}
+If the intrinsic source properties are not known or not reliably available otherwise, the intrinsic source weights are usually set equal.
 
 \subsection*{Connecting weighting formulas}
 The connection to the effective area formula from above with the more practical one using simulation weights is shortly depicted below.
@@ -654,7 +590,7 @@ Now replacing $\hat{N}_\text{gen}$ and $\hat{N}$ in the effective area definitio
 Identifying and replacing the OneWeight definition the formula to obtain the effective area estimate from a simulation data set reads
 \begin{equation}
   A_\text{eff}(\Delta E, \Delta \Omega) =
-    \frac{1}{N_\text{gen}\delta\Omega}\cdot
+    \frac{1}{N_\text{gen}\Delta\Omega}\cdot
     \frac{\left(
             \sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
             \text{Oneweight}_i \cdot f(E_i)
@@ -665,7 +601,7 @@ Identifying and replacing the OneWeight definition the formula to obtain the eff
 Sometimes a slightly modified version
 \begin{equation}
   A_\text{eff}(\Delta E, \Delta \Omega) =
-    \frac{1}{N_\text{gen}\delta\Omega}\cdot
+    \frac{1}{N_\text{gen}\Delta\Omega}\cdot
     \frac{\sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
           \text{Oneweight}_i}
          {\Delta E}
@@ -690,7 +626,7 @@ A different approximation than in the time dependent case is used, which takes i
 \subsection{Single sample stacking case}
 Starting again from the general form
 \begin{equation}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   = -2\left(\sum_{k=1}^{N_\text{srcs}}\hat{\lambda}_{k,S} +
                                       \hat{\lambda}_{k,B} -
                                       \hat{\lambda}_{k,B}^{(0)}\right) +
@@ -714,7 +650,7 @@ Also the second part is usually valid if the amount of signal expected in the da
 
 These approximations cancel the Poisson term in front of the sum and leaves
 \begin{equation}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   = 2\sum_{i=1}^N \ln\left(
     \frac{\sum_{k=1}^{N_\text{srcs}}\left(
           \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
@@ -739,7 +675,7 @@ and the denominator in the logarithm can be simplified to
 \end{equation}
 Using the same argument for the background distributions in the nominator, the stacking test statistic gets
 \begin{align}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   &= 2\sum_{i=1}^N \ln\left(
     \frac{\sum_{k=1}^{N_\text{srcs}}\left(
           \hat{\lambda}_{k,S} S_{i,k}+\hat{\lambda}_{k,B} B_{i,k}\right)}
@@ -752,7 +688,7 @@ Using the same argument for the background distributions in the nominator, the s
 
 Using the fixed expectation approximation from above again, the background parameter $\hat{\lambda}_B$ can be eliminated leaving $N_\text{srcs}$ free signal parameters, one for each source
 \begin{align}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   &= 2\sum_{i=1}^N \ln\left(
     \frac{\sum_{k=1}^{N_\text{srcs}}\left(\hat{\lambda}_{k,S} S_{i,k}\right) +
           \left(
@@ -776,7 +712,7 @@ The $N_\text{srcs}$ free parameters $\lambda_{k,S}$ can again be reduced to a si
 \end{equation}
 The test statistic can then be further reduced to
 \begin{align}
-  -2\ln\Lambda
+  -2\ln\hat{\Lambda}
   &= 2\sum_{i=1}^N \ln\left(
         \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}}\left(w_k S_{i,k}\right)}
              {N B_i} -
@@ -814,17 +750,26 @@ Construction of the multi sample Likelihood formula in the time integrated case 
 \end{equation}
 inserted in the familiar combination of single sample Likelihoods
 \begin{align}
-  -2\ln\Lambda
-  &= \sum_{j=1}^{N_\text{sam}} -2\ln\Lambda_j(\hat{n}_{S,j}) \\
+  -2\ln\hat{\Lambda}
+  &= \sum_{j=1}^{N_\text{sam}} -2\ln\hat{\Lambda}_j(\hat{n}_{S,j}) \\
   &= \sum_{j=1}^{N_\text{sam}} \left[
-      2\sum_{i=1}^N \ln\left(
-        \frac{\hat{n}_{S,j}}{N}\left(
-          \frac{\sum_{k=1}^{N_\text{srcs}}(w_k S_{i,k})}{B_i} - 1
+      2\sum_{i=1}^{N_j} \ln\left(
+        \frac{\hat{n}_{S,j}}{N_j}\left(
+          \frac{\sum_{k=1}^{N_\text{srcs}}(w_{k,j} S_{i,k,j})}{B_{i,j}} - 1
+        \right) + 1
+      \right)
+    \right] \\
+  &= \sum_{j=1}^{N_\text{sam}} \left[
+      2\sum_{i=1}^{N_j} \ln\left(
+        \frac{\hat{n}_S \cdot w_j}{N_j}\left(
+          \frac{\sum_{k=1}^{N_\text{srcs}}(w_{k,j} S_{i,k,j})}{B_{i,j}} - 1
         \right) + 1
       \right)
     \right]
-  \mcomma
+  \mperiod
 \end{align}
+The number of events $N_j$ is now related to the number of events per sample $j$, the number of sources is the same in each sample, because of the steady state emission scenario.
+Also the PDFs $S_{i,k,j}$, $B_{i,j}$ and stacking weights $w_{k,j}$ are taken and normalized per sample as seen before in the time dependent Likelihood.
 
 Because all sources contribute in all times and thus all samples, the weights are not written out in a compact form here, but they still represent the relative sensitivity of a single sample to a given source hypothesis combined with the global sensitivity to a single source across all samples.
 This may also be seen as a special case for the time dependent Likelihood weights, where all the time windows for signal and background are as large as the sample livetimes.
@@ -833,15 +778,15 @@ A notable difference arises, if another global fit parameter is introduced along
 This is often done to better adapt to the unknown signal hypothesis and in a time integrated analysis the statistics are usually sufficient to reliably fit an additional parameter.
 Usually this a parameter describing the signal flux hypothesis and is modelled as a single unbroken power law with spectral index $\gamma$ in the energy PDF term
 \begin{equation}
-  w^S(\vec{x}_k, \gamma)
+  w_j^{S,E}(\vec{x}_k, \gamma)
   = \frac
       {
-        \int_0^\infty A_\text{eff}(E,\Omega_k)\cdot
+        \int_0^\infty A_{j,\text{eff}}(E,\Omega_k)\cdot
           \Phi(E, \Omega_k, \gamma)\,\d{E}
       }
       {
         \sum_{m=1}^{N_\text{srcs}}
-        \int_0^\infty A_\text{eff}(E,\Omega_m)\cdot
+        \int_0^\infty A_{j,\text{eff}}(E,\Omega_m)\cdot
           \Phi(E, \Omega_m, \gamma)\,\d{E}
       }
   \mperiod
