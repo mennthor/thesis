@@ -1,0 +1,30 @@
+\input{../inc/header.tex}
+
+\usepackage{layout}
+\usepackage{layouts}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+This document gives the final text width to use for natural scale PDF plot creation in complementary programs.
+On the second page the full page margins in units of \emph{pt} are shown
+
+\begin{center}
+  \begin{tabular}{ccc}
+  \toprule
+  \multicolumn{3}{c}{The page width is} \\
+  \cline{1-3}
+  pt & in & cm \\
+  \midrule
+  \prntlen{\textwidth} &
+    \printinunitsof{in}\prntlen{\textwidth} &
+    \printinunitsof{cm}\prntlen{\textwidth} \\
+  \bottomrule
+  \end{tabular}
+\end{center}
+
+\newpage
+\layout
+
+\end{document}
