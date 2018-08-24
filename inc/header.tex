@@ -1,10 +1,26 @@
-\documentclass[parskip=half, cleardoublepage=plain]{scrbook}
+%------------------------------------------------------------------------------
+%-- Almost all settings and tweaks taken from: github.com/maxnoe/tudothesis
+%------------------------------------------------------------------------------
+
+\documentclass[
+  headsepline,
+  bibliography=totoc,
+  parskip=half,
+  cleardoublepage=plain,
+  captions=tableheading,
+  titlepage=firstiscover,
+  headings=normal
+  ]{scrbook}
 
 % Warning, if another latex run is needed
 \usepackage[aux]{rerunfilecheck}
 
 % Just list chapters and sections in the toc, not subsections or smaller
 \setcounter{tocdepth}{1}
+
+% KOMA Headers
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
 
 %------------------------------------------------------------------------------
 %-- Language and Type
@@ -15,9 +31,8 @@
 % Language: english | german
 \usepackage{polyglossia}
 \setdefaultlanguage{english}
-
-% For german | english abstract and german | english titles in the toc
-\setotherlanguages{english}
+% For secondary abstract in german
+\setotherlanguages{german}
 
 % Intelligent quotation marks, language and nesting sensitive
 \usepackage[autostyle]{csquotes}
@@ -81,7 +96,12 @@
 \usepackage[section, below]{placeins}
 
 \usepackage{caption}
-  \captionsetup{width=0.9\textwidth}
+\captionsetup{
+  labelfont=bf,
+  format=plain,
+  width=0.9\textwidth,
+  font=small
+  }
 \usepackage{subcaption}
 
 %------------------------------------------------------------------------------
@@ -114,14 +134,14 @@
 \usepackage{scrlayer-scrpage}  % KOMA layout modifications
 
 %------------------------------------------------------------------------------
-%-- Todo notes (put .sty in $($kpsewhich -var-value TEXMFHOME)/tex/latex)
-%------------------------------------------------------------------------------
-\usepackage{mytodonotes}
-
-%------------------------------------------------------------------------------
 %-- Use realtiv paths for standalone compiling subchapters
 %------------------------------------------------------------------------------
 \usepackage{import}
+
+%------------------------------------------------------------------------------
+%-- Custom todo notes (put .sty in $($kpsewhich -var-value TEXMFHOME)/tex/latex)
+%------------------------------------------------------------------------------
+\usepackage{mytodonotes}
 
 %------------------------------------------------------------------------------
 %-- Custom commands
@@ -135,3 +155,50 @@
 \newcommand{\mintertext}[1]{\quad\text{#1}\quad}
 
 \DeclareMathOperator{\rect}{rect}
+
+%------------------------------------------------------------------------------
+%-- Custom title page options
+%------------------------------------------------------------------------------
+% Store the title in \thetitle, so one can access it in the document
+\let\oldtitle\title%
+\renewcommand{\title}[1]{\oldtitle{#1}\newcommand{\thetitle}{#1}}
+
+% Initialize commands:
+\newcommand\thebirthplace{}
+\newcommand\thechair{}
+\newcommand\thedivision{}
+\newcommand\thethesisclass{}
+\newcommand\thesubmissiondate{}
+\newcommand\thefirstcorrector{}
+\newcommand\thesecondcorrector{}
+
+% New commands for information about the thesis
+\newcommand\birthplace[1]{\renewcommand\thebirthplace{geboren in #1}}
+\newcommand\chair[1]{\renewcommand\thechair{#1}}
+\newcommand\division[1]{\renewcommand\thedivision{#1}}
+\newcommand\thesisclass[1]{\renewcommand\thethesisclass{#1}}
+\newcommand\submissiondate[1]{\renewcommand\thesubmissiondate{#1}}
+\newcommand\firstcorrector[1]{\renewcommand\thefirstcorrector{#1}}
+\newcommand\secondcorrector[1]{\renewcommand\thesecondcorrector{#1}}
+
+% Pre-set title page elements
+\subject{Arbeit zur Erlangung des akademischen Grades\\ \thethesisclass}
+\publishers{\thechair \\ \thedivision \\ Technische Universität Dortmund}
+
+% Page for the correctors
+\newcommand{\makecorrectorpage}{%
+  \thispagestyle{empty}
+  \vspace*{\fill}
+  \begin{tabular}{@{}l@{\hspace{2em}}l@{}}
+      Erstgutachter:  & \thefirstcorrector \\
+      Zweitgutachter: & \thesecondcorrector \\
+      Abgabedatum:    & \thesubmissiondate
+  \end{tabular}
+  \newpage
+}
+
+% Add birthplace to author
+\let\oldauthor\author
+\renewcommand\author[1]{%
+  \oldauthor{#1 \\ \thebirthplace}
+}
