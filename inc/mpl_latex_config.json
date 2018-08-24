@@ -1,0 +1,7 @@
+{
+  "textwidth_inches": 5.78853,
+  "texengine": "lualatex",
+  "prim_fontsize_pt": 10.95,
+  "sec_fontsize_pt": 9,
+  "latex_args": { "text.latex.preamble": ["\\usepackage[locale=US]{siunitx}"] }
+}
