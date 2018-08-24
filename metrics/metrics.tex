@@ -1,21 +1,37 @@
 \input{../inc/header.tex}
 
-\usepackage{layout}
-\usepackage{layouts}
+\usepackage{layout}    % \layout
+\usepackage{layouts}   % \prntlen
+\usepackage{numprint}  % SI tables has some issues, so manually round...
+  \npstyleenglish
+  \newcommand{\numrnd}[2]{\nprounddigits{#2}$\numprint{#1}$}
+
+% From: tex.stackexchange.com/questions/409930
+% Shows current size with \currentsize which can be stored to \fsize
+% with \setfsize. The length \size can then be printed with \prntlen
+\makeatletter
+\newcommand{\currentfsize}{\f@size pt}
+\makeatother
+\newdimen\fsize
+\newcommand{\setfsize}{\setlength{\fsize}{\currentfsize}}
+
+% Strip unit pt from font sizes to round actual numbers
+\makeatletter
+\newcommand*{\stripunit}[1]{\strip@pt#1}
+\makeatother
 
 
 \begin{document}
 
-\thispagestyle{empty}
-This document gives the final text width to use for natural scale PDF plot creation in complementary programs.
-On the second page the full page margins in units of \emph{pt} are shown
+\section*{Metrics}
+  \thispagestyle{empty}
+This document gives the used text width and font sizes to use for natural scale PDF plot creation in complementary programs.
+On the second and third page the full page margins are shown.
 
 \begin{center}
   \begin{tabular}{ccc}
   \toprule
   \multicolumn{3}{c}{The page width is} \\
-  \cline{1-3}
-  pt & in & cm \\
   \midrule
   \prntlen{\textwidth} &
     \printinunitsof{in}\prntlen{\textwidth} &
@@ -24,7 +40,57 @@ On the second page the full page margins in units of \emph{pt} are shown
   \end{tabular}
 \end{center}
 
+\begin{center}
+  % \begin{tabular}{
+  % Not sure why SI is not working here...
+  %   c S%[table-format=3.4]
+  %   c S%[table-format=3.4]
+  %   c S%[table-format=3.4]
+  %   c S%[table-format=3.4]
+  %   }
+  \begin{tabular}{crcrcrcr}
+  \toprule
+  \multicolumn{8}{c}{Fontsizes in units of \emph{pt} are} \\
+  \midrule
+  \lstinline!\Huge! & {\Huge\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+  \lstinline!\LARGE! & {\LARGE\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+  \lstinline!\normalsize! &
+    {\normalsize\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+  \lstinline!\footnotesize! &
+    {\footnotesize\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} \\
+
+
+  \lstinline!\huge! & {\huge\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+  \lstinline!\Large! & {\Large\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+  \lstinline!\small! & {\small\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+  \lstinline!\scriptsize! &
+    {\scriptsize\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} \\
+
+   \multicolumn{2}{c}{{}} &
+   \lstinline!\large! & {\large\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} &
+   \multicolumn{2}{c}{{}} &
+   \lstinline!\tiny! & {\tiny\setfsize\normalsize\numrnd{\stripunit{\fsize}}{2}} \\
+
+  \bottomrule
+  \end{tabular}
+\end{center}
+
+
+\section*{Text size samples}
+{\Huge This text is in \lstinline!\Huge! size.} \\
+{\huge This text is in \lstinline!\huge! size.} \\
+{\LARGE This text is in \lstinline!\LARGE! size.} \\
+{\Large This text is in \lstinline!\Large! size.} \\
+{\large This text is in \lstinline!\large! size.} \\
+{\normalsize This text is in \lstinline!\normalsize! size.} \\
+{\small This text is in \lstinline!\small! size.} \\
+{\footnotesize This text is in \lstinline!\footnotesize! size.} \\
+{\scriptsize This text is in \lstinline!\scriptsize! size.} \\
+{\tiny This text is in \lstinline!\tiny! size.}
+
+
 \newpage
+\section*{Page layout}
 \layout
 
 \end{document}
