@@ -1,44 +1,46 @@
 \chapter{Time dependent analysis}
 
-This analysis is searching for a stacked lower energy neutrino contribution at the HESE track event positions, which are treated as transient sources.
-A generic search in time emission models is done by testing for 21 generic box time windows increasing in logarithmic time from two seconds to five days, symmetrically around all sources.
+Despite the coincidence of the Blazar TXS 0506+056 and a single ultra-high-energy neutrino together with the evidence for a temporally constrained neutrino flux about three years earlier, lasting 110 days, no other significant result of neutrino point source searches were obtained in the last years.
+Most prominent examples are the generic all-sky search which scans the whole sky for an unknown neutrino emitter with a large amount of data.
+Three analysis stand out in this scenario.
+One is testing the whole sky using seven years of data with no prior assumptions \CITE{coenders} and the other one is probing only the northern sky with priors obtained from the most recent diffuse flux measurement in the muon track channel \CITE{aachen 6yr and reiman}.
+Both analyses couldn't find a significant contribution, mostly because the large trial factor from scanning the whole sky is dropping the significance.
+Another analysis of this kind is using the high energy starting event sample directly to test for a clustering of these events, assuming at least some of them originate from the same source region, again with no significant result.
+Therefore, many different approaches were followed, to search with more bias but better significance by introducing a priori knowledge of emission scenarios.
+One class of searches relevant here is the stacked search approach.
+Expecting that individual sources are too weak to be detected as a single source, it is tested for multiple sources of the same source classes, which are assumed to have similar intrinsic emission mechanisms.
+Popular and well-motivated choices here, for example, Blazars and sources, known from source catalogues of other high energy astrophysical observatories like FERMI \CITE{A bunch of stacking papers, blazars, grb, etc.}
+To further reduce the background also timing information can be taken into account.
+Several source classes are transient events and neutrino emission is then also expected only on a corresponding time scale \CITE{grb, frb, emission models}.
+All of the shortly summarized analysis above could not find a significant contribution of the expected neutrino signal.
+The non-detection seen in so many analysis may also have the reason that emission scenarios are not understood well enough yet so that the searched catalogues are not specific enough thus dropping the sensitivity Or maybe there are simply not enough events collected so far to make significant statements about possibly weak sources.
 
-\FIXME{Longer summary of time dependent source searches!}
-For the physics motivation: IceCube couldn’t find a significant point source so far despite many different analysis and efforts. Prominent examples relevant for this is search are the and the , both with no significant results.
+Therefore, a different, more generic approach is used here, under the following assumptions.
+As the HESE events on their own show a clear astrophysical signal and therefore should originate from some sources, also a lower energy neutrino flux should be produced during the emission of the high energy events \CITE{Some model dealing with HESE}.
+This analysis test if there is any clustering of lower energy neutrino events around the HESE locations.
+A stacking search in used because no significant signal can be seen, by examining the HESE event positions in the aforementioned all-sky searches, so the possible emitters are likely too weak to reveal themselves in the large sample background.
+In this first analysis, also the possibility of a time-dependent emission which could, for example, originate from a flaring state is considered \CITE{AGN flare stuff}.
+This also further reduces the expected background and would be very sensitive to a time-constrained emission scenario.
 
-\FIXME{Robust physics scenario motivation}
-But the HESE events on their own show a clear astrophysical signal and therefore should originate from some sources. This analysis test if there is any clustering of lower energy neutrino events around the HESE locations.
+The analysis method uses the time-dependent, unbinned Likelihood approach as described before, similar to the one used for example in \CITE{MRichman GRB search} but with some major methodical differences.
+The required test statistics to obtain final significances on data are built on experimental data.
+Each source is always unique in its time window and is also only present in a single sample, so all sources are treated independently of each other.
+Because of the low amount of background in the tested, quite small time windows, only a single free parameter, the expected signal strength is fitted.
+To further differentiate between signal and background, instead of only using the spatial and temporal clustering, energy information is used with the assumption, that all sources inject neutrinos with energies following a generic $E^{-2}$ power-law flux.
 
-\FIXME{Formulate in sentences}
-The analysis method is a time dependent unbinned likelihood approach similar to the so called “GRB Likelihood”. Key features used here are:
-\begin{enumerate}
-  \item Background is modelled using scrambled data
-  \item Using time dependent spatial background PDFs
-  \item Energy PDF is estimated from data and MC with fixed index $E^{-2}$ power law
-\end{enumerate}
-For source and test data we use:
-\begin{enumerate}
-  \item Source dataset: 6 years HESE track events, IC79 - IC86, 2015.
-  \item Test dataset: 5 years PS tracks (IC79 - IC86, 2014) + 1 year GFU (IC86, 2015)
-\end{enumerate}
-
-The available data for six years of muon neutrino track events is split in a \enquote{blind} on-time data part and a leftover off-time data part.
-The on-time data consists of all events which times fall within any of the times of the largest time window considered around any source.
-This data is only used to for the final result to avoid a bias with potential signal events in the process of creating the necessary Likelihood PDFs.
-The off-time data part has no relevance for the final result as all events are outside any tested time window.
-It is thus used as a representative background sample for construction of the Likelihood models and the background trials.
-This is a valid approach here, because the cut-out signal regions are small compared to the total sample livetime.
-
-This chapter gives an overview over the actual implementation and choices for the formulas in the point source theory chapter.
-This should give proper orientation for the steps necessary to reproduce the analysis results.
-
-\TODO{Maybe explain:}
-\begin{itemize}
-  \item Used parameter space
-  \item Explain details how fitter was used, the seed was found, signal injection, BG injection, BG rate description
-  \item Systematic tests: Signal found
-  \item Show sensitivity, signal injection, bg injection, ref to MRichman?
-\end{itemize}
+% This is covered in the reco and data section
+% For source and test data we use:
+% \begin{enumerate}
+%   \item Source dataset: 6 years HESE track events, IC79 - IC86, 2015.
+%   \item Test dataset: 5 years PS tracks (IC79 - IC86, 2014) + 1 year GFU (IC86, 2015)
+% \end{enumerate}
+% \TODO{Maybe explain:}
+% \begin{itemize}
+%   \item Used parameter space
+%   \item Explain details how fitter was used, the seed was found, signal injection, BG injection, BG rate description
+%   \item Systematic tests: Signal found
+%   \item Show sensitivity, signal injection, bg injection, ref to MRichman?
+% \end{itemize}
 
 
 \section{Per event distribution modelling}
@@ -57,23 +59,23 @@ where
     \sin(\delta_k)\sin(\delta_i)
 \end{equation}
 is the space angle between the positions of source $k$ and event $i$ in equatorial coordinates $\delta, \alpha$.
-Instead of using the Gaussian uncertainty $\sigma$ directly, the Kent distribution uses $\kappa \approx \sfrac{1}{\sigma^2}$ which holds up to $\sigma \approx \SI{40}{\degree}$ \CITE{relation kappa sigma}\FIXME{plot in appendix?}.
-The Kent distribution is used here, because it is correctly normalized on the sphere and virtually indistinguishable for small angle uncertainties as tracks usually have.
+Instead of using the Gaussian uncertainty $\sigma$ directly, the Kent distribution uses $\kappa \approx \sfrac{1}{\sigma^2}$ which holds up to $\sigma \approx \SI{40}{\degree}$ \CITE{relation kappa sigma}\TODO{plot in appendix?}.
+The Kent distribution is used here because it is correctly normalized on the sphere and virtually indistinguishable for small angle uncertainties as tracks usually have.
 
-Background PDFs are constructed in equatorial coordinates as well and the distribution is estimated from data, using the off time data set only to avoid signal contamination.
+Background PDFs are constructed in equatorial coordinates as well and the distribution is estimated from data, using the off-time dataset only to avoid signal contamination.
 By using equatorial coordinates, the right-ascension distribution is assumed to be flat, which translates to a flat distribution in local azimuth coordinates.
 This holds well for larger time windows in which the detector rotation relative to the sky smooths out any irregularities in the local azimuth PDF.
-For smaller time windows the assumption may break down, and alternatively a local background PDF can be used as a drop in replacement.
+For smaller time windows the assumption may break down, and alternatively, a local background PDF can be used as a drop-in replacement.
 Here the PDF is only declination independent and can be written as
 \begin{equation}
   f(\delta_i|t_k) = \frac{1}{2\pi}\cdot P(\delta_i|t_k)
 \end{equation}
 where $t_k$ is the time of source $k$ used to account for varying background strengths due to seasonal variations \CITE{seasonal variations}\FIXME{explain 1, 2 sentences to seas. var.?}.
 
-To build a custom background PDF for each source in its respective sample, first all events in each sample are binned in $\sin(\delta)$ in $20$ bins, with $14$ more densely spaced bins around the horizon region defined as $\delta\in[\SI{-30}{\degree}, \SI{30}{\degree}]$.
+To build a custom background PDF for each source in its respective sample, first all events in each sample are binned in $\sin(\delta)$ in $\num{20}$ bins, with $\num{14}$ more densely spaced bins around the horizon region defined as $\delta\in[\SI{-30}{\degree}, \SI{30}{\degree}]$.
 In this region the selection models are usually switched between dedicated models for the northern and southern sky are used and the finer resolution helps to catch the resolution features in the distributions.
 To capture the time dependence of the declination dependent background rate, the rate is calculated by using the runtime information from the samples.
-Due to a lack of proper run time information, the run lengths are estimates from data by subtracting the earliest from the latest event time per bin \footnote{This overestimates the background rate, because the earliest and latest events can only be close to the real run times, which yields a slightly less performance of this analysis.}.
+Due to a lack of proper runtime information, the run lengths are estimates from data by subtracting the earliest from the latest event time per bin \footnote{This overestimates the background rate, because the earliest and latest events can only be close to the real runtimes, which yields a slightly less performance of this analysis.}.
 The rate information is smoothed by re-binning the per run rate bins using a monthly binning.
 
 To get a continuous model for the background expectation per bin, a model
@@ -84,11 +86,11 @@ To get a continuous model for the background expectation per bin, a model
 \end{equation}
 is fitted to the re-binned time bin centres.
 The free parameters are amplitude $A$ and average rate $R_0$ both in $\si{\per\s}$.
-For the fit in each bin the period length $T$ is fixed to $365$ days, the natural scale for the seasonal variations and the time offset $t_0$ is fixed from a fit with more statistics using the whole data set \TODO{Add rate plots to app.}.
+For the fit in each bin the period length $T$ is fixed to $365$ days, the natural scale for the seasonal variations and the time offset $t_0$ is fixed from a fit with more statistics using the whole dataset \TODO{Add rate plots to app.}.
 
-Having obtained the set of discrete background expectations from the $2$ fit parameters per rate model, a smoothing spline is used to continuously model the fit parameter dependence on declination \TODO{err. scans in the app.?}.
+Having obtained the set of discrete background expectations from the two fit parameters per rate model, a smoothing spline is used to continuously model the fit parameter dependence on declination \TODO{err. scans in the app.?}.
 Finally, to get the background PDFs per source, the set of rate model parameters is read off from the built splines on a fine $\sin(\delta)$ grid and plugged into the rate model above.
-For each parameter set the model is integrated over the sources time window to obtain an average background PDF per source.
+For each parameter set, the model is integrated over the sources time window to obtain an average background PDF per source.
 To evaluate the PDf for each events' declination an interpolating spline is used to include the dense grid in a continuous model.
 
 \subsection*{Energy PDF}
@@ -98,11 +100,11 @@ The integral values
   \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
 \end{equation}
 can be found using simulation if the conditional probabilities $P(E_i,\delta_i|E_\nu)E$ are analytically unknown.
-This is done by directly estimating the convolved integral values, here using a two dimensional histogram in $\sin(\delta)$ and in $\log_{10}$ of an energy proxy variable with $30$ equidistant bins between $\lfloor \min\log_{10}(E_\text{proxy}) \rfloor$ and $\lceil \max\log_{10}(E_\text{proxy}) \rceil$.
+This is done by directly estimating the convolved integral values, here using a two dimensional histogram in $\sin(\delta)$ and in $\log_{10}$ of an energy proxy variable with $\num{30}$ equidistant bins between $\lfloor \min\log_{10}(E_\text{proxy}) \rfloor$ and $\lceil \max\log_{10}(E_\text{proxy}) \rceil$.
 \TODO{Link to plot in app.}.
 
 To directly obtain the needed signal over background ration $S^E / B^E$ for the test statistic formula, two histograms with the same binning are used, one with using data to obtain the background PDF and the signal one with using signal simulation weighted to the assumed power law with index $\gamma = 2$.
-The number of events are obtained using OneWeight as shown before for the signal simulation histogram
+The number of events is obtained using OneWeight as shown before for the signal simulation histogram
 \begin{equation}
   N(\Delta E, \Delta\delta)
   = \sum_{(i|E_{\nu,i}\in\Delta E, \delta_i\in\Delta\delta)}
@@ -111,26 +113,8 @@ The number of events are obtained using OneWeight as shown before for the signal
 \end{equation}
 where OneWeight$'$ is a slight modification OneWeight, it is already divided by the number of total generated simulation events $\text{OneWeight}'\coloneqq\text{OneWeight}/N_\text{gen}$, where $N_\text{gen}$ is the total for all particle types combined and $\Phi$ is also the combined neutrino plus anti-neutrino fluence.
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For this, a simulation weight, usually called OneWeight\footnote{Which is used in a slight modification, namely the weight used in code is already divided by the number of generated simulation events $\text{OneWeight}\rightarrow\text{OneWeight}/N_\text{gen}$.} in IceCube, is used to estimate the number of events per declination.
-% The OneWeight per event $i$ is defined as \CITE{oneweight finley?}
-% \begin{align}
-%   \text{OneWeight}_i
-%   &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
-%                        \Phi_\text{gen}(E_i)\d{E}\d{\Omega}
-%                        }{\Phi_\text{gen}(E_i)}A_\text{gen} \\
-%   &= p_\text{int}\frac{\int_{E_0}^{E_1}\Phi_\text{gen}(E_i)\d{E}}
-%                       {\Phi_\text{gen}(E_i)}
-%     A_\text{gen}\Omega_\text{gen}
-%   \mcomma
-% \end{align}
-% where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the surface and the solid angle over which the initial neutrinos are injected.
-% In the last step the integration over $\Omega$ is carried out, because usually the injection fluence is only energy dependent.
-% By this definition OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$.
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 For bins missing either or both data or simulation entries, the ratio is not valid.
-To obtain reasonable ratios a two step strategy is used.
+To obtain reasonable ratios a two-step strategy is used.
 First the outermost energy bins per $\sin(\delta)$ column is filled with the lowest, at small energies, or highest, at high energies, ratio value per column.
 The invalid ratios are then linearly interpolated from the previously valid and new edge values.
 To smooth out unexpected high ratios coming from limited statistics, the ratio is required to monotonically increase in each $\sin(\delta)$ column, which is valid only for the fixed power law and energy range chosen here.
@@ -138,8 +122,8 @@ To get a continuous representation of the ratio, a linear, regular grid interpol
 No extra smoothing e.g. with a Gaussian kernel is applied here.
 
 A more general strategy could be to fill missing values conservatively to lowest non-zero entry per signal and background histogram and then taking the ratio.
-To smooth fluctuations a smoothing spline could be fitted to the ratio histogram using the statistical errors as smoothing conditions.
-This would also automatically yield analytic derivatives in both axis, which could be handy when fitting more parameters than the single signal strength.
+To average out fluctuations, a smoothing spline could be fitted to the ratio histogram using the statistical errors as smoothing conditions.
+This would also automatically yield analytic derivatives in both axes, which could be handy when fitting more parameters than the single signal strength.
 \TODO{Put plots in app.}
 
 \subsection*{Temporal PDF}
@@ -150,14 +134,14 @@ The time PDFs are simple rectangle functions
                               {t_k^1-t_k^0}\right)
 \end{equation}
 for both signal and background.
-For signal this is a rather generic choice for an unknown emission process.
-For background the same sinus function rate model used for the spatial PDFs could more accurately be used.
+For signal, this is a rather generic choice for an unknown emission process.
+For background, the same sinus function rate model used for the spatial PDFs could more accurately be used.
 But as the amplitudes are small, even at the largest time window the resulting PDF would be virtually indistinguishable from a uniform distribution.
-So for code simplicity simple rectangle model is used for the background PDF.
+So for code simplicity, simple rectangle model is used for the background PDF.
 This also means that no extra sensitivity is coming from the temporal term, it is merely there to select events within the time windows and alters the amount of total background contribution which is almost zero for the smallest and grows approximately linearly for larger time windows.
 
-In this analysis, 21 time windows are tested, from $\SI{2}{\second}$ to $\SI{5}{\day}$.
-This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray and Fast Radio Burst or tidal disruption events \FIXME{Look up correct values}\CITE{Paper on GRB, TDE scales}.
+In this analysis, $\num{21}$ time windows are tested, from $\SI{2}{\second}$ to $\SI{5}{\day}$.
+This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray Burst, Fast Radio Burst or tidal disruption events \FIXME{Look up correct values}\CITE{Paper on GRB, TDE scales}.
 The time windows are spaced symmetrically around each source.
 All sources are given the same time window and all time windows are tested independently of each other.
 This is done to avoid an unstable resource consuming fitting of the time window size but comes at the cost of an additional trial factor for testing multiple windows and selecting the best one.
@@ -218,7 +202,7 @@ The time window intervals can be found in table~(\ref{tab:time_windos}).
     \bottomrule
   \end{tabular}
   \caption{
-    Used time windows $\Delta T = [T_0, T_1]$ in seconds relative to each source events' detection time in the time dependent analysis.
+    Used time windows $\Delta T = [T_0, T_1]$ in seconds relative to each source events' detection-time in the time-dependent analysis.
     Each time window is tested independently from the others and all sources share the same time window length in a single set-up.
   }
   \label{tab:time_windos}
@@ -226,45 +210,47 @@ The time window intervals can be found in table~(\ref{tab:time_windos}).
 
 
 \section{Background estimation and stacking weights}
-The estimates of the number of background events per source $\Braket{\lambda_{k,B}}$ are not fitted in this analysis, but fixed from a-priori estimates on data.
-The values are obtained by fitting the sinus rate model to the whole off time data on the whole sky, again using monthly bins.
+The estimates of the number of background events per source $\Braket{\lambda_{k,B}}$ are not fitted in this analysis but fixed from a priori estimates on data.
+The values are obtained by fitting the sinus rate model to the whole off-time data on the whole sky, again using monthly bins.
 \TODO{plots in app.}
 The rate model for each sample is then integrated over each sources time window in that sample, to obtain the average number of background events.
 Again, the amplitudes are quite flat, so the exact integral is almost the same as just using the product of time window length and average rate.
 
-The a-priori fixed stacking weights should resemble the expected signal emission as closely as possible to the true case, otherwise the analysis' sensitivity will drop significantly.
-Because this analysis makes no explicit assumption on the emission model, the weights are computed using a generic power law with index $\gamma=2$.
-This also implies that sources are assumed to emit the same intrinsic flux, which is a strong assumption but justified in a sense that it is a non-specialised assumption with regard to that the underlying source types are unknown.
+The a priori fixed stacking weights should resemble the expected signal emission as closely as possible to the true case, otherwise, the analysis' sensitivity will drop significantly.
+Because this analysis makes no explicit assumption on the emission model, the weights are computed using a generic power law with index $\gamma = 2$.
+This also implies that sources are assumed to emit the same intrinsic fluence, which is a strong assumption but justified in a sense that it is a non-specialised assumption with regard to that the underlying source types are unknown.
 
-The declination dependent signal efficiency weight for each source in a specific sample can be obtained by histogramming the declination values from measured off-time data weighted with
+The declination dependent signal efficiency weight for each source in a specific sample can be obtained by histogramming the declination values from signal simulation with weights
 \begin{equation}
-  w_i = \Phi(E_{\nu,i})\frac{\text{OneWeight}'_i}{\Delta\Omega}
-  \mcomma
+  w_i = \Phi(E_{\nu,i})\cdot\text{OneWeight}'_i
+  \mperiod
 \end{equation}
-where $\Phi(E_{\nu,i})$ is the combined fluence of both neutrinos and anti-neutrinos the simulation shall be weighted to and the already explained simulation OneWeight.
+Here $\Phi(E_{\nu,i})$ is the combined fluence of both neutrinos and anti-neutrinos the simulation shall be weighted to.
+The histogram entries are then normalized by diving by the bin width $\Delta\Omega_\text{bin}$ to obtain a proper number density.
 If a flux per particle type $p$ is used $\Phi(E_{\nu,i}, p)$, then an additional factor $f_p$ for the OneWeight needs to be considered which gives the fraction of simulated particle types – usually $f_p=0.5$, so that $\text{OneWeight}\rightarrow\text{OneWeight}/f_p$ \CITE{nugen docs?}.
 
-Here an equidistant binning is used so that at least $100$ events are in each bins.
+Here an equidistant binning is used so that at least $100$ events are in each bin.
 To obtain a smooth representation of the expected events per declination function, a smoothing spline is fitted to the histogram bin centres.
 For reasonable boundary conditions, the values at the outermost bin edges are linearly extrapolated from the next two inner centre values.
 The smoothing spline is created using a least squares minimization.
-The weights are the inverse $\sqrt(N_i)$ Poisson errors of each bin $i$ and the least squares sum constraint is set to the number of bins, so that the usual $\chi^2 / \text{dof} \approx 1$ holds.
-This gives a stable and reasonable estimation of the number of events per declination from the given Monte Carlo simulation.
-From this spline the signal efficiency weights are read off for each source location.
-For each sample this procedure is repeated and the source weights are taken from the spline belonging to the sample they fall into.
-\FIXME{Plot in app.}
+The weights are the inverse $\sqrt{N_i}$ Poisson errors of each bin $i$ and the least squares sum constraint is set to the number of bins so that the usual $\chi^2 / \text{dof} \approx 1$ approximately holds if the spline can describe the data.
+This gives a stable estimation of the number of events per declination from the given Monte Carlo simulation.
+From this spline, the signal efficiency weights are read off for each exact source location.
+For each sample, this procedure is repeated and the source weights are taken from the spline belonging to the sample they fall into.
+\TODO{Plot in app.}
 
 
 \section{Note on LLH minimization}
-When minimizing the Likelihood to find the best fit parameter $\hat{n}_S$ the small background can be taken advantage of in this analysis for smaller time windows to solve the equations analytically and save execution time.
-For small time windows, mostly no event, a single event or two events actually have significant contribution in the Likelihood minimization.
-For these cases an analytic result of the test statistic fit can be obtained.
-Below are the analytic solutions for zero, one and two events with the single sample Likelihood, where the number of events mean the number of non-zero signal over background ratios.
-The same reasoning holds for the multi sample Likelihood where only a bit more bookkeeping is necessary to entangle the contributions from each single sample Likelihood.
+When minimizing the Likelihood to find the best-fit parameter $\hat{n}_S$ the small background can be taken advantage of in this analysis for smaller time windows to solve the equations analytically and save execution-time.
+For small time windows, mostly no event, a single event or two events actually have a significant contribution in the Likelihood minimization.
+For these cases, an analytic result of the test statistic fit can be obtained.
+Below are the analytic solutions for zero, one and two events with the single sample Likelihood, where the number of events means the effective number of the non-zero signal over background ratios.
+The same reasoning holds for the multi-sample Likelihood where only a bit more bookkeeping is necessary to entangle the contributions from each single sample Likelihood.
 
 As a reminder, the single sample test statistic that is fitted is
 \begin{equation}
-  \frac{1}{2}\Lambda = -n_S + \sum_{i=1}^N \ln\left(n_S \cdot R_i + 1\right)
+  -2\ln\Lambda
+  = -2n_S + 2\sum_{i=1}^N \ln\left(n_S \cdot R_i + 1\right)
 \end{equation}
 where
 \begin{equation}
@@ -274,53 +260,56 @@ where
 is introduced as a short-cut for the fixed signal over background ratios per event $i$.
 The gradient in the single fit parameter $n_S$ then reads
 \begin{equation}
-  \frac{1}{2}\deldel{\Lambda}{n_S}
-  = -1 + \sum_{i=1}^N \frac{R_i}{n_S R_i + 1}
+  \deldel{(-2\ln\Lambda)}{n_S}
+  = -2 + 2\sum_{i=1}^N \frac{R_i}{n_S R_i + 1}
   \mperiod
 \end{equation}
 
 For zero events the case is trivial because the \enquote{fit} is directly zero, as under fluctuations for $n_S < 0$ are excluded in this analysis and it is only fitted for over-fluctuations.
-This might result in slightly worse sensitivity and limits due to compressing the complete test statistic in a delta peak at $\Lambda=0$.
-Though, for code and fit procedure simplicity this is accepted in this analysis. \CITE{Thorstens wiki page??}
+This might result in slightly worse sensitivity and limits due to compressing the complete test statistic in a delta peak at $-2\ln\Lambda=0$.
+Though, for code and fit procedure simplicity, this is accepted in this analysis. \CITE{Thorstens wiki page??}
 For zero events, no sum term is surviving and the analytic solution is
 \begin{equation}
-  \frac{1}{2}\Lambda
-  = -n_S \quad\Rightarrow\quad \hat{n}_S = 0\mintertext{,} \hat{\Lambda} = 0
+  \ln\Lambda = -n_S
+  \mintertext{$\Rightarrow$}
+  \hat{n}_S = 0 \, ,\quad \ln\hat{\Lambda} = 0
   \mperiod
 \end{equation}
 
-For a single surviving event, a single sum term is left and the linear equation needs to be solved for $\hat{n}_S$ in the gradient and re-inserted in the Likelihood to obtain the best fit $\Lambda$.
-The best fit $n_S$ is
+For a single surviving event, a single sum term is left and the linear equation needs to be solved for $\hat{n}_S$ in the gradient and re-inserted in the Likelihood to obtain the best-fit test statistic.
+The best-fit $\hat{n}_S$ is
 \begin{equation}
   0 = -1 + \frac{R_1}{n_S\cdot R_1 + 1}
-    \quad\Rightarrow\quad \hat{n}_S = \frac{R_1 - 1}{R_1}
+  \mintertext{$\Rightarrow$}
+  \hat{n}_S = \frac{R_1 - 1}{R_1}
   \mcomma
 \end{equation}
 which yields
 \begin{equation}
-  \frac{1}{2}\hat{\Lambda}
-    = -\hat{n}_S + \ln\left( \hat{n}_S \cdot R_1 + 1 \right)
-    = -\hat{n}_S + \ln(R_1)
+  -2\ln\hat{\Lambda}
+    = -2\hat{n}_S + 2\ln\left( \hat{n}_S \cdot R_1 + 1 \right)
+    = -2\hat{n}_S + 2\ln(R_1)
 \end{equation}
-for the best fit test statistic value.
+for the best-fit test statistic value.
 
-The last analytic case handled is the one with two events left, which leaves a quadratic equation to solve in $\hat{n_S}$.
+The last analytic case handled is the one with two events left, which leaves a quadratic equation to solve in $\hat{n}_S$.
 \begin{align}
   0 &= -1 + \frac{R_1}{n_S\cdot R_1 + 1} + \frac{R_2}{n_S\cdot R_2 + 1} \\
   \Leftrightarrow
   0 &= n_S^2 + n_S \left(\frac{R_1 + R_2}{R_1 R_2} - 1\right) +
        \frac{1}{R_1 R_2} - \frac{R_1 + R_2}{R_1 R_2}
 \end{align}
-and with the short-cut $\frac{R_1 + R_2}{R_1 R_2} \coloneq\tilde{c}$, the best fit is obtained solving the quadratic equation
+and with the short-cut $\frac{R_1 + R_2}{R_1 R_2} \coloneq\tilde{c}$, the best-fit is obtained solving the quadratic equation
 \begin{equation}
   \hat{n}_S = —\frac{1}{2}\tilde{c} + 1 + \sqrt{\frac{\tilde{c}^2}{4} + 1 - \frac{1}{R_1 R_2}}
 \end{equation}
 The solution with the negative sign always resembles the fit for $n_S < 0$ and is not considered here.
-Re-inserting into $\Lambda$ yields the best fit test statistic
+Re-inserting into $-2\ln\Lambda$ yields the best-fit test statistic
 \begin{equation}
-  \frac{1}{2}\hat{\Lambda} = -\hat{n}_S +
-                             \ln\left( \hat{n}_S \cdot R_1 + 1 \right) +
-                             \ln\left( \hat{n}_S \cdot R_2 + 1 \right)
+  -2\ln\hat{\Lambda}
+  = -2\hat{n}_S +
+      2\ln\left( \hat{n}_S \cdot R_1 + 1 \right) +
+      2\ln\left( \hat{n}_S \cdot R_2 + 1 \right)
   \mperiod
 \end{equation}
 
@@ -329,154 +318,177 @@ Re-inserting into $\Lambda$ yields the best fit test statistic
 The Likelihood ratio test performs a discrimination between the null hypothesis that only diffuse background is present in the data versus the alternative, that also signal is mixed in.
 In order to decide whether a fit on actual data shows a significant signal, the behaviour or test statistic of pure background needs to be known.
 The distribution is generally unknown when no further assumption like the validity of Wilks' theorem is assumed.
-It can be empirically estimated though, from sampling background like data and testing the hypotheses multiple times in pseudo experiments.
+It can be empirically estimated though, from sampling background like data and testing the hypotheses multiple times in pseudo-experiments.
 This builds a distribution of test statistic values the final fit on data can be compared against.
 To estimate the analysis' performance beforehand, simulated signal can be injected into the pseudo background events.
 
 \subsection*{Background trials}
-To obtain background like pseudo event samples, background is re-sampled in this analysis to avoid bias from mismatching simulation data.
-Re-sampling data either assumes, that only a fraction of the sample is made from true signal events, or only a fraction of off region data is used.
-The first case assumes that, when scrambled the few signal events, if present, don't interfere with the larger portion of background like events.
-The latter case can only use a fraction of the data and is only convenient to use, if a large and representative number of events survive after cutting out signal regions.
+To obtain background like pseudo-event samples, the experimental off-time data is re-sampled in this analysis to avoid bias from mismatching simulation data \CITE{Some PS paper this is mentioned}.
+By re-sampling data, it is either assumed, that only a fraction of the sample is made from true signal events, or that only data from off regions is used, so in regions where no signal is assumed anyway.
+The first case uses randomized data and assumes that, when scrambled, the few potential signal events don't interfere with the larger portion of background like events.
+The latter case only uses a fraction of the data in regions that are not tested for a signal contribution.
+This is only convenient to do if a large and representative number of events survive after cutting out the signal regions.
 Here the latter approach is used because the 22 sources only cover a small fraction of the full livetime.
-Trials are generated and PDF are build using only the off data, holding the data from the largest time windows back for the actual unblinding.
+Trials are generated and PDFs are build using only the off region data, holding the data from the largest time windows back.
+The on-time data is only used once at the end, to do a single fit to obtain the analysis' results
 
 To generate a single fake background sample for a single trial run, the PDFs described before are sampled to match the built models.
-First, for each source the number of background events to inject on the whole sky is drawn from a Poisson distribution with the expected number of background events.
+First, for each source, the number of background events to inject on the whole sky is drawn from a Poisson distribution with a mean equal to the expected number of background events.
 For the requested number of events, the $\sin(\delta)$ PDF is sampled so a different declination dependence is sampled for each source, according to the models.
-The sampling is done by re-sampling the existing data events by re-weighting them to the current declination PDF.
-Right-ascension values are randomly assigned between $0$ and $2\pi$ to match the assumed flat model.
+The existing data events are sampled with different declination distributions by re-weighting them to the current declination PDF.
+The weights are computed using the ratio of a spline, fitted to the intrinsic distribution and the desired $\sin(\delta)$ distribution spline.
+Right-ascension values are randomly assigned between $\num{0}$ and $2\pi$ to match the assumed flat model.
 Next, new times are sampled from the previously built rate models per source.
 The sampling is done uniformly because the time windows are too short to explore the slight non-uniformity of the rate model.
-Technically it is not correct to sample right-ascension and times independently because one fully determines the other.
-But as the time and right-ascension PDF are assumed to uniform and independent a-priori, it doesn't matter here.
-The other used attributes as the energy and spatial resolution proxy are kept from each re-sampled data event.
-\FIXME{Re-sampled events in app.?}
+The other used attributes are the estimated event energy and estimated spatial uncertainty and are kept as-are from each re-sampled data event.
+\TODO{Re-sampled events in app.?}
 
-Each generated pseudo data set is then fitted with the Likelihood to build the test statistic distribution for pure background.
-It is important, to not tweak the seed for the fit parameter but to leave the seed selection routine equal for all trials.
-Otherwise a bias is obtained because the fitter might perform better or worse for a special scenario.
+Each generated pseudo dataset is then fitted with the Likelihood to build the test statistic distribution for  a sample of pure background.
+Note, that it is important not to tweak the seed for the fit parameter depending on the trial type – background or injected signal – but to leave the seed selection routine equal for all trials.
+Otherwise, a bias is obtained because the fitter might perform better or worse for a special scenario which is not known on pure data.
 
-For this analysis $10^8$ trials with pure background pseudo data were done to built an independent test statistic per time window.
+For this analysis, $\num{e8}$ trials with pure background pseudo data were done to build an independent test statistic per time window.
 The high number of trials are necessary to compensate for the low background in the smaller time windows.
-For the smallest time window order of $1$ event is expected as background on the whole sky.
+For the smallest time window order of a single event is expected as background on the whole sky.
 This makes it extremely rare to find an event in the vicinity of the tested sources.
 And if so, the event gets a high test statistic value if it is sufficiently close to the source or has a high energy.
-The test statistic therefore has a lot of trials which fit to exactly zero.
-\FIXME{Insert number here}
-With larger time windows this effect gets less severe and more events are available to obtain test statistics with less zero trials.
+With larger time windows this effect gets less severe and more events are available to obtain test statistics with longer tails and higher test statistic values.
 The larger the time windows get the more the shape of the test statistic resembles the $\chi^2_1$ distribution expected from Wilks' theorem.
-\FIXME{BG TS plots in app.}
+\TODO{BG TS plots in app.}
 
-Note that signal under fluctuations are not regarded here, which mean that any values $n_S < 0$ are truncated at $n_S=0$.
+Note that signal under fluctuations are not regarded here, which mean that any values $n_S < 0$ are truncated at $n_S = 0$.
 This yields to a compactification of under fluctuating trials at a test statistic value of zero.
-This behaviour is more severe for smaller time windows, as background has not much chance to look like signal, so the amount of under fluctuations is much larger then the expected 50\% for pure background.
-Another way to look at this is, that for Wilks' theorem to hold and for getting about 50\% under as well as over fluctuations, both the signal and background PDFs must be equally well sampled.
-If the time windows are small, then the pure chance of having any event close by any source is small, so the signal PDF is almost never sampled in the signal like region.
+This behaviour is more severe for smaller time windows, as the background has not much chance to look like signal, so the amount of under fluctuations is much larger than the expected $\SI{50}{\percent}$ for a pure-background sample.
+Another way to look at this is, that for Wilks' theorem to hold and to get about $\SI{50}{\percent}$ under as well as over fluctuations, both the signal and background PDFs must be equally well sampled.
+If the time windows are small, then the pure chance of having an event close by any source is small, so the signal PDF is almost never sampled in the signal-like region.
 This leads to a lot of trials with test statistic values of zero the more, the smaller the time window.
-Here, for the smallest time window over 99\% of all trials have a test statistic value of zero.
-For the largest time window the ratio about 71\% of all trials come with a zero test statistic value.
-This is not a problem, but rather leads to a worsening of performance estimation and limits, the worse the more zero trials there are.
-This is because of the compactification to zero, the limits can only start at values with a higher test statistic value than zero for a meaningful estimate.
-For example, if there are 99\% zero trials, then the smallest meaningfull confidence that can be applied is about $2.5\sigma$ which leads to larger or worse limits than necessary.
+Here, for the smallest time window over $\SI{99}{\percent}$ of all trials have a test statistic value of zero.
+For the largest time window, about $\SI{71}{\percent}$ of all trials still come with a zero test statistic value.
+This is not a problem but only leads to a worsening of performance estimation and limits, the worse the more zero trials there are.
+This is because of the compactification at zero, the limits can only start at values with a higher test statistic value than zero for a meaningful estimate.
+For example, if there are $\SI{99}{\percent}$ zero trials, then the smallest meaningful confidence that can be applied is about $\SI{2.5}{\sigma}$ which leads to larger or worse limits than necessary for any smaller confidence level.
 On the other hand, the small time windows have such a low background, that any number of somewhat signal-like events showing up, will lead to a high and close-to-detection significance.
 
-The number of generated trials allow to use the samples directly as an empirical PDF representation up to about $3\sigma$, which leaves approximately $\num{270000}$ events in the tails for robust quantile estimation.
-$10^8$ samples allow to empirically estimate the distribution up to about $5.7\sigma$, but with very poor statistics.
+The number of generated trials allow using the samples directly as an empirical PDF representation up to about $\SI{3}{\sigma}$, which leaves approximately $\num{270000}$ events in the tails for robust quantile estimation.
+In principle $\num{e8}$ samples allow to empirically estimate the significance up to about $\SI{5.7}{\sigma}$, but with very poor statistics in the high confidence regime.
 To make the p-value estimation more robust for large test statistic values, the tail of each time windows test statistic is fitted with an exponential distribution.
-To find a robust set of exponential PDF parameters, an exponential is fitted to the tail of the distribution with a threshold scanned on a grid between $3.5\sigma$ and $4.5\sigma$.
-The best fit is selected using a Kolmogorov-Smirnov test \CITE{KS Test} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $1\sigma$ level.
+To find a robust set of exponential PDF parameters, an exponential is fitted to the tail of the distribution with a threshold scanned on a grid between $\SI{3.5}{\sigma}$ and $\SI{4.5}{\sigma}$.
+The best-fit is selected using a Kolmogorov-Smirnov test \CITE{KS Test} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $\SI{1}{\sigma}$ level.
 This yields quite robust tails even in the smallest time windows.
-For the larger time windows, the $\chi^2_1$ like form of the distributions are naturally described by the exponential.
-An independent set of trials is used to verify the validity of the tail fits.\FIXME{Attach plot}
-The resulting PDFs are then a hybrid made from the empirical distribution and the exponential tail smoothly describing the distribution tails and are used to estimate p-values for further fits.
-\FIXME{Plots in app.}
+For the larger time windows, the $\chi^2_1$-like forms of the distributions are naturally described by the exponential tails.
+An independent set of trials is used to verify the validity of the tail fits.\TODO{Attach plot}
+The resulting PDFs are then a hybrid made from the empirical distribution and the exponential tail smoothly describing the distribution tails and are used to estimate p-values for further evaluations.
+\TODO{Plots in app.}
 
-For the larger time windows, as the test statistic is approaching the expected behaviour of a $\chi^2$, the PDF could also be described using the ansatz from the usual time integrated analyses with a split PDF
+For multiple samples, every single injector can be sample individually, because each source is unique in its corresponding dataset.
+The used multi background injector thus simply samples from all individual background injectors through a loop over all stored injectors.
+
 
 \subsection*{Signal trials}
-To estimate the analysis' performance and to compute limits or constrains for a specific choice of a source flux model, signal like events need to be tested.
-Because neither is known which and if any events in the data are true signal, these events have to be taken from simulation.
+To estimate the analysis' performance and to compute limits or constraints for a specific choice of a source flux model, signal-like events need to be tested.
+Because neither is known which and if any events in the data are true signal events, these events have to be injected from simulation data.
 Using the already known weighting scheme, any source emission scenario can be modelled.
 The injection mode should mimic the emission scenario to obtain realistic estimates.
 
 The used simulation approach is to select a pool of simulated signal events from a region close to the source that shall be simulated.
 These events get rotated to the desired location using the true simulation coordinates.
-This assures that representative events are used from existing simulation.
+This assures that events that are representative for a source location on the sky are used from existing simulation.
 The signal simulation is weighted to a per-burst emission to describe the tested emission scenario.
-Per-burst emission means that the total number of expected signal events is independent of the emission time window, which is reflected by the rectangle function PDFs in the Likelihood.
-To correctly insert events corresponding to a desired target flux, the already shown weighting scheme using OneWeight is used
+Per-burst emission means that the total number of expected signal events is independent of the emission-time window, which is reflected by the rectangle function PDFs in the Likelihood.
+To correctly insert events corresponding to the desired target fluence, the already shown weighting scheme using OneWeight is used
 \begin{equation}
-  w_{i,k} = w_k^{(\text{tot})}\frac{\text{OneWeight}'_i \cdot \Phi(E_{\nu,i})}{\Omega_k}
+  w_{i,k} = w_k \frac{\text{OneWeight}'_i \cdot \Phi(E_{\nu,i})}{\Omega_k}
   \mperiod
 \end{equation}
-where $k$ indices the source the event was selected from and $w_k^{(\text{tot})}$ the combined source weight.
+where $k$ indices the source the event was selected from and $w_k$ the combined source weight.
 The diffuse fluence $\Phi(E_{\nu,i})$ is normalized to a point source fluence by dividing out the selection solid angle $\Omega_k$ and is left with units $\si{\per\GeV\per\cm\squared}$.
-Events can be selected for multiple sources, if their selection regions overlap.
-All weights for each event in the whole pool of events then get normalized
-\begin{equation}
-  w^\text{sampling}
-  = \sum_{k=1}^{N_\text{srcs}} \sum_{(i|\Omega_i \in \Omega_k)} w_{i,k}
-  \mcomma
-\end{equation}
-so the weights are prepared for a weighted random choice sampling procedure.
+Events can be selected multiple time if they fall in multiple source selection regions.
+All weights for each event in the whole pool of events then get normalized $\sum_{i,k}\tilde{w}_{i,k} = 1$. so the weights are prepared for a weighted random choice sampling procedure.
 
-Usually the injection is set up to rotate the true event coordinates to the source locations and use the reconstructed coordinates in the Likelihood testing.
+Usually, the injection is set up to rotate the true event coordinates to the source locations and use the reconstructed coordinates in the Likelihood testing.
 Here, this would overestimate the sensitivity because of the unknown source locations in this analysis.
-As the source positions themselves are taken from reconstructed high energy neutrinos, they too have an spatial reconstruction uncertainty.
-It is possible to take this uncertainties into account in the Likelihood formulation, which yields to much more complicated fit procedure and requires a lot of neutrino events to test against, because per source two new parameters are introduced.
-In this time dependent analysis this is not possible due to low statistics in the small time windows tested here.
-However in the limit calculation this lack of information can be incorporated by simulating these uncertainties during the signal injection.
+As the source positions themselves are taken from reconstructed high energy neutrinos, they too have a spatial reconstruction uncertainty.
+It is possible to take these uncertainties into account in the Likelihood formulation, which yields to a much more complicated fit procedure and requires a lot of neutrino events to test against because per source two new parameters are introduced.
+In this time-dependent analysis, this is not possible due to low statistics in the small time windows tested here.
+However, in the limit calculation, this lack of information can be incorporated by simulating these uncertainties during the signal injection.
 
 The whole process is then done as follows.
-For each source the pool of simulation events is selected in a declination band around the best fit source positions, which are also tested against in the Likelihood formulation.
-The bandwidth upper and lower borders around each source are chosen by scanning the $3\sigma$ contour from the corresponding source prior map selecting events between the minimum and maximum declinations from the contour line.
-For all selected events the injection weights are computed using OneWeight and the target fluence as shown above.
-For the actual injection during trial sampling the prepared pool is sampled randomly across all sources.
-The number of events drawn in total is given as a Poisson mean number of signal events and gives Poisson fluctuation around that value for each trial.
+For each source, the pool of simulation events is selected in a declination band around the best-fit source positions, which are also tested against in the Likelihood formulation.
+The bands' upper and lower borders around each source are chosen by scanning the $\SI{3}{\sigma}$ contour from the corresponding source prior map and selecting the minimum and maximum declinations from the contour line.
+For all selected events the injection weights are computed as shown above.
+For the actual injection during trial sampling, the events from the prepared pool are sampled randomly automatically respecting each sources contribution due to the weight construction and the intrinsically simulated signal efficiency.
+The number of events drawn in total is given as a Poisson mean number of signal events and fluctuates according to the Poisson distribution around that value for each trial.
 To account for the unknown source positions, new point-like source positions are drawn for each trial.
-The positions are drawn independently from each sources reconstruction prior PDF map, so that the most likely position is still the tested best fit position.
+The positions are drawn independently from each sources reconstruction prior PDF map so that the most likely position is still the tested best-fit position.
 All drawn events are rotated to their new source position in their true spatial coordinates.
-Lastly new time attributes are chosen from a uniform distribution for each sources time window for all events drawn for each source.
-The sampled events are finally stripped from all Monte Carlo truth information, appended to the background data also drawn for the trial and the Likelihood is fitted to create a test statistic with signal included.
+Lastly, new time attributes are chosen from a uniform distribution for each sources time window for all events drawn for each source to match the tested emission scenario.
+The sampled events are finally stripped from all Monte Carlo truth information, appended to the background data also drawn for the trial and the Likelihood is fitted to create a test statistic distribution with signal included.
 This injection mode worsens the analysis performance and limits but represents a more realistic performance estimation in light of the unknown but constrained source positions.
 \TODO{Include src injection plot?}
 
 
-\section{HESE reconstruction map handling}
-The spatial reconstruction information for the high energy starting events are originally scanned in local detector coordinates zenith and azimuth.
-The local event coordinates on the other hand are converted to equatorial coordinates beforehand, because they can be directly compared to source objects that are  usually described in equatorial coordinates \CITE{equ. coords.}.
-To become computationally feasible, also the reconstruction maps for the HESE events need to be converted to allow an fast to evaluate equatorial representation.
+\subsection{Signal injection from multiple samples}
+The combination of several injectors per sample to simulate the signal for the multi-sample Likelihood is done by distributed sampling from each single sample injector.
+For a proper distribution of the requested number signal events to each injector, a similar weighting ansatz is used as for the multi-Likelihood $n_S$ splitting weights.
+The relative amount of signal per emitter depends on the total fluence expected to be emitted from a particular set of sources in a single sample.
+For a single injector, each event has weights as shown above.
+To construct a multi-injector, which basically injects from a combined, virtual sample, the intrinsic source weights need to be re-normalized to all sources in all injectors.
+This catches the circumstance, that each source is unique in each sample.
+The multi-injector construction for the steady state emission scenario works similar, but with a different assumption on the source emission.
 
-The used HEALPix maps use an internal coordinate to pixel number conversion scheme, with $\Theta\in[0, \pi]$ and $\varphi\in[0, 2\pi]$, that is easily identifiably with the local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\alpha\in[0, 2\pi]$, so the local maps directly represent local coordinates for each pixel \TODO{HEALPix coords in appendix?}.
+The new, re-normalized weights per sample can then be expressed by
+\begin{equation}
+    \tilde{w}_{i,k}
+    = \tilde{w}_k^\text{src} w_k^\text{det}
+      \frac{\text{OneWeight}'_i \cdot \Phi(E_{\nu,i})}{\Omega_k}
+  \mcomma
+\end{equation}
+where $\tilde{w}_k^\text{src}$ are the intrinsic source weights normalized over all samples
+\begin{equation}
+  \sum_{j=1}^{N_\text{sam}} \sum_{k=1}^{N_\text{j,srcs}}
+  \tilde{w}_k^\text{src} = 1
+  \mperiod
+\end{equation}
+where the inner sum runs over all sources in sample $j$.
+Using the total number of expected events from each sample by summing all re-normalized weights $\tilde{w}_{i,k}$ per sample, the relative event distribution can be computed.
+During sampling, the split number of events for the current trial is sampled from a multinomial distribution with the distribution weights as expectation values and requests each injector to sample the correct amount of signal \CITE{BohmZech PoissonAndMultinomials}.
+
+
+\section{HESE reconstruction map handling}
+To obtain an estimate on the spatial reconstruction uncertainty for the high energy starting events, the reconstruction Likelihood is originally scanned in local detector coordinates zenith and azimuth \CITE{millipede, online alerts}.
+The local event coordinates, on the other hand, are converted to equatorial coordinates beforehand, because they can be directly compared to source objects that are usually described in equatorial coordinates \CITE{equ. coords.}.
+To become computationally feasible, also the reconstruction maps for the HESE events need to be converted into a fast-to-evaluate equatorial representation.
+
+The used HEALPix \CITE{healpix, healpy} maps use an internal coordinate to pixel number conversion scheme, with $\Theta\in[0, \pi]$ and $\varphi\in[0, 2\pi]$, that is easily identifiably with the local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\alpha\in[0, 2\pi]$, so the local maps directly represent local coordinates for each pixel \TODO{HEALPix coords section in appendix?}.
 The conversion to equatorial coordinates depends on the source times which fixes the detector location relative to the equatorial coordinate system.
-Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies with time.
+Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies strongly over time.
 To avoid recalculating local map coordinates to equatorial coordinates at runtime, pre-transformed maps in equatorial coordinates are computed once beforehand.
-The convention used to efficiently map from HEALPix coordinates to equatorial ones is chosen to $\delta = \sfrac{\pi}{2} - \Theta$ and $\alpha = \varphi$.
+The convention used to efficiently map from HEALPix coordinates to equatorial ones is chosen as $\delta = \sfrac{\pi}{2} - \Theta$ and $\alpha = \varphi$.
 
 This mapping is not bijective though, because $\delta \approx \theta - \sfrac{\pi}{2}$ is only an approximation and the number of pixels in each $\Theta$ band changes depending on whether being close to the poles or to the horizon.
-So sometimes two pixels are mapped to one, which means that another pixel stays empty, because the number of pixels is fixed.
+So sometimes two pixels are mapped to one, which means that another pixel stays empty because the number of pixels is fixed.
 To overcome this, the mapping is done in reverse by transforming the exact pixel coordinates from a map in equatorial convention back to local coordinates.
 Then the local map is interpolated to the new pixel location and that value is stored in the equatorial map.
 The maximum error that can happen this way is in the order of a single pixel offset because the above approximation between zenith and declination holds closely enough.
 
-The transformed maps are then converted back to linear PDF space by exponentiating the map and smeared with a one degree symmetric Gaussian kernel to approximately account for unknown systematics.
-The smoothing introduces some numerical error because it is done in spherical harmonics space which has to be truncated numerically.
-The artefacts are removed by normalizing the smoothed maps to have an integral value of $\sum_{i=1}^{N_\text{pix}} \d{A_\text{pix}} = 1$ over the unit sphere and setting the resulting map to zero outside the $6\sigma$ level.
-Due to a lack of a proper test statistic, the Likelihood value for the $6\sigma$ level is obtained from Wilks' theorem with
+The transformed maps are then converted back to linear PDF space by $m\rightarrow \exp{(m)}$.
+To approximately and conservatively account for unknown systematics, the transformed maps are smeared with a symmetric Gaussian kernel of width $\SI{1}{\sigma}$ \CITE{Original HESE PS search}.
+The smoothing introduces some numerical errors because it is done in spherical harmonics space which has to be truncated numerically \CITE{healpy?}.
+The artefacts are removed by normalizing the smoothed maps to have an integral value of $\sum_{i=1}^{N_\text{pix}} \d{A_\text{pix}} = 1$ over the unit sphere and setting the resulting map to zero outside the $\SI{6}{\sigma}$ level.
+Due to a lack of a proper test statistic, the Likelihood value for the $\SI{6}{\sigma}$ level is obtained from Wilks' theorem with
 \begin{equation}
   \text{thresh} =
     \max(\mathcal{L}_\text{map})\cdot
     \left(1 - \int_0^{6^2}\chi^2_{2}(x)\d{x}\right)
   \mperiod
 \end{equation}
-The resulting maps can be used as spatial PDF maps and are sampled for the performance estimation.
+The resulting maps can then be used as spatial PDF maps and are sampled during the signal injection described above.
 
 
 \section{Performance estimation}
-The a-priori question asked here is, how much signal would be needed from the source collection in order to obtain a given significance in the final analysis.
-For this the performance is estimated by injecting a mean number of events for a given grid of mean signal strength values and doing a number of trials at each grid point.
-Each trial the actual number of injected signal events is drawn from a Poisson distribution with the current mean.
+The a priori question asked here is, how much signal would be needed from the source collection in order to obtain a given significance in the final analysis.
+For this, the performance is estimated by injecting a mean number of events for a given grid of mean signal strength values and doing a number of trials at each grid point.
+Each trial the actual number of injected signal events is drawn from a Poisson distribution with the current mean to simulate the measurement process.
 These trials are used to obtain Neyman upper limits \CITE{Neyman paper(s)} for the needed fluence strength.
 
 After creating a test statistic for all tested signal strengths, a generic $\chi^2$ CDF is fit to the discrete points.
@@ -484,32 +496,31 @@ While not having a justified connection to the distributions, the function is va
 This way the desired performance values over a given test statistic value from pure background trials can easily be obtained from the well behaved $\chi^2$ CDF.
 
 The advantage of this method is, that trials can be reused to evaluate multiple performance definitions if the statistics are high enough.
-Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively 90\% signal over zero background test statistic, 90\% signal over $3\sigma$ background test statistic and for discovery potential 90\% over $5\sigma$ was used here. The usual 50\% above $5\sigma$ yield to better discovery potential than sensitivity on first sight, which may be slightly confusing on first sight, so the 90\% definition was used.}.
+Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively $\SI{90}{\percent}$ signal over zero background test statistic, $\SI{90}{\percent}$ signal over $\SI{3}{\sigma}$ background test statistic and for discovery potential $\SI{90}{\percent}$ over $\SI{5}{\sigma}$ was used here. The usual $\SI{50}{\percent}$ above $\SI{5}{\sigma}$ yield to better discovery potential than sensitivity on first sight, which may be slightly confusing on first sight, so the $\SI{90}{\percent}$ definition was used.}.
 Another advantage is, that the whole Neyman grid construction can be visually inspected to see if any errors occurred during the minimization or trial generation \TODO{Neyman grid in app.}.
 \TODO{Maybe make FC limits from trials by applying FC weighting scheme.}
-Errors on the limits or bounds obtained from the fitted $\chi^2$ CDF could be obtained via trial bootstrapping and refitting, but is neglected here due to the high number of trials done per grid point and the dense grid itself.
+Errors on the limits or bounds obtained from the fitted $\chi^2$ CDF could be obtained via trial bootstrapping and refitting but is neglected here due to the high number of trials done per grid point and the dense grid itself.
 
-A given true, mean injection strength can be converted to the actual intrinsic fluence at the sources.
-This conversion follows straight from the weighting relation between the fluence and the weights, as shown earlier
+A given true, mean injection strength can be converted to a physical intrinsic fluence at the sources.
+This conversion follows straight from the weighting relation between the fluence and number of events, as shown earlier
 \begin{align}
   N &= \sum_{k=1}^{N_\text{srcs}} \sum_{(i|\Omega_i \in \Omega_k)}
-    w_k^{(\text{tot})}\frac{\text{OneWeight}'_i\cdot\Phi_0\cdot f(E_{\nu,i})}
-                           {\Omega_k} \\
+    w_k\frac{\text{OneWeight}'_i\cdot\Phi_0\cdot f(E_{\nu,i})}{\Omega_k} \\
   &= \Phi_0 \cdot
       \sum_{k=1}^{N_\text{srcs}}
-      \sum_{(i|\Omega_i \in \Omega_k)} \tilde{w}_{k,i}
+      \sum_{(i|\Omega_i \in \Omega_k)} w'_{k,i}
   \coloneqq \Phi_0 \cdot \sum_{k=1}^{N_\text{srcs}} F_k = \Phi_0 \cdot F
   \mcomma
 \end{align}
-where the outermost sum is added to sum up each source contribution and $\tilde{w}_{k,i}$ is the whole physics weight without the proper fluence normalization.
-The sum over $\tilde{w}_{i,k}$, $F$, then has all the properties of the final fluence except the proper normalization.
-This relation connects events $N$ at the detector and intrinsic fluence strength $\Phi_0$ and can also be given per source
+where the outermost sum is added to sum up each source contribution and $w'_{k,i}$ is the whole physics weight without the proper fluence normalization.
+The sum over $w'_{i,k}$, $F$, then has all the properties of the final fluence except the proper normalization.
+This relation connects the number of events $N$ at the detector and intrinsic source fluence strength $\Phi_0$ and can also be given per source
 \begin{align}
   \Phi_0(N) = \frac{N}{F}
     &\mintertext{and per source}
     \Phi_0^k(N) = \hat{w}_k^\text{src} \cdot \Phi_0(N)
     \mcomma \\
-  \intertext{where $\hat{w}_k^\text{src}$ are the normalized intrinsic source weights. Ging from intrinsic flux to events yields}
+  \intertext{where $\hat{w}_k^\text{src}$ are the normalized intrinsic source weights. Going from intrinsic flux to events yields}
   N(\Phi_0) = \Phi_0 \cdot F
     &\mintertext{and per source}
     N(\Phi_0) = \Phi_0 \cdot F_k
@@ -520,35 +531,66 @@ Another usual convention is to use the normalization at $\SI{100}{\TeV}$ which d
 \TODO{Show chi2 fits, show time win vs. perf. curves}
 
 \section{Post trial method}
-IN this analysis the Likelihood is only fitted for the single signal strength parameter $n_S$.
-Nevertheless multiple time windows are tested, because a possible true time window size is unknown.
-By doing the grid scan in 21 different time windows, a trial factor needs to be regarded \CITE{LLH methods for HE Phys?}.
-The trial factor accounts for the fact, that multiple options are trialed and a-posteriori the best one is chosen as the final result.
-The connection to Wilks' theorem here is, that it says, that the differences in free parameters comparing the alternative and null hypothesis is the degree of freedom of the resulting $\chi^2$ test statistic.
-By fitting for two parameters, adding in the time window length for example, the test statistic would end up with higher degrees of freedom, thus incorporating a trial factor automatically.
-This needs to be included by hand here for doing the fit manually by trialing multiple discrete time windows in the whole allowed parameter space.
+In this analysis, the Likelihood is only fitted for the single signal strength parameter $n_S$ because a two-parameter fit the number of events in the same order for small time windows is not feasible.
+Nevertheless, multiple time windows are tested because a possible true time window size is unknown.
+By doing the grid scan in $\num{21}$ different time windows, a trial factor needs to be regarded \CITE{LLH methods for HE Phys?}.
+The trial factor accounts for the fact, that multiple options are trialled and a-posteriori the best one is chosen as the final result.
+The connection to Wilks' theorem here is as follows.
+Wilks' theorem states, that the difference in the number of free parameters comparing the alternative and null hypothesis is the degree of freedom of the resulting $\chi^2$ test statistic.
+By fitting for two parameters, adding in the time window length, for example, the test statistic would end up with higher degrees of freedom, thus incorporating a trial factor automatically.
+This needs to be included by hand here for doing the fit manually by trialling multiple discrete time windows in the whole allowed parameter space.
 
 The procedure to finally obtain a trial corrected result is a follows.
-As in the end the best out of 21 time windows is picked, a bunch of pure background trials need to be run, simulating this behaviour, to know the effect on the final result on data.
-Opposing to the background trials per time window as shown before, here the trials are created correlated as is the case with real data in the end.
+In the end, the best out of $\num{21}$ time windows is picked
+This means pure background trials need to be run, simulating this behaviour, to know the effect on the final result on data.
+Opposing the background trials per time window as shown before, here the trials are created correlated as would be the case with real data in the end.
 The largest time window is used to create a pseudo sample of pure background events.
-This sample is then fitted with the 21 different time window Likelihoods and all fit results are recorded per trial.
-Here $\num{1e6}$ post trials are done to have a robust estimate even for higher significances without having to assume some underlying distribution to fit against.
+This sample is then fitted with the $\num{21}$ different time window Likelihoods and all fit results are recorded per trial.
 
+The underlying distribution may be described by the following PDF, which gives the probability to observe no p-value lower than a given minimal p-value $x$, $\min_i{p_i} \leq x$ from a set of $N$ p-values $\{p_i\}$.
+The cumulated distribution function can be constructed using the uniform distribution of p-values under the null hypothesis by definition, as
+\begin{align}
+  P(\min_i{p_i} \leq x)
+  &= 1 - P(\min_i{p_i} > x) \\
+  &= 1 - P(p_1 > x)\cdot\dots\cdot P(p_N > x)
+  = 1 - (1-x)^N
+  \mcomma
+\end{align}
+by demanding, that each p-value is independent.
+This may not hold in practice which leads to deviations in the effective trial factor.
+In this analysis, for example, the time windows are not independent, because each next larger time window includes all smaller ones.
+To obtain the PDF, the derivative of the constructed CDF $P$ needs to be taken
+\begin{equation}
+  f(\hat{p})
+  = \left. \dd{P}{x} \right|_{x=\hat{p}}
+  = -N(1 - \hat{p})^{N-1}
+  \mcomma
+\end{equation}
+or for the often used distribution of the negative logarithm to base $\num{10}$
+\begin{equation}
+  y = -\log_{10}(\hat{p})
+  \rightarrow
+  f(y) = f(\hat{p}(y))\cdot\dd{\hat{p}}{y}
+  = N \left( 1 - 10^{-y} \right) \cdot -\ln(10)\cdot 10^{-y}
+  \mcomma
+\end{equation}
+where the rule for transforming probability densities was used \CITE{mentioned rule}.
+
+However, here $\num{e6}$ post trials are done to have a robust estimate even for higher significances without having to assume some underlying distribution to fit against.
 The recorded results are then transformed to pre-trial p-values using the per time window background test statistics.
-For each trial the best p-value is chosen and a new post-trial test statistic is build from these p-values.
+For each trial, the best p-value is chosen and a new post-trial test statistic is built from these p-values.
 For the final result, the single fit for each time window is undergoing the same procedure and the best pre-trial p-value is inserted into the post-trial distribution to obtain the final result significance.
 \TODO{Plots of post trial ts, and relation pre <-> post trial pval.}
 
 \section{Results}
 The so far held back on-time data, containing all events within any of the largest time windows around any source are used to do a single fit per time window with the prepared Likelihood models.
-This yields 21 fit results, one for each time window with a single pre-trial p-value for each one.
-Afterwards the post-trial significance is calculated by selecting the best p-value and comparing it to the post-trial test statistic constructed above.
+This yields $\num{21}$ fit results, one for each time window with a single pre-trial p-value for each one.
+Afterwards, the post-trial significance is calculated by selecting the best p-value and comparing it to the post-trial test statistic constructed above.
 
-No significant excess of neutrinos is seen in the stacked search around the 22 proposed HESE events taken as source positions.
+No significant excess of neutrinos is seen in the stacked search around the $\num{22}$ proposed HESE events taken as source positions.
 Table~(\ref{tab:time_dep_results}) summarizes the pre-trial fit results.
-The best pre-trial fit was achieved for the largest time window $[-2.5, 2-5]$ days centred around each source with a pre-trial p-value $\num{0.068}$ and a best fit test statistic of $\num{1.84}$ and $\num{2.32}$ signal-like events.
-The final, trial corrected p-value is then $\num{0.30}$ corresponding to $\num{1.03}\sigma$, obtained by inserting the smallest pre-trial value in the survival function of the empirical post-trial distribution.
+The best pre-trial fit was achieved for the largest time window $[-2.5, 2.5]$ days centred around each source with a pre-trial p-value $\num{0.068}$ and the best-fit test statistic of $\num{1.84}$ and $\num{2.32}$ signal-like events.
+The final, trial corrected p-value is then $\num{0.30}$ corresponding to $1.0\SI{3}{\sigma}$, obtained by inserting the smallest pre-trial value in the survival function of the empirical post-trial distribution.
 \TODO{Show TS plots with result line.}
 
 \begin{table}[htbp]
@@ -599,10 +641,10 @@ The final, trial corrected p-value is then $\num{0.30}$ corresponding to $\num{1
     \bottomrule
   \end{tabular}
   \caption{
-    Results of the time dependent stacking search with HESE events as sources.
+    Results of the time-dependent stacking search with HESE events as sources.
     The fit results per time window performed on held back on-time data is shown.
     All p-values $p$ are pre-trial.
-    The most significant, and only non-zero, result for the largest time window 21 needs to be trial corrected.
+    The most significant, and only non-zero, result for the largest time window $\num{21}$ needs to be trial corrected.
   }
   \label{tab:time_dep_results}
 \end{table}
