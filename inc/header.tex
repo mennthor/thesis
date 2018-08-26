@@ -82,6 +82,7 @@
 %------------------------------------------------------------------------------
 \usepackage{graphicx}
 \usepackage{grffile}  % Flexible filename support
+\usepackage{pgf}
 
 %------------------------------------------------------------------------------
 %-- Floats
@@ -139,11 +140,6 @@
 \usepackage{import}
 
 %------------------------------------------------------------------------------
-%-- Custom todo notes (put .sty in $($kpsewhich -var-value TEXMFHOME)/tex/latex)
-%------------------------------------------------------------------------------
-\usepackage{mytodonotes}
-
-%------------------------------------------------------------------------------
 %-- Custom commands
 %------------------------------------------------------------------------------
 \renewcommand{\d}[1]{\mathrm{d}#1}
@@ -155,6 +151,10 @@
 \newcommand{\mintertext}[1]{\quad\text{#1}\quad}
 
 \DeclareMathOperator{\rect}{rect}
+
+\newcommand{\CITE}[1]{\colorbox{green}{#1}}
+\newcommand{\TODO}[1]{\colorbox{orange}{#1}}
+\newcommand{\FIXME}[1]{\colorbox{red}{\textcolor{white}{#1}}}
 
 %------------------------------------------------------------------------------
 %-- Custom title page options
