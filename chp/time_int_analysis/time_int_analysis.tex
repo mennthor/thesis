@@ -159,10 +159,9 @@ Additionally, because the Likelihood works with the approximation of having a co
 $\num{e6}$ background only trials where performed to sufficiently describe the test statistic distribution.
 Again, no under-fluctuations are fitted and the fit parameter $n_S$ is truncated at zero.
 Due to the variable index, this is not as large an issue as described above.
-The statistic follows the expected $\chi^2$ distribution well and is described with the same empirical PDF with a fitted exponential tail, deciding via a KS-test where the best threshold is.
-Another common approach is to fit the expected $\chi^2$ distribution directly.
-The number of degrees of freedom is one, due to the single free fit parameter then.
-This is needed because at exactly $\SI{100}{\percent}$ pure background, which means $n_S=0$, the spectral index has no relevance any more and is degenerate, leading to a slightly different effective number of degrees of freedom $\hat{n}$.
+The statistic follows the expected $\chi^2$ distribution well and is therefore described with a model from a common approach, which is to fit the expected $\chi^2$ distribution directly.
+Despite expecting the number of degrees of freedom to be one, it is slightly higher.
+This occurs because at exactly $\SI{100}{\percent}$ pure background, which means $n_S=0$, the spectral index has no relevance any more and is degenerate, leading to a slightly different effective number of degrees of freedom $\hat{n}$.
 The PDF fitted to the test statistic is then a split PDF catching the compactified under-fluctuations at zero and the tail with a $\chi^2$ distribution \TODO{Plot chi2 vs. exp tail?}
 \begin{equation}
   f(x \coloneqq -2\ln\hat{\Lambda}) =
@@ -172,6 +171,19 @@ The PDF fitted to the test statistic is then a split PDF catching the compactifi
   \end{cases}
   \mperiod
 \end{equation}
+% The resulting fit and a comparison to the previously used empirical test statistic approach can be seen in figure~(\ref{fig:time_int_bg_ts}).
+
+% \begin{figure}[htbp]
+%   \centering
+%   \subimport*{plots/}{bg_ts.pgf}
+%   \caption{
+%     Background only test statistic with both the exponential tail model and the direct $\chi^2$ model.
+%     The $\chi^2$ model is slightly more conservative and is used here to obtain the final p-value on the experimental data result.
+%     For the exponential tail the threshold from where the empirical part is used is indicated by the dashed vertical line at a test statistic value of $\num{5.15}$.
+%   }
+%   \label{fig:time_int_bg_ts}
+% \end{figure}
+
 
 \subsection*{Signal trials}
 The signal injection is set up to simulate a steady flux scenario.
@@ -200,5 +212,19 @@ The result is obtained by doing a single Likelihood fit on unscrambled experimen
 The resulting test statistic is compared to the background only test statistic model to obtain the final p-value
 
 No significant excess of neutrinos is seen in the test for a steady state flux scenario.
-The best-fit test statistic is $\num{0.056}$ with best-fit parameters $\hat{n}_S = \num{5.57}$ and $\hat{\gamma} = \num{2.8}$.
+The best-fit test statistic is $\num{0.057}$ with best-fit parameters $\hat{n}_S = \num{5.57}$ and $\hat{\gamma} = \num{2.8}$.
 This complies to a p-value of $p=0.47$ and a significance of $\SI{0.73}{\sigma}$.
+The  best fit test statistic value together with the background only distribution can be seen in figure~(\ref{fig:time_int_bg_ts_best_fit}).
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics{plots/bg_ts_best_fit}
+%   % \subimport*{plots/}{bg_ts_best_fit.pgf}
+%   \caption{
+%     Background only test statistic together with the experimental, unblinded result.
+%     The best test statistic value of $\num{0.057}$ was shifted to twice its value to be visible in the plot.
+%     In solid, the fitted $\chi^2$ PDF model which is used to estimate the p-value is overlaid.
+%   }
+%   \label{fig:time_int_bg_ts_best_fit}
+% \end{figure}
+
