@@ -3,5 +3,8 @@
   "texengine": "lualatex",
   "prim_fontsize_pt": 10.95,
   "sec_fontsize_pt": 9,
-  "latex_args": { "text.latex.preamble": ["\\usepackage[locale=US]{siunitx}"] }
+  "latex_args": {
+    "text.latex.preamble": ["\\usepackage[locale=US, separate-uncertainty=true, per-mode=symbol-or-fraction, exponent-product=\\cdot]{siunitx}"],
+    "pgf.preamble": ["\\usepackage[locale=US, separate-uncertainty=true, per-mode=symbol-or-fraction, exponent-product=\\cdot]{siunitx}"]
+  }
 }
