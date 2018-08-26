@@ -1,79 +1,102 @@
-\chapter{Neutrino detection with the IceCube observatory}
+\chapter{The IceCube neutrino observatory}
 
-\section{Detector}
-The low interaction cross section of neutrinos with normal matter makes them not only a suitable astrophysical messenger particle pointing back to production regions, but also makes them hard to detect when they arrive at earth.
-Thus there is the need for large detection volumes attacking the low interaction possibilities with larger instrumented volumes.
-As the detection principle is based on the photoelectric detection of Cherenkov light in the blue part of the visible spectrum, a detector medium which is optical transparent is needed.
-Building a large detection volume from scratch is not feasible so natural resources are used.
-Multiple neutrino observatories have been built by instrumenting naturally occurring sites with the needed properties, for example in the Mediterranean sea or in the case of IceCube in the clear Antarctic ice at the South Pole.
+The low interaction cross section of neutrinos with normal matter makes them not only a suitable astrophysical messenger particle pointing back to production regions but also hard to detect when they arrive on earth.
+Thus there is the need for large detection volumes attacking the low interaction possibilities with larger instrumented volumes \CITE{Katz}.
+As the detection principle is based on the photoelectric detection of Cerenkov light in the blue part of the visible spectrum, a detector medium which is optically transparent is needed.
+Building a large detection volume from scratch is not feasible so natural resources need to be exploited.
+Multiple neutrino observatories have been built by instrumenting naturally occurring sites with the needed properties, for example in the Mediterranean sea or in the case of IceCube in the clear Antarctic ice at the South Pole \CITE{Katz}.
 
-IceCube is currently the largest neutrino observatory, instrumenting roughly one cubic kilometer of Antarctic ice.
-Instrumentation is realized by an approximately hexagonal grid of 86 strings, each carrying 60 digital optical modules (DOMs).
-The DOMs are deployed in depth from \SI{1450}{\m} to \SI{2450}{m} below the ground with a vertical spacing of \SI{17}{\m}.
-We further have to distinguish between 80 regular strings with a horizontal spacing of about \SI{125}{\m} in the hexagonal grid and 6 additional DeepCore strings which make up the DeepCore sub-detector.
-These strings are more densely packed with a string distance of about \SI{75}{\m} and a vertical spacing of \SI{10}{\m} for 10 DOMs above a naturally occurring dust layer at \SI{2000}{\m} below ground in the ice and the remaining 50 DOMs with a spacing of \SI{7}{\m} below the dust layer, starting at \SI{2100}{\m}.
-The denser packing reduces the energy threshold in the sub-array to about \SI{10}{\GeV} suitable to probe atmospheric neutrino oscillation properties.
-Additionally there is a also a surface detection array of small ice-filled tanks containing two photomultipliers each, which can be used for cosmic ray studies or as a veto layer for atmospheric particles also traveling down to the IceCube array.
-The complete IceCube detector is therefore suitable to detect neutrinos in a wide range of energies, starting at the aforementioned \SI{10}{\GeV} and reaching to the highest energies of multiple \si{\peta\eV} with events lighting up almost the complete detection volume.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{plots/icecube_detector.pdf}
+  \caption{
+    Schematic view of the IceCube detector in its full configuration.
+    Image taken from \CITE{https://icecube.wisc.edu/gallery/view/140} and slightly adapted.
+  }
+  \label{fig:icecube_detector}
+\end{figure}
+
+
+IceCube is currently the largest neutrino observatory, instrumenting roughly one cubic kilometre of Antarctic ice at the geographic South Pole.
+Instrumentation is realized by an approximately hexagonal grid of $\num{86}$ strings, each carrying 60 digital optical modules (DOMs).
+The DOMs are deployed in depths from $\SI{1450}{\m}$ to $\SI{2450}{m}$ below the ground with a vertical spacing of $\SI{17}{\m}$.
+It has to be further distinguished between $\num{80}$ regular strings with a horizontal spacing of about $\SI{125}{\m}$ in the hexagonal grid and six additional DeepCore strings which make up the DeepCore sub-detector.
+These strings are more densely packed with a string distance of about $\SI{75}{\m}$ and a vertical spacing of $\SI{10}{\m}$ for ten DOMs above a naturally occurring dust layer at $\SI{2000}{\m}$ below ground in the ice and the remaining $\num{50}$ DOMs with a spacing of $\SI{7}{\m}$ below the dust layer, starting at $\SI{2100}{\m}$.
+For a schematic of the detector, see figure~().
+The denser packing of the photodetectors reduces the energy threshold in the sub-array to about $\SI{10}{\GeV}$ suitable to probe atmospheric neutrino oscillation properties \CITE{Det. paper, Wiebusch DeepCore}.
+Additionally, there is also a surface detection array of small ice-filled tanks containing two photomultipliers each, covering an area of roughly $\SI{1}{\km\squared}$ on the surface above the IceCube detector.
+This air shower detection array, called IceTop, can be used for cosmic ray studies or as a veto layer for atmospheric particles travelling down to the IceCube array alongside any astrophysical neutrinos \CITE{IceTop paper}.
+The complete IceCube detector is, therefore, suitable to detect neutrinos in a wide range of energies, starting at the aforementioned $\SI{10}{\GeV}$ and reaching to the highest energies of cosmogenic neutrinos up to multiple $\si{\exa\eV}$ with events lighting up almost the complete detection volume \CITE{EHE paper, "probing the origin"}.
 
 Each digital optical module consists of a spherical glass unit withstanding the pressure of the surrounding ice and protecting the electric components inside.
-The main detection instrument is a \SI{25}{\cm} diameter photomultiplier facing downwards per DOM.
-The signal is digitized and send to the surface data acquisition system, the IceCube Lab, via the string cable.
-The main trigger system yields a total trigger rate of approximately \SI{2.8}{\k\Hz}
+The main detection instrument is a single $\SI{25}{\cm}$ diameter, downward-facing photomultiplier per DOM.
+The signal is digitized and sent to the surface data acquisition system, the IceCube Lab, via the string cable.
+The main trigger system yields a combined trigger rate of approximately $\SI{2.8}{\k\Hz}$ \CITE{Det. paper}.
 
-Construction of the detector began in the Antarctic summer 2004 deploying a single string and ended in 2011 after partial configurations of 1, 9, 22, 40, 59 and 79 strings with the deployment of the last strings to complete the 86 string array.
-The sub-arrays deployed each season were already operational so data taking started with the very first configuration.
+Construction of the detector began in the Antarctic summer $\num{2004}$ deploying a single string and ended in $\num{2011}$ after partial configurations of $\num{1}$, $\num{9}$, $\num{22}$, $\num{40}$, $\num{59}$ and $\num{79}$ strings with the deployment of the last strings to complete the $\num{86}$ string array.
+The sub-arrays deployed each season were already operational so data taking started with the very first configuration\CITE{Det. paper}.
 
 \section{Detection principle}
-Neutrinos come in three lepton flavors, electron-, muon- and tau-neutrino together with their corresponding anti-particle.
-As neutrinos only interact weakly with all other standard model particles they cannot be detected directly.
-Therefore IceCube detects neutrinos indirectly via the Cherenkov effect.
+Neutrinos come in three lepton flavours, electron-, muon- and tau-neutrino together with their corresponding antiparticles.
+As neutrinos only interact weakly with all other standard model particles they cannot be detected directly \CITE{PDG}.
+Therefore IceCube detects neutrinos indirectly via the Cerenkov effect.
 Neutrinos can undergo neutral current and charged current interaction with matter in the detection volume.
-The interactions are the same for all three lepton flavors $l$:
+The interactions are the same for all three lepton flavours $l$:
 \begin{equation}
   \nu_l + X \rightarrow Z^0 \rightarrow \nu'_l + X'
   \mintertext{and}
   \nu_l + X \rightarrow W^{\pm} \rightarrow l + X'
   \mperiod
 \end{equation}
+For the energies considered at IceCube, the interactions are dominated by deep inelastic scattering \CITE{Sarkar}.
+Combined CC and NC cross sections are in the order of $\SI{e-35}{\cm\squared}$ for a $\SI{1}{\TeV}$ or $\SI{e-33}{\cm\squared}$ for a $\SI{1}{\peta\eV}$ neutrino.
+For example, a $\SI{1}{\TeV}$ neutrino has an interaction length of roughly $\SI{2.5e6}{\km}$ in water \CITE{Gandhi}.
 
 In neutral current interactions neutrinos interact via an intermediate $Z^0$ boson with a nucleus, generally noted as $X$ in the above equation.
-The Z boson carries no charge resulting in an unchanged flavor neutrino final state, where only energy is transfered between nucleus and neutrino.
-These interactions produce rather spherical, cascade-like signatures in the detector, indistinguishable from which flavor they originated.
-Cascade energy
+The Z boson carries no charge resulting in an unchanged flavour neutrino final state, where only energy is transferred between nucleus and neutrino.
+These interactions produce rather spherical, cascade-like signatures in the detector, indistinguishable from which flavour they originated.
 
-In charged current interactions the exchange particle is the charged $W$ boson, thus changing the initial neutrino state $\nu_l$ to a final lepton state $l$ with the same flavor.
-These interaction can produce vastly different event signature in the detector depending on energy.
+In charged current interactions the exchange particle is the charged $W$ boson, thus changing the initial neutrino state $\nu_l$ to a final lepton state $l$ with the same flavour.
+These interactions can produce vastly different event signature in the detector depending on energy.
 In general, electron final states produces neutral current like cascades due to their short mean free path and rapid energy loss.
-Muon final states can produce track-like signatures and with enough energy travel through the whole detector.
+Muon final states can produce track-like signatures and with enough energy travel through the whole detector \CITE{Katz}.
 Tau leptons can produce various different signatures depending on the initial energy and particle location.
-A unique pattern would be the so-called double bang signature, in which a first cascade is produced in the initial charged current interaction and a second one when the tau lepton decays, depositing energy in the detector medium.
+A unique pattern would be the so-called double bang signature, in which a first cascade is produced in the initial charged current interaction and a second one when the tau lepton decays, depositing energy in the detector medium \CITE{Cowen tau neutrinos}.
 
-\CITE{All in Gaisser's new book, chapter 17.}
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[c]{0.49\textwidth}
+    \includegraphics{plots/track.pdf}
+    \subcaption{Track-like event}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[c]{0.49\textwidth}
+    \includegraphics{plots/cascade.pdf}
+    \subcaption{Cascade-like event}
+  \end{subfigure}
+  \caption{
+    Two event displays from very high energy events \CITE{Science Evidence}.
+    Each sphere represents a DOM and the size of each sphere corresponds to the detected photons in each photomultiplier.
+    The track-like event starts on the right side within the detector and travels to the left continuously leaving traces from energy losses along the way.
+    The particle causing the cascade event interacts in the upper region of the detector and loses all its energy on length scales unresolvable by the detector, so the light spreads out spherically.
+  }
+  \label{fig:icecube_events_topologies}
+\end{figure}
 
 Despite the different interaction types, the detection principle is the same for all mentioned above.
 When energy is deposited in the detector, secondary charged particles are created which, at the high energies considered here, travel through the matter faster than the effective speed of light in the medium.
-During their passage trough matter Cherenkov light gets emitted along their path \CITE{Cherenkov paper / book?}.
-The light is emitted in an angle in first order given by the relation
+During their passage through matter, Cherenkov light gets emitted along their path.
+The light is emitted in an angle given in first order by the relation
 \begin{equation}
   \Theta = \arccos\left(\frac{1}{\beta n}\right)
 \end{equation}
-with the refractive index $n$ of the traversed medium an $\beta = v/c$ the particle speed in units of the vacuum speed of light $c$.
-Typical interactions of the primary charged lepton are ionization, photo nuclear, pair creation and Bremsstrahlung losses where the latter three start to dominate the energy loss for muon energies above some \SI{10}{\tera\eV}.
-The Cherenkov light yield from the secondary charged particles originating from the lepton's interaction point is typically higher than the one from the primary lepton itself.
+with the refractive index $n$ of the traversed medium an $\beta = v/c$ the particle speed in units of the vacuum speed of light $c$ \CITE{Cherenkov paper / book?}.
+Typical interactions of the charged primary lepton are ionization, photonuclear, pair creation and Bremsstrahlung losses where the latter three start to dominate the energy loss for muon energies above some \SI{10}{\tera\eV}.
+The Cherenkov light yield from the secondary charged particles originating from the lepton's interaction point is typically higher than the one from the primary lepton itself \CITE{PROPOSAL paper, light-yield???}.
 
 The Cherenkov photons travel through the ice and may be detected in one of the photomultiplier tubes inside the DOMs which are able to detect single photon hits.
-The antarctic ice as a natural medium is not perfectly isotropic and has depth and direction dependent absorption and scattering properties which was observed by using artificially injected signal from LEDs build into the DOM cases.
-In IceCube we observe a dust layer between a depth of roughly \SI{2000}{\m} and \SI{2100}{m} in which the mean free path is drastically reduced compared to the clear ice in other layers.
-Furthermore a directional dependence of the scattering coefficient is present due to effect during ice formation and a vertical tilt of depth layers due to slow glacier movement of the detection volume.
-Different ice models have been developed and adapted to account for these different effect as good as possible.
-\CITE{anisotropy, dust layer, icepaper...}
-
-\section{Atmospheric muons and neutrinos}
-\TODO{Describe the two other main signals that matter here from the physics point of view, air showers}
-
-\begin{itemize}
-  \item Air showers from CRs
-  \item Muon and munu production in air showers
-  \item Generic spectra of atmospheric and astrophysical neutrinos
-\end{itemize}
+The Antarctic ice as a natural medium is not perfectly isotropic and has depth and direction dependent absorption and scattering properties which was observed by using an artificially injected signal from LEDs built into the DOM cases.
+Additionally, a dust layer between a depth of roughly \SI{2000}{\m} and \SI{2100}{m} in which the mean free path is drastically reduced compared to the clear ice in other layers is observed in IceCube.
+Furthermore, a directional dependence of the scattering coefficient is present due to effect during ice formation and a vertical tilt of depth layers due to slow glacier movement of the detection volume.
+Different ice models have been developed and adapted to account for these different effects as good as possible.
+\CITE{Casey, Bay, Flasher paper and ICRC Flasher paper}
