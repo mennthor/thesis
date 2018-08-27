@@ -70,7 +70,10 @@ Here the PDF is only declination independent and can be written as
 \begin{equation}
   f(\delta_i|t_k) = \frac{1}{2\pi}\cdot P(\delta_i|t_k)
 \end{equation}
-where $t_k$ is the time of source $k$ used to account for varying background strengths due to seasonal variations \CITE{seasonal variations}\FIXME{explain 1, 2 sentences to seas. var.?}.
+where $t_k$ is the time of source $k$ used to account for varying background strengths due to seasonal variations.
+This considers that a source occurring in a time of lower than average background rate has a higher chance of seeing a signal contribution which is not influenced by the change in background rate.
+Seasonal variations in the atmospheric neutrino flux are directly correlated to the variation in temperature in the upper atmosphere layers.
+Changed densities hinder or promote the interactions of primary cosmic rays and influence the neutrino production \CITE{Barret, Gaisser Seas., IceCube Seasonal}.
 
 To build a custom background PDF for each source in its respective sample, first all events in each sample are binned in $\sin(\delta)$ in $\num{20}$ bins, with $\num{14}$ more densely spaced bins around the horizon region defined as $\delta\in[\SI{-30}{\degree}, \SI{30}{\degree}]$.
 In this region the selection models are usually switched between dedicated models for the northern and southern sky are used and the finer resolution helps to catch the resolution features in the distributions.
@@ -141,7 +144,7 @@ So for code simplicity, simple rectangle model is used for the background PDF.
 This also means that no extra sensitivity is coming from the temporal term, it is merely there to select events within the time windows and alters the amount of total background contribution which is almost zero for the smallest and grows approximately linearly for larger time windows.
 
 In this analysis, $\num{21}$ time windows are tested, from $\SI{2}{\second}$ to $\SI{5}{\day}$.
-This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray Burst, Fast Radio Burst or tidal disruption events \FIXME{Look up correct values}\CITE{Paper on GRB, TDE scales}.
+This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray Burst, Fast Radio Burst or tidal disruption events \FIX{Look up correct values}\CITE{Paper on GRB, TDE scales}.
 The time windows are spaced symmetrically around each source.
 All sources are given the same time window and all time windows are tested independently of each other.
 This is done to avoid an unstable resource consuming fitting of the time window size but comes at the cost of an additional trial factor for testing multiple windows and selecting the best one.
