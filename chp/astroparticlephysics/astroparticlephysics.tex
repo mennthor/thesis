@@ -1,28 +1,126 @@
 \chapter{Astroparticle physics}
 
-We are able to observe the universe not only in visible light, but in a variety of different wavelengths and other particles.
-Typically three main messenger particles are distinguished photons, cosmic rays and neutrinos.
-Photon observations range over many decades in wavelength, from radio over microwave, infrared, visible light, ultraviolet, x-ray up the the very highest gamma-ray energies, each used for different purposes and combined to obtain a unified picture of astrophysical processes.
-Cosmic rays usually include charged particles as protons, ions or bare nuclei and electrons as well as uncharged neutrons.
-While charged particles, especially the heavy particles reach up to the very highest energies observed in the order \SI{100}{\exa\eV}, they usually don't point back to their origin, due to deflection in magnetic field within the intergalactic or interstellar medium.
-Neutrons have a half widths time of about \SI{15}{\min} and can't travel far on cosmological scales without decaying and are thus used to probe the closer distances to earth.
+The universe can not only be observed in visible light but in a variety of different wavelengths and other particles.
+Typically, it is distinguished between three main messenger particles which are photons, cosmic rays and neutrinos \CITE{astro review paper}.
+Very recently, also gravitational waves need to be taken into account \CITE{LIGO}.
+Photon observations range over many decades in wavelength, from radio over microwave, infrared, visible light, ultraviolet, x-ray up the the very highest gamma-ray energies, each used for different purposes and combined to obtain a unified picture of astrophysical processes \CITE{a distinguished experiment each, ALMA, Spitzer, Hubble, FUSE, Xandra, Fermi, Magic}.
+Cosmic rays usually include charged particles as protons, ions or bare nuclei and electrons, as well as uncharged neutrons and, are measured using earthbound experiments for the very highest energies \CITE{HAWC, PierreAuger}.
+While charged particles, especially the heavy particles reach up to the very highest energies observed in the order \SI{100}{\exa\eV}, they usually don't point back to their origin, due to deflection in the magnetic field within the intergalactic or interstellar medium \CITE{Medina}.
+Photons are uncharged but are attenuated on cosmic distances by various influences, especially for high energies and make it hard to detect faraway sources \CITE{Gilmore}.
+% Neutrons have a half widths time of about \SI{15}{\min} and can't travel far on cosmological scales without decaying and are thus used to probe the closer distances to earth \CITE{PDG}. %% Leave neutrons out
 Neutrinos on the other hand only interact weakly with normal matter preventing it from getting deflected away from the source position.
-This advantage makes it necessary though to build relatively large detectors to be able to register a large enough amount of them.
-\TODO{More details?}
+This advantage makes it necessary though to build relatively large detectors to be able to register a large enough amount of them \CITE{Katz, Barger}.
 
 \section{Astrophysical neutrino production}
-\begin{itemize}
-  \item Shock acceleration mechanisms
-  \item Neutrino production from hadronuclear and photonuclear processes
-  \item Connection to CR spectrum(?)
-\end{itemize}
+The neutrino production in astrophysical sources can be explained by basic interactions described in the standard model of elementary particle physics \CITE{PDG, Herrero}.
+An extensive review of the processes is given in \CITE{Gaisser, Grupen} and a short summary is given here.
+Neutrino production in astrophysical sources is tightly connected to preceding acceleration of charged particles, cosmic rays, through some engine mechanism \CITE{Gereal AGN paper, shock model fermi}.
+If these high energy particles are available and collide with ambient hadronic matter or radiation, the actual creation of neutrinos is primarily explained by the decay of pions through hadronic interaction channels.
+The primary collisions can either happen in protohadronic
+\begin{equation}
+  p p \rightarrow
+    \begin{cases}
+      p p \pi^0 \\
+      p n \pi^+
+    \end{cases}
+    \mintertext{or photohadronic channels}
+  p \gamma \rightarrow
+    \begin{cases}
+      p + \pi^0 \\
+      n + \pi^+
+    \end{cases}
+  \mperiod
+\end{equation}
+For $pp$ collisions up to $\SI{60}{\percent}$ of the initial beam energy can be channeled into pions \CITE{Gaisser: Inelasticity in p-nucleus...}.
+The subsequent decays then lead to neutrinos via the decaying pions
+\begin{align}
+  \pi^0 &\rightarrow 2\gamma \\
+  \pi^+ &\rightarrow \mu^+ \nu_\mu \rightarrow e^+ \nu_e \bar{\nu}_\mu \nu_\mu
+  \mcomma
+\end{align}
+where the charged pion decays in $>\SI{99,9}{\percent}$ of the time in the depicted channel \CITE{PDG}.
+This decay chain also leads to the assumption of having a neutrino flavour ratio of
+\begin{equation}
+  \nu_e : \nu_\mu : \nu_\tau = 1 : 2 : 0
+\end{equation}
+directly at the sources.
+Through neutrino oscillations over cosmic distances, the usually expected flavour mixture at earth is $1:1:1$ \CITE{Athar 1 and 2}.
+
+The energy spectrum of the primary cosmic ray population follows a power law $E^{-\gamma}$ in first order.
+This universal behaviour can be explained by first-order Fermi shock acceleration \CITE{Fermi, Gaisser Book, Bell 1+2}.
+The cosmic ray spectrum measured at earth is subject to losses and can very roughly be described with a spectral index of $\gamma=\num{2.7}$ until a steepening at roughly $\SI{1}{\peta\eV}$ occurs due to particle leakage from the the galactic disc \CITE{Galprop, Gaisser-CR E Sprectrum from Meas. of Air Showers, Gaisser CRs Current Status, Hörandel-On.the.Knee, Grupen Book, Thunman}
+Depending on the initial energy distribution at the source, the neutrino spectrum closely follows the spectral form of the cosmic rays because neutrinos do not suffer any substantial losses during their travel to earth.
+Usually, a spectral index of $\gamma=2$ resembles a generic choice for a reasonable range of scenarios and can be derived from only a few basic assumptions in the shock acceleration regions \CITE{Lipari Proton..., Bell 1 p. 151, Gaisser Book 1}.
+However, recent measurements from IceCube in different flavour channels yielded a range of different indices from $\gamma=\num{2.19}$ \CITE{ICRC17 Aachen} for muon tracks from the northern sky, over $\num{2.48}$ \CITE{ICRC17 HansN} for the cascade channel to $\num{2.92}$ \CITE{ICRC17 HESE 6yr} for all flavour, high energy starting events.
+So the full production mechanisms of astrophysical neutrinos remain not completely understood.
 
 \section{Possible sources of astrophysical neutrinos}
-\begin{itemize}
-  \item Short intro to equatorial coordinates
-  \item Unified AGN model
-  \item Supernova remnants
-  \item Molecular clouds
-  \item Transients -> Tidal disruptions, GRBs, FRBs
-  \item TXS, explaining lower energy contribution (how? what to cite?)
-\end{itemize}
+Though the first neutrino emitting source has recently been identified from the connection of the extremely-high-energy neutrino event and the flaring Blazar TXS 0506+056 \CITE{TXS} there are many other candidates that in theory may emit neutrinos.
+An overview plot for various neutrino emitter candidates and limits from neutrino searches can be seen in figure~(\ref{fig:astro_kowalski_plot}), but with the assumption that the observed diffuse flux can be explained by the depicted source classes alone \CITE{Kowalski}.
+Some prominent examples from the pool of possible emitters are given below in a short review extracted from \CITE{Grupen, Gaisser Book 2, Meszaros, DermerGiebel, Dermer Best Bet, Rameez Detection Prospects, Böttcher}.
+
+Active galactic nuclei (AGN) is the general term for active central engines in the hearts of galaxies.
+These accelerators are powered by a super-massive black hole accreting matter from a surrounding disc of matter and forming a relativistic jet outflow perpendicular to the disc.
+Depending on the exact formation of the jets and the ambient material multiple particle acceleration mechanisms are possible.
+AGNs thus come in a variety of different characteristics, which largely depend on the viewing angle of the observer on earth and the signal of various emission lines.
+A schematic representation of the classification scheme can be seen in figure~(\ref{fig:astro_agns})
+Their emission spectra can range over a broad frequency region from low energy radio waves to the highest gamma-ray energies.
+Models from the particle acceleration span leptonic, hadronic, or leptohadronic interaction types, depending which particle makes up the main amount of electromagnetic emission from a source.
+As protons get accelerated in each scenario neutrinos may be emitted from each of these objects.
+Blazars make up a subclass of AGNs.
+For Blazars, the line of sight less than $\SI{10}{\degree}$, so an observer at earth sees straight into the jet, perpendicular to the disc area.
+The line of sight then directly lies parallel to the acceleration direction leading to strong high energy gamma-ray fluxes.
+This indicates that also neutrinos should be created in the processes leading to the high energy gamma rays and make them to a likely neutrino point source candidate.
+As the detection of the observation of an extremely-high-energy neutrino from the direction of TXS 0506+056 shows, at least one Blazar seems to correspond to the prediction \CITE{TXS, Pohl Interpretation}.
+Though a variety of other searches across Blazar catalogues remained unsuccessful so far \CITE{Raab ICRC, Huber ICRC}.
+
+\FIX{TXS explain possible lower energy nus? How? What to cite?)}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=7cm]{plots/kowalski_plot_bw.pdf}
+    \subcaption{
+      Constraints on possible neutrino sources under the assumption to be responsible for the diffuse astrophysical flux detected by IceCube.
+      Image taken from \CITE{Kowalski}, colours removed.}
+    \label{fig:astro_kowalski_plot}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=7cm]{plots/agn_classification.pdf}
+    \subcaption{
+      Unified AGN classification scheme.
+      For the discussed Blazars, the observer looks more or less directly into the jet region.
+      Image taken from \CITE{Beckmann}}
+    \label{fig:astro_agns}
+  \end{subfigure}
+\end{figure}
+
+
+While AGNs do show a time variability, there are true transient events that are candidates for neutrino emission too.
+Gamma-ray bursts for example output enormous energies on timescales from milliseconds to minutes.
+These events are likely created by stellar collapse events, either massive star hypernovae or compact binary mergers.
+Highly relativistic jets emerge from the collapse region giving rise to high energy particle shock accelerations \CITE{Bianco}.
+Though dedicated IceCube searches for neutrinos from these objects remained inconclusive \CITE{An All-Sky Search for Three Flavors of Neutrinos from GRBs, SEARCH FOR MUON NEUTRINOS FROM GRBs}, GRBs remain objects of high interest for probing neutrino production in most extreme environments \CITE{Murase}.
+Other classes of transient neutrino sources may be tidal disruption events or white dwarf mergers.
+The former being stars that get torn apart by gravitational tidal forces when they come too close to the central black hole.
+The accreted gas may then either externally collide with the black hole's jet or provide enough material for a strong jet breakout \CITE{Mattila}.
+White dwarf mergers are estimated to have a reasonably high merger rate to be detected as a quasi-diffuse neutrino flux.
+During a merger, particle acceleration may occur due to magnetic flux line reconnection.
+
+
+\section{Atmospheric muons and neutrinos}
+Apart from the astrophysical flux of neutrinos, a far greater neutrino flux component dominates the observed neutrino flux on earth up to energies of some $\SI{100}{\TeV}$ \CITE{Engbert, Gaisser Flux of Atmo Nu}.
+When cosmic rays hit the upper atmosphere they interact with the air molecules and produce extensive air showers when the interchanged energy is cascaded to down to the final reaction products \CITE{Gaisser Book2, chp 16}.
+
+The processes that produce neutrinos in these showers are basically the same as the ones inside the source regions as described above so mainly from pion and kaon decay.
+The dominant component of the atmospheric neutrino flux goes hand in hand with the atmospheric muon flux and is often called \enquote{conventional} atmospheric neutrino flux \CITE{HondaGaisser, Thunman}.
+A secondary component originating from mesons with charm components is called \enquote{prompt} but is sub-dominant to the conventional and also to the astrophysical flux and plays no role in this thesis \CITE{EnbergSarcevic, Aachen 8yr}.
+Pions and kaons have decay times in the order of $\SI{e-8}{\s}$ and can interact during their rather long livetime with other particles at the high energies considered here.
+That leads to a steepened spectral index with respect to the incident cosmic ray spectrum so that the conventional atmospheric neutrino flux follows a power law with a spectral index \CITE{Thunman p.13, distinction between prompt and conv.}
+\begin{equation}
+  \gamma_{\nu_\text{atmo}} = \gamma_\text{CR} + 1 = 3.7
+  \mperiod
+\end{equation}
