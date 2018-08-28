@@ -7,7 +7,7 @@ Therefore the technical details of the implementation can be reviewed in the mod
 
 As mentioned before, no significant excess of neutrinos at any location on the sky could be found in the extensive all-sky search with seven years of data.
 The results also indicate, that at each HESE position no significant source can be identified.
-This motivates to conduct a time-dependent search independently of the previous time-dependent one, to check for the possibility that possible sources that may have emitted the HESE events are only yielding enough events in a combined search.
+This motivates to conduct a time-independent search independently of the previous time-dependent one, to check for the possibility that possible sources that may have emitted the HESE events are only yielding enough events in a combined search.
 
 The method used in this analysis is similar to the previous one and uses the same Likelihood mechanism as derived in the dedicated chapter using different approximations suitable for large statistics samples and a steady source scenario \CITE{Could cite aachen 6yr 100 astro evts on 100k atmo}.
 The fact that all sources are assumed to contribute to the common neutrino flux at all times throughout all samples simplifies the construction of background PDFs and the process of trial generation.
@@ -15,12 +15,12 @@ Therefore no splitting in off- and on-data regions is done beforehand.
 By scrambling all data events in right-ascension before building any PDFs or doing trials, the experimental data is kept \enquote{blinded}.
 
 The main difference to the time-dependent analysis is the usage of a variable, unbroken power law spectrum in the energy PDF.
-This introduces a second free fit parameter, namely the spectral index $\gamma$ of the assumed power law flux $E_\nu^{-\gamma}$ used equally for all sources.
+This introduces a second free fit parameter, namely the spectral index $\gamma$ of the assumed power law flux $E_\nu^{-\gamma}$ shared between all sources under the assumption of equal emission scenarios.
 Due to the much larger statistics, it is possible to reliably fit another parameter.
 From a technical point of view, the new degree of freedom is also needed to match the model to background and signal assumptions.
 While the specific shape of the underlying spectral model was not very important in the time-dependent analysis due to the low overall background expectation, it is necessary here to distinguish signal and background contributions more efficiently.
 
-Performance estimation is done exactly as done in the time-dependent analysis, by scanning a grid of true source strengths and building a test statistic for each grid point.
+Performance estimation is done exactly as in the time-dependent analysis, by scanning a grid of true source strengths and building a test statistic for each grid point.
 This yields the full Neyman plane and can be used to fit a fairly general $\chi^2$ CDF to the samples, building the required performance parameters or limits.
 No post trials are needed here because no grid scan is made.
 Instead, the spectral index is fitted, which incorporates the trial factor automatically in the fitting procedure.
@@ -33,7 +33,7 @@ A set of rules regarding the binning and handling of these data, tuned for optim
 \subsection*{Spatial PDF}
 The spatial signal PDF is defined as a two-dimensional Gaussian distribution for comparability reasons in this case.
 However, this makes virtually no differences to the previous definition where the Kent distribution was used.
-As the dataset is made of well-reconstructed muon tracks, the angular uncertainty is small enough to avoid the regions in which both PDFs would start to severely differ \TODO{ref to kent vs gaus plot?}.
+As the dataset consists of well-reconstructed muon tracks, the angular uncertainty is small enough to avoid the regions in which both PDFs would start to severely differ.
 
 The background PDF construction is similar but simpler here, as only a single PDF is required to describe the background behaviour.
 Because seasonal variations are averaged out in the whole sample livetime, it is sufficient to construct a single average distribution from data
@@ -42,7 +42,7 @@ Because seasonal variations are averaged out in the whole sample livetime, it is
   \mperiod
 \end{equation}
 This is done by histogramming the data events in sine of declination and fitting an interpolating spline through the resulting bin centre points to have a smooth and continuous representation of the PDF available.
-Again for being consistent with the commonly used PDFs in IceCube, the binning is chosen a bit different than in the previous analysis, which makes almost no difference in the used PDF \TODO{compariosn plot?}.
+Again for being consistent with the commonly used PDFs in IceCube, the binning is chosen a bit different than in the previous analysis, which makes almost no difference in the used PDF \FIX{compariosn plot?}.
 The binning set-up can be looked up in the \lstinline!skylab! module which collects the shared settings for the datasets.
 
 \subsection*{Energy PDF}
@@ -50,7 +50,7 @@ The energy PDF needs to be built and evaluated for multiple power law spectral i
 To avoid long computing times by re-calculating the PDF for every occurring index, the energy PDF is built in three instead of two dimensions and cached beforehand.
 
 For a fixed index $\gamma$ the histograms are built as before from data and signal simulation with the same binning and the ratio built to describe the signal over background ration for the energy term.
-For simulated signal data, the number of events per bin can be computed using the modified OneWeight
+For simulated signal data, the number of events per bin can be computed using the modified OneWeight \footnote{See previous chapters for a more detailed introduction of OneWeight.}
 \begin{equation}
   N(\Delta E, \Delta\delta)
   = T\cdot \sum_{(i|E_{\nu,i}\in\Delta E, \delta_i\in\Delta\delta)}
@@ -62,9 +62,10 @@ The slightly different binning can again be looked up in the \lstinline!skylab! 
 
 To cache the energy PDF dependency on the spectral index, the signal over background ratios are built for each $\gamma$ on a grid, which is constrained in the interval $[1, 4]$ to cover a broad range of physically plausible hard and soft energy spectra.
 The stack of histograms is then used to create a one-dimensional spline in the $\gamma$ direction to obtain a continuous description and get the needed derivatives for the fit in analytic form as well.
-The built splines are cached during runtime to avoid repeat construction for the same declinations and energies.
+The built splines are cached during runtime to avoid repeated construction for the same declinations and energies.
 \TODO{Example hists like on GFU wiki}.
-A less complicated method would be to use multi-dimensional, three-dimensional, in this case, splines directly to parametrize the PDF in energy, $\sin(\delta)$ and $\gamma$.
+A less complicated method would be to use multi-dimensional, splines directly to parametrize the PDF.
+In this case, the spline would be three-dimensional, in energy, $\sin(\delta)$ and $\gamma$,
 The advantage would be to have a single description of the PDF and obtain analytic gradients in all directions automatically.
 
 
@@ -153,7 +154,7 @@ The variable index results in almost $\SI{50}{\percent}$ over- and under-fluctua
 \subsection*{Background trials}
 Pure background pseudo data samples are still generated by using the experimental data in this analysis for the same reason of avoiding bias from mismatches between data and background simulation.
 For each trial, a new right-ascension value is assigned to scramble the events.
-Usage of background is justified by the assumption of having a low amount of signal in the sample and that the spatial scrambling of the event positions in right-ascension ensures the removal of any potential signal clustering.
+The usage of experimental data as background is justified by the assumption of having a low amount of signal in the sample and that the spatial scrambling of the event positions in right-ascension ensures the removal of any potential signal clustering.
 Additionally, because the Likelihood works with the approximation of having a constant number of events by dropping the Poisson term, the number of background events stays constant in each trial.
 
 $\num{e6}$ background only trials where performed to sufficiently describe the test statistic distribution.
@@ -162,7 +163,7 @@ Due to the variable index, this is not as large an issue as described above.
 The statistic follows the expected $\chi^2$ distribution well and is therefore described with a model from a common approach, which is to fit the expected $\chi^2$ distribution directly.
 Despite expecting the number of degrees of freedom to be one, it is slightly higher.
 This occurs because at exactly $\SI{100}{\percent}$ pure background, which means $n_S=0$, the spectral index has no relevance any more and is degenerate, leading to a slightly different effective number of degrees of freedom $\hat{n}$.
-The PDF fitted to the test statistic is then a split PDF catching the compactified under-fluctuations at zero and the tail with a $\chi^2$ distribution \TODO{Plot chi2 vs. exp tail?}
+The PDF fitted to the test statistic is then a split PDF catching the compactified under-fluctuations at zero and the tail with a $\chi^2$ distribution \FIX{Plot chi2 vs. exp tail?}
 \begin{equation}
   f(x \coloneqq -2\ln\hat{\Lambda}) =
   \begin{cases}
