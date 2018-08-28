@@ -91,8 +91,9 @@ The alternative hypothesis $H_1$ is constructed by using the full Likelihood par
 
 The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H_0$ against the alternative $H_1$ is defined as \CITE{Casella Berger Book}
 \begin{equation}
-  \ln\hat{\Lambda} = \ln\left(\frac{\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)}
-                          {\sup_{\theta \in \Theta} \mathcal{L}(\theta)}\right)
+  \ln\hat{\Lambda}
+  = \ln\left(\frac{\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)}
+                  {\sup_{\theta \in \Theta} \mathcal{L}(\theta)}\right)
   = \ln\left(\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)\right) -
     \ln\left(\sup_{\theta \in \Theta} \mathcal{L}(\theta)\right)
   \mperiod
@@ -193,8 +194,8 @@ Note that the background distribution is only depending on the event position be
 
 \subsection{Energy distribution}
 In addition to the spatial clustering, the event's energy can also provide a powerful separation argument and lead to a large improvement in sensitivity \CITE{Braun Paper}.
-As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2.2}$ \CITE{latest ICRC Aachen diffuse? Or generic -2?}, higher energy events are more likely to originate from an extraterrestrial source rather than having been created in the atmosphere.
-The energy dependence can only be taken into account with energy estimators of the true neutrino energy $E_\nu$.
+As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2}$, higher energy events are more likely to originate from an extraterrestrial source rather than having been created in the atmosphere.
+In the PDFs, the energy dependence can only be taken into account with energy estimators of the true neutrino energy $E_\nu$ because the information must also be available on measured data, not knowing the true neutrino energy.
 Formally that can be written as an integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
 \begin{equation}
   S^E(E_i, \delta_i|\gamma) =
@@ -374,12 +375,13 @@ Again, a-priori information about the expected number of signal events originati
   n_{S,j} = w_j n_S
   \mperiod
 \end{equation}
-To calculate the a-priori weights $w_j$ the law of total probability is applied \CITE{What to cite here? Casella Berger again or Blobel?}
+To calculate the a-priori weights $w_j$ the law of total probability is applied \CITE{Casella Berger}
 \begin{equation}
   w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k)
+  = \sum_{k=1}^{N_\text{srcs}} \underbrace{P(j,k)}_\text{unknown}
   \mcomma
 \end{equation}
-because only the conditional probability contribution from each source $k$ per sample $j$ is known.
+because only the conditional probability contribution $P(j|k)$ from each source $k$ per sample $j$ is known, but not the joint distribution $P(j,k)$.
 That means, the needed probability $P(j)$ of getting a signal contribution $n_S w_j$ from sample $j$ splits into $P(j|k)$ and $P(k)$.
 $P(j|k)$ is the probability of getting signal from source $k$ within sample $j$, normalized over all samples
 \begin{equation}
@@ -448,179 +450,6 @@ The full multi-sample test statistic then reads
 \end{equation}
 where $\tilde{w}_{k,j}$ are the un-normalized weights per source with respect to the expected signal in their corresponding sample and are normalized over all un-normalized source expectations $\tilde{w}_m$ in all samples regarded.
 This expression nicely demonstrates the circumstances here, namely that each source is independent of each other source and lies completely in a single data sample, so the whole underlying Likelihood fully factorizes in events, sources and samples.
-
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %% General method to get a-priori weights from effective areas
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{A-priori weight selection}
-The a-priori weights for the expected signal of a source in a specific sample should match the true emission model as closely as possible.
-Note that the weights resemble the expected relative flux at the detector.
-For example, for an IceCube-like detector that only measures the northern sky, all weights for sources on the southern sky would be zero, regardless of the true intrinsic emission strength because no signal is ever detected.
-
-To construct the weights, that actually distribute the total signal to the expected contribution from each source, signal simulation can be used to estimate the signal detection efficiencies.
-Depending on the assumed per event PDFs, the weights might dependent on any source or any event parameter.
-For the spatial term, the weights are dependent only on the source positions and the signal response of the detector at their positions.
-The assumption that IceCube is right-ascension symmetric yields source declination dependent stacking weights.
-When using time information the weights also depend on the current events time.
-Because the expected source emissions can, and usually do vary in time, the signal expectation can change for each event.
-The energy PDF usually is not dependent on any source parameter or depends on the spectral index of an assumed unbroken power law.
-In the first case the stacking weights are thus independent of any source parameter, while in the second form, they depend on the current spectral index and have to be recalculated for every occurring index.
-
-Assuming a spatial, temporal and spectral index $\gamma_k$ source parameter dependency the general $n_S$ splitting weight per source $k$ would then be
-\begin{equation}
-  w_k^\text{det} = w(\vec{x}_k, t, t_k, \gamma_k)
-  = w^{S,E}(\vec{x}_k, \gamma) \cdot w^T(t, t_k)
-  \mcomma
-\end{equation}
-where $t$ can be any point in time and the spatial and spectral index dependent weights are correlated because a different index changes the declination distribution of the signal efficiency.
-The weights $w_k^\text{det}$ describe the full expected, relative detection efficiency for each source under the current data sample.
-For the time dependence, as expressions are only evaluated for the recorded events times, the weights are also only evaluated at times $t=t_i$.
-
-In the special case treated here, having sources unique in their time windows, the weight calculation simplifies to the spatial, source declination dependent part only, because only one source at a time has an emission expectation, so the normalized time dependent weights are $w_k^T = 1$ for each source.
-The general case would be to get the time dependent weights for each event from the time signal PDF per source and then normalizing over all contributions.
-
-For actually calculating the signal efficiency and thus the expected number of events $N$ at detector level and for the final sample event selection from an intrinsic neutrino flux $\phi$
-\begin{equation}
-  N = T\cdot\int_0^\infty\int_\Omega
-    A_\text{eff}(E,\Omega)\cdot\phi(E,\Omega | \gamma) \,\d{E}\d{\Omega}
-\end{equation}
-is used.
-$A_\text{eff}$ is the hypothetical detector surface area which would yield the same number of observed events if it would detect $\SI{100}{\percent}$ of the incoming flux compared to the real detector and the applied event selection and maps an intrinsic flux to event counts detected at detector level.
-$A_\text{eff}$ is typically in units $\si{\m\squared}$, the flux $\phi$ in \si{\per\GeV\per\m\squared\per\second\per\steradian} and the detector livetime $T$ in $\si{\second}$.
-When using a time-integrated fluence $\Phi$ model the livetime is obsolete and the number of events read
-\begin{equation}
-  N = \int_0^\infty\int_\Omega
-    A_\text{eff}(E,\Omega)\cdot\Phi(E,\Omega | \gamma) \,\d{E}\d{\Omega}
-  \mperiod
-\end{equation}
-The expected number of events for a given source declination can then be obtained by integrating over the energy only, getting the number of events per declination.
-The normalized weights per source in a single sample can be constructed by
-\begin{equation}
-  w^{S,E}(\vec{x}_k, \gamma)
-  = \frac
-      {
-        \int_0^\infty A_\text{eff}(E,\Omega_k) \cdot
-        \Phi(E,\Omega_k | \gamma)\,\d{E}
-      }
-      {
-        \sum_{m=1}^{N_\text{srcs}}
-        \int_0^\infty A_\text{eff}(E,\Omega_m) \cdot
-        \Phi(E,\Omega_m | \gamma)\,\d{E}
-      }
-  \mperiod
-\end{equation}
-This effective area formulation holds for calculating the multi sample splitting weights as well as for the signal splitting within a single sample, because it generally calculates the detector efficiency to a given flux or fluence hypothesis.
-
-In practice to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
-The OneWeight per event $i$ is defined as \CITE{oneweight finley?, sim paper?}
-\begin{align}
-  \text{OneWeight}_i
-  &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
-                       \Phi_\text{gen}(E_i)\d{E}\d{\Omega}
-                       }{\Phi_\text{gen}(E_i)}A_\text{gen} \\
-  &= p_\text{int}\frac{\int_{E_0}^{E_1}\Phi_\text{gen}(E_i)\d{E}}
-                      {\Phi_\text{gen}(E_i)}
-    A_\text{gen}\Omega_\text{gen}
-  \mcomma
-\end{align}
-where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume \footnote{Otherwise the simulation efficiency would be very low due to the small interaction probabilities of neutrinos.}, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the surface and the solid angle over which the initial neutrinos are injected.
-In the last step, the integration over $\Omega$ is carried out because usually, the injection fluence is only energy dependent.
-By this definition, OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$ combined with the correction factor for the forced interaction.
-To obtain the number of equivalent data events for a given simulation set, the per event weights
-\begin{equation}
-  N = \sum_i w_i = \sum_i \frac{\Phi_i}{\Phi_{i,\text{gen}}}
-\end{equation}
-need to be summed up.
-Using OneWeight to express the generating flux the number of events can be obtained via
-\begin{align}
-  N &= T \cdot \sum_i \frac{\text{OneWeight}_i \cdot \phi_i}{N_\text{gen}} \\
-  \intertext{or for fluences without the livetime $T$}
-  N &= \sum_i \frac{\text{OneWeight}_i \cdot \Phi_i}{N_\text{gen}}
-  \mcomma
-\end{align}
-where $N_\text{gen}$ is the generated total number of events summed over both particle and anti-particle types.
-This scaling makes sure, that the physical expectation value stays the same regardless of the number of simulated events.
-The sum can also be taken across subsamples of a whole data set to obtained differential event counts, e.g. per energy or solid angle.
-
-Additional intrinsic source weights can be introduced to capture differences in the expected, relative fluxes or fluences from the sources themselves.
-This is decoupled from the actual detection mechanism and the detector efficiency weights described above.
-The weight selection strongly depends on the used catalogue and can, for example, be the gamma or x-ray flux or distance weighting \CITE{1, 2 analyses with this weighting}.
-These intrinsic source weights $w_k^\text{src}$ are independently multiplied with the corresponding detector weights $w_k^\text{det}$ to form the total source weights use in the stacking
-\begin{equation}
-  w_k \coloneqq w_k^\text{det} \cdot w_k^\text{src}
-  \mperiod
-\end{equation}
-If the intrinsic source properties are not known or not reliably available otherwise, the intrinsic source weights are usually set equal.
-
-\subsection*{Connecting weighting formulas}
-The connection to the effective area formula from above with the more practical one using simulation weights is shortly depicted below.
-From the definition of the effective area
-\begin{equation}
-  A_\text{eff}(\Delta E, \Delta \Omega) =
-    A_\text{gen} \frac{\hat{N}(\Delta E, \Delta \Omega)}
-                      {\hat{N}_\text{gen}(\Delta E, \Delta \Omega)}
-  \mcomma
-\end{equation}
-where $\Delta E$ and $\Delta \Omega$ are arbitrary chosen integration intervals in energy and solid angle, because effective area is only properly defined under the integral.
-The number of generated events per interval can be obtained from the flux or fluence assumption used to sample the primary simulation particles
-\begin{equation}
-  \phi_\text{gen} = \phi_0 \cdot f(E, \Omega)
-  \mperiod
-\end{equation}
-where the unitless functional dependency is caught in the usually energy and solid angle dependent function $f(E, \Omega)$.
-Because the generating function is usually uniform and independent in solid angle it follows that $f(E, \Omega) \rightarrow f(E)\cdot \sfrac{1}{\Omega_\text{gen}}$.
-The number of simulated primaries in the interval is then given by
-\begin{equation}
-  \hat{N}_\text{gen}(\Delta E, \Delta\Omega) =
-    N_\text{gen} \cdot \frac{\Delta\Omega}{\Omega_\text{gen}}
-    \frac{\int_{E'}^{E'+\Delta E} f(E) \d{E}}
-         {\int_{E_0}^{E_1} f(E) \d{E}}
-  \mperiod
-\end{equation}
-For neutrino simulation where primaries are forced to interact close to the detection volume, the number of events is given by
-\begin{equation}
-  \hat{N}(\Delta E, \Delta \Omega) =
-  \sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)} p_{i,\text{int}}
-  \mperiod
-\end{equation}
-Now replacing $\hat{N}_\text{gen}$ and $\hat{N}$ in the effective area definition yields
-\begin{equation}
-  A_\text{eff}(\Delta E, \Delta \Omega) =
-    A_\text{gen} \cdot
-    \left(\sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
-          p_{i,\text{int}}\right) \cdot
-    \frac{\Omega_\text{gen}}{\Delta\Omega} \cdot \frac{1}{N_\text{gen}}
-    \frac{\int_{E_0}^{E_1} f(E) \d{E}}
-         {\int_{E'}^{E'+\Delta E} f(E) \d{E}}
-\end{equation}
-Identifying and replacing the OneWeight definition the formula to obtain the effective area estimate from a simulation data set reads
-\begin{equation}
-  A_\text{eff}(\Delta E, \Delta \Omega) =
-    \frac{1}{N_\text{gen}\Delta\Omega}\cdot
-    \frac{\left(
-            \sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
-            \text{Oneweight}_i \cdot f(E_i)
-          \right)}
-          {\int_{E'}^{E'+\Delta E}f(E)\d{E}}
-  \mperiod
-\end{equation}
-Sometimes a slightly modified version
-\begin{equation}
-  A_\text{eff}(\Delta E, \Delta \Omega) =
-    \frac{1}{N_\text{gen}\Delta\Omega}\cdot
-    \frac{\sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
-          \text{Oneweight}_i}
-         {\Delta E}
-\end{equation}
-is used, which is only valid for small integration intervals, because it assumes a constant generating function $f$ within an interval by approximating
-\begin{equation}
-  \frac{f(E_i)}{\int_{E'}^{E'+\Delta E}f(E)\d{E}}
-  \approx \frac{f(E_i)}{f(E')\cdot\Delta E}
-  \approx \frac{f(E_i)}{f(E_i)\cdot\Delta E}
-  = \frac{1}{\Delta E}
-  \mperiod
-\end{equation}
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -800,4 +629,191 @@ Usually, this a parameter describing the signal flux hypothesis and is modelled 
 \end{equation}
 This leads to splitting weights that dependent on the actual shape of the assumed signal flux because the sensitivity per sample can change when the flux gets harder or softer.
 
-% \listofnotes
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% General method to get a-priori weights from effective areas
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{A-priori weight selection}
+The a-priori weights for the expected signal of a source in a specific sample should match the true emission model as closely as possible.
+Note that the weights resemble the expected relative flux at the detector.
+For example, for an IceCube-like detector that only measures the northern sky, all weights for sources on the southern sky would be zero, regardless of the true intrinsic emission strength because no signal is ever detected.
+
+To construct the weights, that actually distribute the total expected amount of signal to the expected contribution from each source, signal simulation can be used to estimate the signal detection efficiencies.
+This is done by calculating the total number of expected events from each source from a given emission scenario at detector level.
+Depending on the assumed emission scenario, the weights might depend on any source parameter, usually the source position, the time and the spectral emission behaviour of the source.
+For sources, that are not point-like in any parameter but show a functional dependency, the detector response must be folded with the source parameter distribution to obtain the effective weight.
+
+For the spatial weight contribution, the weights are dependent only on the source positions and the signal response of the detector at their positions.
+The assumption that IceCube is right-ascension symmetric yields stacking weights that only depend on the source declinations.
+For extended sources the, detector response needs to be folded with the source extension density profile incorporating efficiencies from multiple detector regions.
+
+When using a time-dependent emission scenario the number of expected events do vary with the emission type.
+For example in a per-burst scenario, the amount of signal events is independent from the considered emission time scale and a time-integrated fluence is assumed rather than a time-dependent flux.
+Because the detector response to signal usually does not vary with time, only the relative differences in the time window functions matter for the stacking weights.
+The cases regarded in this thesis both lead to a vanishing temporal dependence.
+In the time-dependent analysis a fluence scenario is considered and all sources have the same time window length, making the temporal emission equal by design.
+In the time-independent case, all sources have the same linear dependence on the flux
+\begin{equation}
+  \int_T \phi \,\d{t} = T\cdot \phi
+\end{equation}
+and are expected to emit for the whole sample livetime, so all integrals over the temporal part are equal.
+Only when considering fluxes differential in time with different emission profiles, the integral contributions differ and the stacking weights become truly time dependent.
+
+The third common scenario is that sources also vary in their energy dependence for their intrinsic flux strengths.
+Usually this happens in the for of altering the spectral index of the assumed power law flux.
+This means the detector response is additionally depending on the spectral index as expected events per declination change depending on the spectrum's steepness.
+
+To summarize, note that the source weights should represent the estimated splitting of the single signal strength fit parameter, reflecting the relative expected number of events for the whole tested parameter space and thus do not vary per event, but only per source.
+It is useful to imagine what happens if the proposed source class emits signal into the detector and what would be recorded after the detection process.
+
+%%%%%%%%
+%Replaced by an a (hopefully) correct version entangling PDFs and expectations
+% As an example, assuming a dependency on the sources' declinations $\delta_k$ and spectral indices $\gamma_k$ the general $n_S$ splitting weight per source $k$ would then be obtained f
+% \begin{equation}
+%   w_k^\text{det} = w(\vec{x}_k, t, t_k, \gamma_k)
+%   = w^{S,E}(\vec{x}_k, \gamma) \cdot w^T(t, t_k)
+%   \mcomma
+% \end{equation}
+% where $t$ can be any point in time and the spatial and spectral index dependent weights are correlated because a different index changes the declination distribution of the signal efficiency.
+% The weights $w_k^\text{det}$ describe the full expected, relative detection efficiency for each source under the current data sample.
+% For the time dependence, as expressions are only evaluated for the recorded events times, the weights are also only evaluated at times $t=t_i$.
+
+% In the special case treated here, having sources unique in their time windows, the weight calculation simplifies to the spatial, source declination dependent part only, because only one source at a time has an emission expectation, so the normalized time dependent weights are $w_k^T = 1$ for each source.
+% The general case would be to get the time dependent weights for each event from the time signal PDF per source and then normalizing over all contributions.
+%%%%%%%%
+
+As an example, a dependency on the source positions $\vec{x}_k$ and spectral indices $\gamma_k$ of the $n_S$ splitting weight per source $k$ is assumed.
+For actually calculating the signal efficiency and thus the expected number of events per source $N_k$ at detector level and for the final sample event selection from an intrinsic, linearly time dependent neutrino flux $\phi$, the expression
+\begin{equation}
+  N_k(\vec{x}_k, \gamma_k)
+  = T \cdot \int_{E_\nu} \int_{\Omega_\nu} f(\vec{x}_k - \vec{x})
+      A_\text{eff}(E_\nu,\Omega_\nu) \cdot
+      \phi(E_\nu,\Omega_\nu | \gamma_k) \,\d{E_\nu}\d{\Omega_\nu}
+\end{equation}
+is used.
+Note the usage of the true neutrino energies and directions, as the interest lies in the mapping of intrinsic flux strength to expected events, not in the performance of spatial or energy reconstruction algorithms.
+Here, the value of $\gamma_k$ is taken to be exact and for a point-source hypothesis, the function $f(\vec{x})$ can be replaced with a $\delta$ distribution for picking only the integral contribution from the single source position.
+$A_\text{eff}$ is the hypothetical detector surface area which would yield the same number of observed events if it would detect $\SI{100}{\percent}$ of the incoming flux compared to the real detector and the applied event selection and maps an intrinsic flux to event counts detected at detector level.
+The integrated $A_\text{eff}$ is typically in units $\si{\m\squared}$, the flux $\phi$ in \si{\per\GeV\per\m\squared\per\second\per\steradian} and the detector livetime $T$ in $\si{\second}$.
+When using a time-integrated fluence $\Phi$ model the livetime is obsolete and the number of events read
+\begin{equation}
+  N_k \rightarrow \frac{N_k}{T}
+  \mperiod
+\end{equation}
+The normalized weights per source in a single sample can be constructed by
+\begin{equation}
+  w_k = \frac{N_k}{\sum_{m=1}^{N_\text{srcs}} N_m}
+  \mperiod
+\end{equation}
+This effective area formulation holds for calculating the multi sample splitting weights as well as for the expected $n_S$ splitting within a single sample, because it generally calculates the detector efficiency to a given flux or fluence hypothesis.
+
+In practice to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
+The OneWeight per event $i$ is defined as \CITE{oneweight finley?, sim paper?}
+\begin{align}
+  \text{OneWeight}_i
+  &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
+                       \Phi_\text{gen}(E_i)\d{E}\d{\Omega}
+                       }{\Phi_\text{gen}(E_i)}A_\text{gen} \\
+  &= p_\text{int}\frac{\int_{E_0}^{E_1}\Phi_\text{gen}(E_i)\d{E}}
+                      {\Phi_\text{gen}(E_i)}
+    A_\text{gen}\Omega_\text{gen}
+  \mcomma
+\end{align}
+where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume \footnote{Otherwise the simulation efficiency would be very low due to the small interaction probabilities of neutrinos.}, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the surface and the solid angle over which the initial neutrinos are injected.
+In the last step, the integration over $\Omega$ is carried out because usually, the injection fluence is only energy dependent.
+By this definition, OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$ combined with the correction factor for the forced interaction.
+To obtain the number of equivalent data events for a given simulation set, the per event weights
+\begin{equation}
+  N = \sum_i w_i = \sum_i \frac{\Phi_i}{\Phi_{i,\text{gen}}}
+\end{equation}
+need to be summed up.
+When using OneWeight to express the generating flux the number of events can be obtained via
+\begin{align}
+  N &= T \cdot \sum_i \frac{\text{OneWeight}_i \cdot \phi_i}{N_\text{gen}} \\
+  \intertext{or for fluences without the livetime $T$}
+  N &= \sum_i \frac{\text{OneWeight}_i \cdot \Phi_i}{N_\text{gen}}
+  \mcomma
+\end{align}
+where $N_\text{gen}$ is the generated total number of events summed over both particle and anti-particle types.
+This scaling makes sure, that the physical expectation value stays the same regardless of the number of simulated events.
+The sum can also be taken across subsamples of a whole data set to obtained differential event counts, e.g. per energy or solid angle to obtain approximations for the analytic formulas shown above.
+
+\subsection{Intrinsic source weights}
+Additional intrinsic source weights can be introduced to capture differences in the expected, relative fluxes or fluences from the sources themselves.
+This is decoupled from the actual detection mechanism and the detector efficiency weights described above.
+The weight selection strongly depends on the used catalogue or source category and can, for example, be the gamma or x-ray flux or distance weighting \CITE{1, 2 analyses with this weighting}.
+These intrinsic source weights $w_k^\text{src}$ are independently multiplied with the corresponding detector weights $w_k^\text{det}$ to form the total source weights use in the stacking
+\begin{equation}
+  w_k \coloneqq w_k^\text{det} \cdot w_k^\text{src}
+  \mperiod
+\end{equation}
+If the intrinsic source properties are not known or not reliably available otherwise, the intrinsic source weights are usually assumed to be equal.
+
+\subsection{Connecting weighting formulas}
+The connection to the effective area formula from above with the more practical one using simulation weights is shortly depicted below.
+From the definition of the effective area
+\begin{equation}
+  A_\text{eff}(\Delta E, \Delta \Omega) =
+    A_\text{gen} \frac{\hat{N}(\Delta E, \Delta \Omega)}
+                      {\hat{N}_\text{gen}(\Delta E, \Delta \Omega)}
+  \mcomma
+\end{equation}
+where $\Delta E$ and $\Delta \Omega$ are arbitrary chosen integration intervals in energy and solid angle, because effective area is only properly defined under the integral.
+The number of generated events per interval can be obtained from the flux or fluence assumption used to sample the primary simulation particles
+\begin{equation}
+  \phi_\text{gen} = \phi_0 \cdot f(E, \Omega)
+  \mperiod
+\end{equation}
+where the unitless functional dependency is caught in the usually energy and solid angle dependent function $f(E, \Omega)$.
+Because the generating function is usually uniform and independent in solid angle it follows that $f(E, \Omega) \rightarrow f(E)\cdot \sfrac{1}{\Omega_\text{gen}}$.
+The number of simulated primaries in the interval is then given by
+\begin{equation}
+  \hat{N}_\text{gen}(\Delta E, \Delta\Omega) =
+    N_\text{gen} \cdot \frac{\Delta\Omega}{\Omega_\text{gen}}
+    \frac{\int_{E'}^{E'+\Delta E} f(E) \d{E}}
+         {\int_{E_0}^{E_1} f(E) \d{E}}
+  \mperiod
+\end{equation}
+For neutrino simulation where primaries are forced to interact close to the detection volume, the number of events is given by
+\begin{equation}
+  \hat{N}(\Delta E, \Delta \Omega) =
+  \sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)} p_{i,\text{int}}
+  \mperiod
+\end{equation}
+Now replacing $\hat{N}_\text{gen}$ and $\hat{N}$ in the effective area definition yields
+\begin{equation}
+  A_\text{eff}(\Delta E, \Delta \Omega) =
+    A_\text{gen} \cdot
+    \left(\sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
+          p_{i,\text{int}}\right) \cdot
+    \frac{\Omega_\text{gen}}{\Delta\Omega} \cdot \frac{1}{N_\text{gen}}
+    \frac{\int_{E_0}^{E_1} f(E) \d{E}}
+         {\int_{E'}^{E'+\Delta E} f(E) \d{E}}
+\end{equation}
+Identifying and replacing the OneWeight definition the formula to obtain the effective area estimate from a simulation data set reads
+\begin{equation}
+  A_\text{eff}(\Delta E, \Delta \Omega) =
+    \frac{1}{N_\text{gen}\Delta\Omega}\cdot
+    \frac{\left(
+            \sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
+            \text{Oneweight}_i \cdot f(E_i)
+          \right)}
+          {\int_{E'}^{E'+\Delta E}f(E)\d{E}}
+  \mperiod
+\end{equation}
+Sometimes a slightly modified version
+\begin{equation}
+  A_\text{eff}(\Delta E, \Delta \Omega) =
+    \frac{1}{N_\text{gen}\Delta\Omega}\cdot
+    \frac{\sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
+          \text{Oneweight}_i}
+         {\Delta E}
+\end{equation}
+is used, which is only valid for small integration intervals, because it assumes a constant generating function $f$ within an interval by approximating
+\begin{equation}
+  \frac{f(E_i)}{\int_{E'}^{E'+\Delta E}f(E)\d{E}}
+  \approx \frac{f(E_i)}{f(E')\cdot\Delta E}
+  \approx \frac{f(E_i)}{f(E_i)\cdot\Delta E}
+  = \frac{1}{\Delta E}
+  \mperiod
+\end{equation}
