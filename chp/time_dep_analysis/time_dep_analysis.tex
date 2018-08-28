@@ -152,6 +152,11 @@ The time window intervals can be found in table~(\ref{tab:time_windos}).
 
 \begin{table}[htbp]
   \centering
+  \caption{
+    Used time windows $\Delta T = [T_0, T_1]$ in seconds relative to each source events' detection-time in the time-dependent analysis.
+    Each time window is tested independently from the others and all sources share the same time window length in a single set-up.
+  }
+  \label{tab:time_windos}
   \begin{tabular}{
     % https://tex.stackexchange.com/questions/291786
     % 1st set of ID DeltaT, 3 cols, last 2 combined with square brackets
@@ -204,11 +209,6 @@ The time window intervals can be found in table~(\ref{tab:time_windos}).
       21 & -216000.0 & +216000.0 \\
     \bottomrule
   \end{tabular}
-  \caption{
-    Used time windows $\Delta T = [T_0, T_1]$ in seconds relative to each source events' detection-time in the time-dependent analysis.
-    Each time window is tested independently from the others and all sources share the same time window length in a single set-up.
-  }
-  \label{tab:time_windos}
 \end{table}
 
 
@@ -457,37 +457,6 @@ Using the total number of expected events from each sample by summing all re-nor
 During sampling, the split number of events for the current trial is sampled from a multinomial distribution with the distribution weights as expectation values and requests each injector to sample the correct amount of signal \CITE{BohmZech PoissonAndMultinomials}.
 
 
-\section{HESE reconstruction map handling}
-To obtain an estimate on the spatial reconstruction uncertainty for the high energy starting events, the reconstruction Likelihood is originally scanned in local detector coordinates zenith and azimuth \CITE{millipede, online alerts}.
-The local event coordinates, on the other hand, are converted to equatorial coordinates beforehand, because they can be directly compared to source objects that are usually described in equatorial coordinates \CITE{equ. coords.}.
-To become computationally feasible, also the reconstruction maps for the HESE events need to be converted into a fast-to-evaluate equatorial representation.
-
-The used HEALPix \CITE{healpix, healpy} maps use an internal coordinate to pixel number conversion scheme, with $\Theta\in[0, \pi]$ and $\varphi\in[0, 2\pi]$, that is easily identifiably with the local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\alpha\in[0, 2\pi]$, so the local maps directly represent local coordinates for each pixel \TODO{HEALPix coords section in appendix?}.
-The conversion to equatorial coordinates depends on the source times which fixes the detector location relative to the equatorial coordinate system.
-Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies strongly over time.
-To avoid recalculating local map coordinates to equatorial coordinates at runtime, pre-transformed maps in equatorial coordinates are computed once beforehand.
-The convention used to efficiently map from HEALPix coordinates to equatorial ones is chosen as $\delta = \sfrac{\pi}{2} - \Theta$ and $\alpha = \varphi$.
-
-This mapping is not bijective though, because $\delta \approx \theta - \sfrac{\pi}{2}$ is only an approximation and the number of pixels in each $\Theta$ band changes depending on whether being close to the poles or to the horizon.
-So sometimes two pixels are mapped to one, which means that another pixel stays empty because the number of pixels is fixed.
-To overcome this, the mapping is done in reverse by transforming the exact pixel coordinates from a map in equatorial convention back to local coordinates.
-Then the local map is interpolated to the new pixel location and that value is stored in the equatorial map.
-The maximum error that can happen this way is in the order of a single pixel offset because the above approximation between zenith and declination holds closely enough.
-
-The transformed maps are then converted back to linear PDF space by $m\rightarrow \exp{(m)}$.
-To approximately and conservatively account for unknown systematics, the transformed maps are smeared with a symmetric Gaussian kernel of width $\SI{1}{\sigma}$ \CITE{Original HESE PS search}.
-The smoothing introduces some numerical errors because it is done in spherical harmonics space which has to be truncated numerically \CITE{healpy?}.
-The artefacts are removed by normalizing the smoothed maps to have an integral value of $\sum_{i=1}^{N_\text{pix}} \d{A_\text{pix}} = 1$ over the unit sphere and setting the resulting map to zero outside the $\SI{6}{\sigma}$ level.
-Due to a lack of a proper test statistic, the Likelihood value for the $\SI{6}{\sigma}$ level is obtained from Wilks' theorem with
-\begin{equation}
-  \text{thresh} =
-    \max(\mathcal{L}_\text{map})\cdot
-    \left(1 - \int_0^{6^2}\chi^2_{2}(x)\d{x}\right)
-  \mperiod
-\end{equation}
-The resulting maps can then be used as spatial PDF maps and are sampled during the signal injection described above.
-
-
 \section{Performance estimation}
 The a priori question asked here is, how much signal would be needed from the source collection in order to obtain a given significance in the final analysis.
 For this, the performance is estimated by injecting a mean number of events for a given grid of mean signal strength values and doing a number of trials at each grid point.
@@ -598,6 +567,13 @@ The final, trial corrected p-value is then $\num{0.30}$ corresponding to $1.0\SI
 
 \begin{table}[htbp]
   \centering
+  \caption{
+    Results of the time-dependent stacking search with HESE events as sources.
+    The fit results per time window performed on held back on-time data is shown.
+    All p-values $p$ are pre-trial.
+    The most significant, and only non-zero, result for the largest time window $\num{21}$ needs to be trial corrected.
+  }
+  \label{tab:time_dep_results}
   \begin{tabular}{
     % ID n_S Lambda pval
     r
@@ -643,11 +619,4 @@ The final, trial corrected p-value is then $\num{0.30}$ corresponding to $1.0\SI
       21 & 2.32 & 1.84 & 0.068 \\
     \bottomrule
   \end{tabular}
-  \caption{
-    Results of the time-dependent stacking search with HESE events as sources.
-    The fit results per time window performed on held back on-time data is shown.
-    All p-values $p$ are pre-trial.
-    The most significant, and only non-zero, result for the largest time window $\num{21}$ needs to be trial corrected.
-  }
-  \label{tab:time_dep_results}
 \end{table}
