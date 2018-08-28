@@ -133,12 +133,12 @@ The introduced per event distributions $S_i, B_i$ are the functions that actuall
 Depending on their structure they can describe a single point source search, a stacking search for searching at various source positions at once or a template search, where a whole spatial region is tested for neutrino emission over the expectation.
 The used PDFs are usually similar for all analysis types and the conventions applied for most point source searches in IceCube are followed here \CITE{Braun paper. Maybe both for time dep. / indep. searches.}.
 
-The per-event distributions introduce the main separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a-priori knowledge in defining signal- and background-like regions in the tested parameter space.
+The per-event distributions describe the main separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a-priori knowledge in defining signal- and background-like regions in the tested parameter space.
 The better these distributions are able to separate signal and background regions the more sensitive the analysis becomes.
 A common approach with known good separation power is to combine contributions from spatial clustering and energy information, where the first one is necessary for the tested hypotheses and the latter providing additional information under certain assumptions of signal flux shapes.
 For time dependent analyses an extra time dependent part is introduced.
 
-For the time dependent analysis implemented here, the signal and background contributions can be written as independent products of a spatial, an energy and a time dependent part as
+For most IceCube point source searches, the signal and background contributions can be written as independent products of a spatial, an energy and a time dependent part as
 \begin{align}
   S_{i,k}
     &= S(\vec{x}_i, \vec{x}_{\mathrm{src},k}, E_i | \gamma)
@@ -154,31 +154,40 @@ For the time dependent analysis implemented here, the signal and background cont
 \end{align}
 where $\gamma$ is the shape parameter of a signal flux usually assumed to be a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux describing the background flux dependency.
 The event times $t_i$ and source times $t_k$ define the time dependent emission-model.
+Note that the PDFs defined above are used in various analysis but neglect some correlations, which will be explained in more detail in this chapter.
+Also note that only variables known on experimental data can be used and no simulation ground truth is known on actual data.
 
 \subsection{Spatial distribution}
 The most important part in the search for neutrino point sources is the spatial clustering of events around a point in the sky.
+Without the spatial term, only a insensitive diffuse analysis would be performed.
 For data samples used in point source searches, there is a reconstructed estimate of the per event uncertainty available.
-This estimator is built from the positional reconstruction Likelihood fit and is constructed assuming a symmetric, two-dimensional Gaussian distribution describing the reconstruction uncertainty \CITE{Paraboloid}.
+This estimator is built from the positional reconstruction Likelihood fit and is constructed assuming a symmetric, two-dimensional Gaussian distribution describing the reconstruction uncertainty.
 Alternatively, the same value can be transformed and used for the symmetric Kent distribution \CITE{Kent paper} for the per event spatial distribution instead.
 The van-Mises distribution is the pendant of a symmetric two dimensional Gaussian but correctly normalized on the sphere and is useful for larger uncertainties for example when investigating cascade-like events.
 For tracks, the good angular resolution of about \SI{1}{\degree} justifies the use of the simpler and more familiar Gaussian distribution as both distributions become virtually indistinguishable for small uncertainties.
 \TODO{Appendix: Show or ref to plot of sigma vs kappa}
+
 In general, the joint probability for an event $i$ to spatially originate from a source $k$ can be obtained by a convolution of the two separate spatial PDFs.
-In a search for point sources at known positions \CITE{coenders, allsky scan}, the distribution of a source position is represented by a delta distribution.
-The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source can thus be expressed as a convolution of the Gaussian per event part and a delta distribution for the fixed source position
+One part describes the intrinsic distribution for the source and the other part the intrinsic distribution of the event itself.
+In a search for point sources at known positions, the distribution of a source position is represented by a delta distribution, in searches for spatially extended sources usually a Gaussian profile is assumed.
+The per-event probability distribution is assumed to be a Gaussian PDF, which is connected to the construction of the per-event uncertainty from a parabolic Likelihood space or a bootstrap algorithm.
+The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source with density profile $f(\vec{x}_k)$ can thus be expressed as a convolution of the Gaussian per event part and source distribution for the fixed source position
 \begin{equation}
-  \begin{aligned}
-    S^S(\vec{x}_i, \vec{x}_{\mathrm{src},k}) &=
-      \int_\Omega \frac{1}{2\pi \sigma_i^2}
-      \exp\left(-\frac{|\vec{x}-\vec{x}_i|^2}{2\sigma_i^2}\right) \cdot
-      \delta(\vec{x}_{\mathrm{src},k} - \vec{x}) \d{\vec{x}} \\
-      &= \frac{1}{2\pi \sigma_i^2}
-         \exp\left(-\frac{|\vec{x}_{\mathrm{src},k}-
-                          \vec{x}_i|^2}{2\sigma_i^2}\right)
-      \mperiod
-  \end{aligned}
+  S^S(\vec{x}_i, \vec{x}_k)
+  = \int_\Omega \frac{1}{2\pi \sigma_i^2}
+    \exp\left(-\frac{|\vec{x}-\vec{x}_i|^2}{2\sigma_i^2}\right) \cdot
+    f(\vec{x}_k - \vec{x}) \d{\vec{x}} \\
+    \mperiod
 \end{equation}
-Assuming extended sources with a Gaussian density profile would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exists, resulting in a substitution of $\sigma_i \rightarrow \sqrt{\sigma_i^2 + \sigma_{\text{src},k}^2}$ \CITE{Gaussian convolution}.
+For the point-source hypothesis, $f(\vec{x}_k)$ can be replaced with a delta distribution $\delta(\vec{x}_k)$ yielding the often used expression
+\begin{equation}
+  S^S(\vec{x}_i, \vec{x}_k)
+  = \frac{1}{2\pi \sigma_i^2}
+    \exp\left(-\frac{|\vec{x}_k-\vec{x}_i|^2}
+                    {2\sigma_i^2}\right)
+\end{equation}
+for the spatial signal PDF.
+Assuming extended sources with a Gaussian density profile would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exists, resulting in a substitution of $\sigma_i \rightarrow \sqrt{\sigma_i^2 + \sigma_k^2}$ \CITE{Gaussian convolution}.
 
 The spatial background distribution is constructed similarly to the signal case above.
 Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination dependent only.
@@ -191,32 +200,62 @@ The spatial background distribution can then be written as
 \end{equation}
 where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on the sine of declination $\delta$.
 Note that the background distribution is only depending on the event position because background should have no correlation with any source by definition.
+This description neglects the per-event uncertainty though.
+In principle the same method can be applied for the background as was used to construct the convoluted signal PDF.
+With
+\begin{equation}
+  B^S(\vec{x}_i) =
+    \int_\Omega \hat{B}^S(\vec{x}) \cdot
+      \exp\left(-\frac{|\vec{x}-\vec{x}_i|^2}{2\sigma_i^2}\right)
+      \,\d{\vec{x}}
+\end{equation}
+the per-event distribution would be described in full detail.
+However, as the intrinsic background PDF $\hat{B}^S$ does not change much with declination and a closed form analytic description as in the Gaussian case above is not easily possible with $\hat{B}^S$ derived from histograms, the per-event uncertainty is neglected.
+
 
 \subsection{Energy distribution}
 In addition to the spatial clustering, the event's energy can also provide a powerful separation argument and lead to a large improvement in sensitivity \CITE{Braun Paper}.
 As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2}$, higher energy events are more likely to originate from an extraterrestrial source rather than having been created in the atmosphere.
 In the PDFs, the energy dependence can only be taken into account with energy estimators of the true neutrino energy $E_\nu$ because the information must also be available on measured data, not knowing the true neutrino energy.
-Formally that can be written as an integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
+Formally, that mapping can be written as an integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
 \begin{equation}
-  S^E(E_i, \delta_i|\gamma) =
-    \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
+  \hat{S}^E(E, \vec{x}|\gamma) =
+    \int_{E_\nu}\int_{\Omega_\nu}
+    P(E, \vec{x}|E_\nu, \vec{x}_\nu) \cdot P(\vec{x}_\nu, E_\nu|\gamma)
+    \,\d{E_\nu}d{\vec{x}_\nu}
     \mcomma
 \end{equation}
 where $\gamma$ is the shape parameter of an assumed signal power law flux.
 
 For background, the same reasoning applies and the flux model is substituted for one describing the atmospheric neutrino background instead
 \begin{equation}
-  B^E(E_i, \delta_i|\phi_\mathrm{BG}) =
-    \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\phi_\mathrm{BG}) \d{E_\nu}
-    \mperiod
+  \hat{B}^E(E, \vec{x}|\phi_\mathrm{BG}) =
+    \int_{E_\nu}\int_{\Omega_\nu}
+    P(E, \vec{x}|E_\nu, \vec{x}_\nu) \cdot P(\vec{x}_\nu, E_\nu|\phi_\mathrm{BG})
+    \,\d{E_\nu}d{\vec{x}_\nu}
 \end{equation}
+to obtain the intrinsic distribution.
 
-In practice, the integrals may be obtained using histograms in declination and an energy estimator from simulations for signal and from either simulations or measured data for the background distributions.
+In practice, the integrals may be obtained using histograms in reconstructed declination and an energy estimator from simulations for signal and from either simulations or measured data for the background distributions.
+
+To obtain the convolved PDFs that also take into account the per event uncertainty for each event in energy and position, the same ansatz as above can be used
+\begin{align}
+  S^E(E_i, \delta_i|\gamma) &=
+    \int_E\int_\Omega f(\vec{x}_i, E_i)\hat{S}^E\,\d{E}\d{\vec{x}} \\
+  B^E(E_i, \delta_i|\phi_\mathrm{BG}) &=
+    \int_E\int_\Omega P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\phi_\mathrm{BG})
+      \d{E_\nu}
+    \mperiod
+\end{align}
+In the majority of analysis, a $\delta$ distribution for the per-event functions is used in the last step, for the same reasons quoted for the spatial background PDF.
+Also the distribution is normalized independently of the spatial PDFs, although the declination occurs in both of them.
+This may be done to simplify the computation and housekeeping in analysis code, because it avoids higher dimensional PDF constructions.
 
 \subsection{Time dependency}
-Testing for time dependent emission models, there is need to incorporate time dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $B_{i,k}^T(t_i, t_k)$ which depend on each events time and it's occurrence relative to the sources' temporal occurrence can be included.
+When testing for time dependent emission models, time dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $B_{i,k}^T(t_i, t_k)$ need to be incorporated, which depend on each events time and their occurrences relative to the sources' temporal evolution.
 The assumption is then, that each source only emits neutrinos as given by $S_{i,k}^T(t_i, t_k)$.
 The background can in general also be time dependent to account e.g. for seasonal variations in the detector rate.
+Because of the precise timing information, there is no relevant time uncertainty that needs to be convolved into the intrinsic PDFs.
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
