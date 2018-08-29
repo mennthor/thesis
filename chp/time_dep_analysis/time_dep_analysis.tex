@@ -369,14 +369,14 @@ Here, for the smallest time window over $\SI{99}{\percent}$ of all trials have a
 For the largest time window, about $\SI{71}{\percent}$ of all trials still come with a zero test statistic value.
 This is not a problem but only leads to a worsening of performance estimation and limits, the worse the more zero trials there are.
 This is because of the compactification at zero, the limits can only start at values with a higher test statistic value than zero for a meaningful estimate.
-For example, if there are $\SI{99}{\percent}$ zero trials, then the smallest meaningful confidence that can be applied is about $\SI{2.5}{\sigma}$ which leads to larger or worse limits than necessary for any smaller confidence level.
+For example, if there are $\SI{99}{\percent}$ zero trials, then the smallest meaningful confidence that can be applied is about $\SIsigma{2.5}$ which leads to larger or worse limits than necessary for any smaller confidence level.
 On the other hand, the small time windows have such a low background, that any number of somewhat signal-like events showing up, will lead to a high and close-to-detection significance.
 
-The number of generated trials allow using the samples directly as an empirical PDF representation up to about $\SI{3}{\sigma}$, which leaves approximately $\num{270000}$ events in the tails for robust quantile estimation.
-In principle $\num{e8}$ samples allow to empirically estimate the significance up to about $\SI{5.7}{\sigma}$, but with very poor statistics in the high confidence regime.
+The number of generated trials allow using the samples directly as an empirical PDF representation up to about $\SIsigma{3}$, which leaves approximately $\num{270000}$ events in the tails for robust quantile estimation.
+In principle $\num{e8}$ samples allow to empirically estimate the significance up to about $\SIsigma{5.7}$, but with very poor statistics in the high confidence regime.
 To make the p-value estimation more robust for large test statistic values, the tail of each time windows test statistic is fitted with an exponential distribution.
-To find a robust set of exponential PDF parameters, an exponential is fitted to the tail of the distribution with a threshold scanned on a grid between $\SI{3.5}{\sigma}$ and $\SI{4.5}{\sigma}$.
-The best-fit is selected using a Kolmogorov-Smirnov test \CITE{KS Test} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $\SI{1}{\sigma}$ level.
+To find a robust set of exponential PDF parameters, an exponential is fitted to the tail of the distribution with a threshold scanned on a grid between $\SIsigma{3.5}$ and $\SIsigma{4.5}$.
+The best-fit is selected using a Kolmogorov-Smirnov test \CITE{KS Test} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $\SIsigma{1}$ level.
 This yields quite robust tails even in the smallest time windows.
 For the larger time windows, the $\chi^2_1$-like forms of the distributions are naturally described by the exponential tails.
 An independent set of trials is used to verify the validity of the tail fits.\TODO{Attach plot}
@@ -417,7 +417,7 @@ However, in the limit calculation, this lack of information can be incorporated 
 
 The whole process is then done as follows.
 For each source, the pool of simulation events is selected in a declination band around the best-fit source positions, which are also tested against in the Likelihood formulation.
-The bands' upper and lower borders around each source are chosen by scanning the $\SI{3}{\sigma}$ contour from the corresponding source prior map and selecting the minimum and maximum declinations from the contour line.
+The bands' upper and lower borders around each source are chosen by scanning the $\SIsigma{3}$ contour from the corresponding source prior map and selecting the minimum and maximum declinations from the contour line.
 For all selected events the injection weights are computed as shown above.
 For the actual injection during trial sampling, the events from the prepared pool are sampled randomly automatically respecting each sources contribution due to the weight construction and the intrinsically simulated signal efficiency.
 The number of events drawn in total is given as a Poisson mean number of signal events and fluctuates according to the Poisson distribution around that value for each trial.
@@ -468,7 +468,7 @@ While not having a justified connection to the distributions, the function is va
 This way the desired performance values over a given test statistic value from pure background trials can easily be obtained from the well behaved $\chi^2$ CDF.
 
 The advantage of this method is, that trials can be reused to evaluate multiple performance definitions if the statistics are high enough.
-Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively $\SI{90}{\percent}$ signal over zero background test statistic, $\SI{90}{\percent}$ signal over $\SI{3}{\sigma}$ background test statistic and for discovery potential $\SI{90}{\percent}$ over $\SI{5}{\sigma}$ was used here. The usual $\SI{50}{\percent}$ above $\SI{5}{\sigma}$ yield to better discovery potential than sensitivity on first sight, which may be slightly confusing on first sight, so the $\SI{90}{\percent}$ definition was used.}.
+Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively $\SI{90}{\percent}$ signal over zero background test statistic, $\SI{90}{\percent}$ signal over $\SIsigma{3}$ background test statistic and for discovery potential $\SI{90}{\percent}$ over $\SIsigma{5}$ was used here. The usual $\SI{50}{\percent}$ above $\SIsigma{5}$ yield to better discovery potential than sensitivity on first sight, which may be slightly confusing on first sight, so the $\SI{90}{\percent}$ definition was used.}.
 Another advantage is, that the whole Neyman grid construction can be visually inspected to see if any errors occurred during the minimization or trial generation \TODO{Neyman grid in app.}.
 \TODO{Maybe make FC limits from trials by applying FC weighting scheme.}
 Errors on the limits or bounds obtained from the fitted $\chi^2$ CDF could be obtained via trial bootstrapping and refitting but is neglected here due to the high number of trials done per grid point and the dense grid itself.
@@ -562,7 +562,7 @@ Afterwards, the post-trial significance is calculated by selecting the best p-va
 No significant excess of neutrinos is seen in the stacked search around the $\num{22}$ proposed HESE events taken as source positions.
 Table~(\ref{tab:time_dep_results}) summarizes the pre-trial fit results.
 The best pre-trial fit was achieved for the largest time window $[-2.5, 2.5]$ days centred around each source with a pre-trial p-value $\num{0.068}$ and the best-fit test statistic of $\num{1.84}$ and $\num{2.32}$ signal-like events.
-The final, trial corrected p-value is then $\num{0.30}$ corresponding to $1.0\SI{3}{\sigma}$, obtained by inserting the smallest pre-trial value in the survival function of the empirical post-trial distribution.
+The final, trial corrected p-value is then $\num{0.30}$ corresponding to $1.0\SIsigma{3}$, obtained by inserting the smallest pre-trial value in the survival function of the empirical post-trial distribution.
 \TODO{Show TS plots with result line.}
 
 \begin{table}[htbp]
