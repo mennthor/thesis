@@ -263,20 +263,34 @@ Because of the precise timing information, there is no relevant time uncertainty
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time dependent Likelihood}
 To test for time dependent emission in this analysis, the general extended Likelihood is altered to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
+As the name may indicate, the source emission is assumed to be per-burst with a fluence $\Phi$ rather than a time-dependent flux.
+
 This includes explicit assumptions about the temporal source emission PDFs and simplifications of the general Likelihood formula introduced before.
 The simplifications need to be applied mainly because when choosing small time windows the analysis deals with a very low amount of leftover events.
 Therefore the number of free parameters needs to be reduced as much as possible without introducing too many a priori assumptions to stick to a rather general search method because the source types themselves are unknown.
 
-Here, a rather general assumption about the source emission is used by choosing rectangle functions \TODO{cite or def of rect fun} for the time windows, having only a non-zero contribution within pre-defined source time windows
+Here, using the burst model, a rather general assumption about the source emission is made.
+The time PDFs are therefore constructed using rectangle functions
+\begin{equation}
+  \rect(t)
+  = \Theta\left(t+\frac{1}{2}\right) \cdot \Theta\left(t-\frac{1}{2}\right)
+  = \begin{cases}
+      1 &\text{ , if}\quad |t| \leq \frac{1}{2} \\
+      0 &\text{ , if}\quad  t    >  \frac{1}{2} \\
+    \end{cases}
+  \mcomma
+\end{equation}
+where $\Theta$ is the Heaviside step function \CITE{AbramovitzStegun}.
+This way, each source is having only a non-zero emission contribution within its pre-defined source time window
 \begin{equation}
   S_{i,k}^T = B_{i,k}^T = T_k(t_i) \coloneqq
     \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
                               {t_k^1-t_k^0}\right)
-  \mcomma
+  \mperiod
 \end{equation}
-which effectively cuts out a subset of events around the sources time stamps $t_k$ and the corresponding time interval around each source $[t_k^0, t_k^1]$.
+This effectively cuts out a subset of events around the sources time stamps $t_k$ and the corresponding time interval around each source $[t_k^0, t_k^1]$ and is a background rejection technique only, because any underlying temporal dependence on the source emission flux is discarded.
 The most simple case is then to have each source in its own, non-overlapping time window so that each source has a unique set of events belonging to it, which is the case in this analysis.
-Note that no separation-power stems from these time PDFs, they are merely used to reduce the background rate under the assumption of a temporally concentrated emission.
+Note again that no separation-power stems from these time PDFs, they are merely used to reduce the background rate under the assumption of a temporally concentrated emission.
 
 One important simplification of the general Likelihood that is applied is that the background expectations are not fitted, but rather fixed from the integrated off-time data rate over the range of the background time PDFs.
 This decreases the number of parameters to fit for because it unifies and fixes the background estimators to
@@ -421,13 +435,13 @@ To calculate the a-priori weights $w_j$ the law of total probability is applied 
   \mcomma
 \end{equation}
 because only the conditional probability contribution $P(j|k)$ from each source $k$ per sample $j$ is known, but not the joint distribution $P(j,k)$.
-That means, the needed probability $P(j)$ of getting a signal contribution $n_S w_j$ from sample $j$ splits into $P(j|k)$ and $P(k)$.
+% That means, the needed probability $P(j)$ of getting a signal contribution $n_S w_j$ from sample $j$ splits into $P(j|k)$ and $P(k)$.
 $P(j|k)$ is the probability of getting signal from source $k$ within sample $j$, normalized over all samples
 \begin{equation}
   \sum_{j=1}^{N_\text{sam}} P(j|k) = 1
   \mperiod
 \end{equation}
-Additionally, $P(k)$ is the probability of getting signal from source $k$ at all within any sample, separately normalized over all sources separately
+Additionally, $P(k)$ is the probability of getting signal from source $k$ at all within any sample, separately normalized over all sources
 \begin{equation}
   \sum_{k=1}^{N_\text{srcs}} P(k) = 1
   \mperiod
@@ -445,10 +459,10 @@ These relations can also be written in a concise matrix notation
     \end{pmatrix}
   \mperiod
 \end{equation}
-The unnormalized signal expectation values can be obtained in each sample by calculating the expected number of events from a signal simulation which usually differs for each detector configuration and sample selection criteria.
+The unnormalized, conditional signal expectation values can be obtained in each sample by calculating the expected number of events from a signal simulation which usually differs for each detector configuration and sample selection criteria.
 These values can then be used to normalize the matrix per column and construct the $P(k)$ vector by summing over each column per source $k$.
 
-The most complex weighting case in this scenario would be multiple sources that have time PDFs overlapping in their emission region and also are leaking into another data sample.
+The most complex weighting case in this scenario would be multiple sources that have time PDFs overlapping in their emission region and are also leaking into another data sample.
 The formalism above still applies, and the sample splitting weighs can be obtained by integrating the time emission PDFs per sample to obtain the relative emission strength for the source portions lying in each sample.
 These are then multiplied with the usual declination dependent weights per sample to form the $P(j|k)$ entries of the above matrix.
 The weighting within each sample wouldn't be affected and is still valid as explained in the previous section.
@@ -651,18 +665,18 @@ This may also be seen as a special case for the time-dependent Likelihood weight
 
 A notable difference arises if another global fit parameter is introduced alongside the mandatory $n_S$.
 This is often done to better adapt to the unknown signal hypothesis and in a time-integrated analysis, the statistics are usually sufficient to reliably fit an additional parameter.
-Usually, this a parameter describing the signal flux hypothesis and is modelled as a single unbroken power law with spectral index $\gamma$ in the energy PDF term
+Usually, this a parameter describing the signal flux hypothesis and is modelled as a single unbroken power law with spectral index $\gamma_k$ per source in the energy PDF term
 \begin{equation}
-  w_j^{S,E}(\vec{x}_k, \gamma)
+  w_j(\vec{x}_k, \gamma_k)
   = \frac
       {
-        \int_0^\infty A_{j,\text{eff}}(E,\Omega_k)\cdot
-          \Phi(E, \Omega_k, \gamma)\,\d{E}
+        T_j \cdot \int_{E_\nu} A_{j,\text{eff}}(E_\nu,\Omega_k)\cdot
+        \phi(E_\nu, \Omega_k | \gamma_k)\,\d{E_\nu}
       }
       {
         \sum_{m=1}^{N_\text{srcs}}
-        \int_0^\infty A_{j,\text{eff}}(E,\Omega_m)\cdot
-          \Phi(E, \Omega_m, \gamma)\,\d{E}
+        T_m \cdot \int_{E_\nu} A_{m,\text{eff}}(E_\nu,\Omega_k)\cdot
+        \phi(E_\nu, \Omega_k | \gamma_k)\,\d{E_\nu}
       }
   \mperiod
 \end{equation}
@@ -697,6 +711,11 @@ In the time-independent case, all sources have the same linear dependence on the
 \end{equation}
 and are expected to emit for the whole sample livetime, so all integrals over the temporal part are equal.
 Only when considering fluxes differential in time with different emission profiles, the integral contributions differ and the stacking weights become truly time dependent.
+It is also possible to split time dependent sources across multiple sample with this formalism.
+If they are assumed to depend on a flux, then the portion of the flux PDF in each sample can be computed.
+If using a per-burst scenario the time evolution information is lost, so a fair approach would be to assume a uniform dependence and again see how much is in each sample.
+Repeating sources in per-burst scenarios can be treated by assuming that each burst is a separate source and making sure, that time windows do not overlap.
+The latter is needed, because a source can't emit two bursts at the same time.
 
 The third common scenario is that sources also vary in their energy dependence for their intrinsic flux strengths.
 Usually this happens in the for of altering the spectral index of the assumed power law flux.
@@ -747,7 +766,7 @@ The normalized weights per source in a single sample can be constructed by
 This effective area formulation holds for calculating the multi sample splitting weights as well as for the expected $n_S$ splitting within a single sample, because it generally calculates the detector efficiency to a given flux or fluence hypothesis.
 
 In practice to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
-The OneWeight per event $i$ is defined as \CITE{oneweight finley?, sim paper?}
+The OneWeight per event $i$ is defined as \CITE{ANIS}
 \begin{align}
   \text{OneWeight}_i
   &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
