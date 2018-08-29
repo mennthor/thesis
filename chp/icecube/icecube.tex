@@ -44,6 +44,7 @@ Therefore IceCube detects neutrinos indirectly via the Cherenkov effect.
 Neutrinos can undergo neutral current and charged current interaction with matter in the detection volume.
 The interactions are the same for all three lepton flavours $l$:
 \begin{equation}
+  \label{equ:nu_interactions}
   \nu_l + X \rightarrow Z^0 \rightarrow \nu'_l + X'
   \mintertext{and}
   \nu_l + X \rightarrow W^{\pm} \rightarrow l + X'
@@ -53,7 +54,7 @@ For the energies considered at IceCube, the interactions are dominated by deep i
 Combined CC and NC cross sections are in the order of $\SI{e-35}{\cm\squared}$ for a $\SI{1}{\TeV}$ or $\SI{e-33}{\cm\squared}$ for a $\SI{1}{\peta\eV}$ neutrino.
 For example, a $\SI{1}{\TeV}$ neutrino has an interaction length of roughly $\SI{2.5e6}{\km}$ in water \CITE{Gandhi}.
 
-In neutral current interactions neutrinos interact via an intermediate $Z^0$ boson with a nucleus, generally noted as $X$ in the above equation.
+In neutral current interactions neutrinos interact via an intermediate $Z^0$ boson with a nucleus, generally noted as $X$ in the reaction equation~(\ref{equ:nu_interactions}).
 The Z boson carries no charge resulting in an unchanged flavour neutrino final state, where only energy is transferred between nucleus and neutrino.
 These interactions produce rather spherical, cascade-like signatures in the detector, indistinguishable from which flavour they originated.
 
@@ -87,7 +88,7 @@ Two exemplary event displays of a cascade and track-like event are shown in figu
   \label{fig:icecube_events_topologies}
 \end{figure}
 
-Despite the different interaction types, the detection principle is the same for all mentioned above.
+Despite the different interaction types, the detection principle remains the same for all signatures mentioned above.
 When energy is deposited in the detector, secondary charged particles are created which, at the high energies considered here, travel through the matter faster than the effective speed of light in the medium.
 During their passage through matter, Cherenkov light gets emitted along their path.
 The light is emitted at an angle given in first order by the relation
@@ -95,8 +96,8 @@ The light is emitted at an angle given in first order by the relation
   \Theta = \arccos\left(\frac{1}{\beta n}\right)
 \end{equation}
 with the refractive index $n$ of the traversed medium an $\beta = v/c$ the particle speed in units of the vacuum speed of light $c$ \CITE{Cherenkov paper / book?}.
-Typical interactions of the charged primary lepton are ionization, photonuclear, pair production and Bremsstrahlung losses where the latter three start to dominate the energy loss for muon energies above some \SI{10}{\tera\eV}.
-The Cherenkov light yield from the secondary charged particles originating from the lepton's interaction point is typically higher than the one from the primary lepton itself \CITE{PROPOSAL paper, light-yield???}.
+Typical interactions of the charged primary lepton are ionization, photonuclear, pair production and Bremsstrahlung losses where the latter three start to dominate the energy loss for muon energies higher than some \SI{10}{\tera\eV}.
+The combined Cherenkov light yield from the secondary charged particles originating from the lepton interaction points is typically higher than the yield from the primary lepton itself \CITE{PROPOSAL paper, Wiebusch Ch light yield with Geant 4}.
 
 The Cherenkov photons travel through the ice and may be detected in one of the photomultiplier tubes inside the DOMs which are able to detect single photon hits.
 The Antarctic ice as a natural medium is not perfectly isotropic and has depth and direction dependent absorption and scattering properties which was observed by using artificially injected light signals from LEDs built into the DOM cases.

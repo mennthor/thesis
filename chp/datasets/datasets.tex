@@ -116,7 +116,7 @@ Due to the lack of a proper test statistic, the Likelihood value $\mathcal{L}_\t
     \left(1 - \int_0^{6^2}\chi^2_{2}(x)\d{x}\right)
   \mperiod
 \end{equation}
-The resulting maps can then be used as spatial PDF maps and are later sampled during the signal injection trials described in the analysis sections.
+The resulting maps can then be used as spatial PDF maps and are later sampled during the signal injection trials described in the analysis sections~\ref{chp:time_dep} and~\ref{chp:time_indep}.
 For each event, the tested source position is defined as the direction of the pixel from the smoothed, equatorial PDF map with the highest value.
 These coordinates are slightly different to the published equatorial HESE coordinates due to the necessary map processing procedure.
 But this ensures that the sampling procedure from the map does not introduce a bias by sampling the most likely source position not exactly at the tested one.
@@ -230,7 +230,7 @@ The simulation sets are computed by the collaboration using a software based on 
 For the Monte Carlo datasets, additionally, the ground simulation truth is also available to study the effects of the detection mechanism on the incident neutrino signal.
 Added are the true neutrino direction in equatorial coordinates, the true neutrino energy and a weight \lstinline!'ow'! \footnote{Named accordingly with keys \lstinline!'trueRa', 'trueDec', 'trueE', 'ow'!} , with the energy in GeV and the angles given in radian.
 The attribute \lstinline!'ow'!, short for \emph{OneWeight}, contains a per-event simulation weight that allows mapping the number of produced simulation events to an expectation value for the desired target flux that can be directly compared to measured data.
-More details on the OneWeight in later chapters.
+More details on the OneWeight is given in equation~(\ref{equ:oneweight_definition}).
 Just note that OneWeight is already divided by the number of simulated events in total for the standardized data set used here, which is, in general, not the case for other datasets.
 The simulation data is used for building the model PDFs in the Likelihood construction, described in the next chapters.
 Another important step, that is already included in the standardized dataset is the so-called \emph{pull correction}.

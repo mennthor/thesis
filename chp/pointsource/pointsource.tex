@@ -62,7 +62,7 @@ and from the Poisson condition there is still the constrain
   \mperiod
 \end{equation}
 
-For testing the significance of a potential signal contribution in the measured data, a Likelihood ratio test is used \footnote{See section~(\ref{chp:pointsource_frequentist}) for an introduction to frequentist methods}.
+For testing the significance of a potential signal contribution in the measured data, a Likelihood ratio test is used \footnote{See section~\ref{chp:pointsource_frequentist} for an introduction to frequentist methods}.
 The null hypotheses $H_0$, which means that only background is expected to be measured, is constructed by using only a portion $\Theta_0$ of the allowed parameter space, here by setting all signal expectations to zero
 \begin{equation}
   \ln\mathcal{L}_0(\{\lambda_{k,S}=0\}, \{\lambda_{k,B}\})
@@ -148,7 +148,7 @@ For most IceCube point source searches, the signal and background contributions 
        B^T(t_i, t_k)
 \end{align}
 where $\gamma$ is the shape parameter of a signal flux usually assumed to be a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux describing the background flux dependency.
-The event times $t_i$ and source times $t_k$ define the time dependent emission-model and $\delta_i$ is the declination angle, described in more detail in chapter~(\ref{chp:datasets}).
+The event times $t_i$ and source times $t_k$ define the time dependent emission-model and $\delta_i$ is the declination angle, described in more detail in chapter~\ref{chp:datasets}.
 Note that the PDFs defined in equation~(\ref{equ:general_pdfs}) are used in various analysis but neglect some correlations, which will be explained in more detail in this chapter.
 Also, note that only variables known on experimental data can be used and no simulation ground truth is known on actual data.
 
@@ -235,7 +235,7 @@ to obtain the intrinsic distribution.
 
 In practice, the integrals may be obtained using histograms in reconstructed declination and an energy estimator from simulations for signal and from either simulations or measured data for the background distributions.
 
-To obtain the convolved PDFs that also take into account the per event uncertainty for each event in energy and position, the same ansatz as for the signal PDFs in section~(\ref{chp:pointsource_signal_pdf}) can be used
+To obtain the convolved PDFs that also take into account the per event uncertainty for each event in energy and position, the same ansatz as for the signal PDFs in section~\ref{chp:pointsource_signal_pdf} can be used
 \begin{align}
   S^E(E_i, \delta_i|\gamma) &=
     \int_E\int_\Omega f(\vec{x}_i, E_i)\hat{S}^E\,\d{E}\d{\vec{x}} \\
@@ -339,6 +339,7 @@ If the true scenario strongly differs from the assumed weights, very little can 
 
 
 \subsection{Single sample stacking case}
+  \label{chp:pointsource_tdep_llh_single}
 Shown here is, that the assumption of independent time windows for the sources simplifies the test statistic further.
 The expression can be rearranged to an explicit sum of logarithms, that better resembles the uniqueness of each source in its time window.
 
@@ -468,7 +469,7 @@ These values can then be used to normalize the matrix per column and construct t
 The most complex weighting case in this scenario would be multiple sources that have time PDFs overlapping in their emission region and are also leaking into another data sample.
 The formalism then still applies, and the sample splitting weighs can be obtained by integrating the time emission PDFs per sample to obtain the relative emission strength for the source portions lying in each sample.
 These are then multiplied with the usual declination dependent weights per sample to form the $P(j|k)$ entries of the matrix in expression~(\ref{equ:sample_w_matrix}).
-The weighting within each sample wouldn't be affected and is still valid as explained in the previous section.
+The weighting within each sample wouldn't be affected and is still constructed as explained in the previous section~\ref{chp:pointsource_tdep_llh_single}.
 
 For the special case treated here, with each source having its unique time window and also falling exclusively in a single sample, each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
 The probabilities $P(k)$ can be obtained by using the un-normalized source stacking weights regardless of the sample $\tilde{w}_k$ and re-normalize them over all sources in all samples
@@ -512,6 +513,7 @@ This expression nicely demonstrates the circumstances here, namely that each sou
 % %% Derivation of classic time integrated LLH used within Skylab
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time integrated Likelihood}
+  \label{chp:pointsource_time_int_llh}
 The standard time integrated Likelihood formula used in IceCube point source searches can also be derived from the general, extended Likelihood formula.
 A different approximation than in the time-dependent case is used, which takes into account the usually larger statistics in a time-integrated sample as all events count and not only these in temporal coincidence with any source.
 
@@ -662,7 +664,7 @@ inserted in the familiar combination of single sample Likelihoods
   \mperiod
 \end{align}
 The number of events $N_j$ is now related to the number of events per sample $j$, the number of sources is the same in each sample, because of the steady state emission scenario.
-Also the PDFs $S_{i,k,j}$, $B_{i,j}$ and stacking weights $w_{k,j}$ are taken and normalized per sample as seen before in the time dependent Likelihood, section~(\ref{chp:pointsource_tdep_llh}).
+Also the PDFs $S_{i,k,j}$, $B_{i,j}$ and stacking weights $w_{k,j}$ are taken and normalized per sample as seen before in the time dependent Likelihood, section~\ref{chp:pointsource_tdep_llh}.
 
 Because all sources contribute in all times and thus all samples, the weights are not written out in a compact form here, but they still represent the relative sensitivity of a single sample to a given source hypothesis combined with the global sensitivity to a single source across all samples.
 This may also be seen as a special case for the time-dependent Likelihood weights, where all the time windows for signal and background are as large as the sample livetimes.
@@ -775,6 +777,7 @@ This effective area formulation holds for calculating the multi sample splitting
 In practice to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
 The OneWeight per event $i$ is defined as \CITE{ANIS}
 \begin{align}
+  \label{equ:oneweight_definition}
   \text{OneWeight}_i
   &= p_\text{int}\frac{\int_\Omega\int_{E_0}^{E_1}
                        \Phi_\text{gen}(E_i)\d{E}\d{\Omega}

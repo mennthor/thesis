@@ -1,5 +1,5 @@
 \chapter{Time dependent analysis}
-
+  \label{chp:time_dep}
 Despite the coincidence of the Blazar TXS 0506+056 and a single ultra-high-energy neutrino together with the evidence for a temporally constrained neutrino flux about three years earlier, lasting 110 days, no other significant result of neutrino point source searches were obtained in the last years.
 Most prominent examples are the generic all-sky search which scans the whole sky for an unknown neutrino emitter with a large amount of data.
 Three analysis stand out in this scenario.
@@ -83,6 +83,7 @@ The rate information is smoothed by re-binning the per run rate bins using a mon
 
 To get a continuous model for the background expectation per bin, a model
 \begin{equation}
+  \label{equ:rate_model}
   f(t)
   = A\cdot
     \sin\left(\frac{2\pi}{T}\left(t - t_0\right)\right) + R_0
@@ -92,7 +93,7 @@ The free parameters are amplitude $A$ and average rate $R_0$ both in $\si{\per\s
 For the fit in each bin the period length $T$ is fixed to $365$ days, the natural scale for the seasonal variations and the time offset $t_0$ is fixed from a fit with more statistics using the whole dataset \TODO{Add rate plots to app.}.
 
 Having obtained the set of discrete background expectations from the two fit parameters per rate model, a smoothing spline is used to continuously model the fit parameter dependence on declination \TODO{err. scans in the app.?}.
-Finally, to get the background PDFs per source, the set of rate model parameters is read off from the built splines on a fine $\sin(\delta)$ grid and plugged into the rate model above.
+Finally, to get the background PDFs per source, the set of rate model parameters is read off from the built splines on a fine $\sin(\delta)$ grid and plugged into the rate model~(\ref{equ:rate_model}).
 For each parameter set, the model is integrated over the sources time window to obtain an average background PDF per source.
 To evaluate the PDf for each events' declination an interpolating spline is used to include the dense grid in a continuous model.
 
@@ -400,6 +401,7 @@ The signal simulation is weighted to a per-burst emission to describe the tested
 Per-burst emission means that the total number of expected signal events is independent of the emission-time window, which is reflected by the rectangle function PDFs in the Likelihood.
 To correctly insert events corresponding to the desired target fluence, the already shown weighting scheme using OneWeight is used
 \begin{equation}
+  \label{equ:sig_inj_weights}
   w_{i,k} = w_k \frac{\text{OneWeight}'_i \cdot \Phi(E_{\nu,i})}{\Omega_k}
   \mperiod
 \end{equation}
@@ -418,7 +420,7 @@ However, in the limit calculation, this lack of information can be incorporated 
 The whole process is then done as follows.
 For each source, the pool of simulation events is selected in a declination band around the best-fit source positions, which are also tested against in the Likelihood formulation.
 The bands' upper and lower borders around each source are chosen by scanning the $\SIsigma{3}$ contour from the corresponding source prior map and selecting the minimum and maximum declinations from the contour line.
-For all selected events the injection weights are computed as shown above.
+For all selected events the injection weights are computed as shown in equation~(\ref{equ:sig_inj_weights}).
 For the actual injection during trial sampling, the events from the prepared pool are sampled randomly automatically respecting each sources contribution due to the weight construction and the intrinsically simulated signal efficiency.
 The number of events drawn in total is given as a Poisson mean number of signal events and fluctuates according to the Poisson distribution around that value for each trial.
 To account for the unknown source positions, new point-like source positions are drawn for each trial.
@@ -434,7 +436,7 @@ This injection mode worsens the analysis performance and limits but represents a
 The combination of several injectors per sample to simulate the signal for the multi-sample Likelihood is done by distributed sampling from each single sample injector.
 For a proper distribution of the requested number signal events to each injector, a similar weighting ansatz is used as for the multi-Likelihood $n_S$ splitting weights.
 The relative amount of signal per emitter depends on the total fluence expected to be emitted from a particular set of sources in a single sample.
-For a single injector, each event has weights as shown above.
+For a single injector, each event has weights as shown in~(\ref{equ:sig_inj_weights}).
 To construct a multi-injector, which basically injects from a combined, virtual sample, the intrinsic source weights need to be re-normalized to all sources in all injectors.
 This catches the circumstance, that each source is unique in each sample.
 The multi-injector construction for the steady state emission scenario works similar, but with a different assumption on the source emission.
@@ -460,18 +462,17 @@ During sampling, the split number of events for the current trial is sampled fro
 \section{Performance estimation}
 The a priori question asked here is, how much signal would be needed from the source collection in order to obtain a given significance in the final analysis.
 For this, the performance is estimated by injecting a mean number of events for a given grid of mean signal strength values and doing a number of trials at each grid point.
-Each trial the actual number of injected signal events is drawn from a Poisson distribution with the current mean to simulate the measurement process.
-These trials are used to obtain Neyman upper limits \CITE{Neyman paper(s)} for the needed fluence strength.
+In each trial, the actual number of injected signal events is drawn from a Poisson distribution with the currently selected mean number of events from the source to simulate the measurement process.
+These trials are used to obtain Neyman upper limits for the needed fluence strength \footnote{See section~\ref{chp:pointsource_frequentist} for the introduction on how to obtain confidence intervals.}.
 
 After creating a test statistic for all tested signal strengths, a generic $\chi^2$ CDF is fit to the discrete points.
 While not having a justified connection to the distributions, the function is variable enough to smoothly interpolate the sampled points.
 This way the desired performance values over a given test statistic value from pure background trials can easily be obtained from the well behaved $\chi^2$ CDF.
 
 The advantage of this method is, that trials can be reused to evaluate multiple performance definitions if the statistics are high enough.
-Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively $\SI{90}{\percent}$ signal over zero background test statistic, $\SI{90}{\percent}$ signal over $\SIsigma{3}$ background test statistic and for discovery potential $\SI{90}{\percent}$ over $\SIsigma{5}$ was used here. The usual $\SI{50}{\percent}$ above $\SIsigma{5}$ yield to better discovery potential than sensitivity on first sight, which may be slightly confusing on first sight, so the $\SI{90}{\percent}$ definition was used.}.
+Here $\num{20000}$ trials were done at each grid point, which is enough for the usual definitions of least detectable signal, sensitivity and discovery potential \footnote{Respectively $\SI{90}{\percent}$ signal over zero background test statistic, $\SI{90}{\percent}$ signal over $\SIsigma{3}$ background test statistic and for discovery potential $\SI{90}{\percent}$ over $\SIsigma{5}$ was used here. The usual discovery potential definition $\SI{50}{\percent}$ above $\SIsigma{5}$ yield to smaller values for the discovery potential than for the sensitivity, which may be slightly confusing on first sight, so the $\SI{90}{\percent}$ definition was used.}.
 Another advantage is, that the whole Neyman grid construction can be visually inspected to see if any errors occurred during the minimization or trial generation \TODO{Neyman grid in app.}.
-\TODO{Maybe make FC limits from trials by applying FC weighting scheme.}
-Errors on the limits or bounds obtained from the fitted $\chi^2$ CDF could be obtained via trial bootstrapping and refitting but is neglected here due to the high number of trials done per grid point and the dense grid itself.
+Errors on the limits or bounds themselves obtained from the fitted $\chi^2$ CDF could be obtained via trial bootstrapping and refitting but is neglected here due to the high number of trials done per grid point and the dense grid itself.
 
 A given true, mean injection strength can be converted to a physical intrinsic fluence at the sources.
 This conversion follows straight from the weighting relation between the fluence and number of events, as shown earlier
@@ -503,6 +504,7 @@ Another usual convention is to use the normalization at $\SI{100}{\TeV}$ which d
 \TODO{Show chi2 fits, show time win vs. perf. curves}
 
 \section{Post trial method}
+  \label{chp:time_dep_post_trial}
 In this analysis, the Likelihood is only fitted for the single signal strength parameter $n_S$ because a two-parameter fit the number of events in the same order for small time windows is not feasible.
 Nevertheless, multiple time windows are tested because a possible true time window size is unknown.
 By doing the grid scan in $\num{21}$ different time windows, a trial factor needs to be regarded \CITE{LLH methods for HE Phys?}.
@@ -557,7 +559,7 @@ For the final result, the single fit for each time window is undergoing the same
 \section{Results}
 The so far held back on-time data, containing all events within any of the largest time windows around any source are used to do a single fit per time window with the prepared Likelihood models.
 This yields $\num{21}$ fit results, one for each time window with a single pre-trial p-value for each one.
-Afterwards, the post-trial significance is calculated by selecting the best p-value and comparing it to the post-trial test statistic constructed above.
+Afterwards, the post-trial significance is calculated by selecting the best p-value and comparing it to the post-trial test statistic constructed as described in section~\ref{chp:time_dep_post_trial}.
 
 No significant excess of neutrinos is seen in the stacked search around the $\num{22}$ proposed HESE events taken as source positions.
 Table~(\ref{tab:time_dep_results}) summarizes the pre-trial fit results.

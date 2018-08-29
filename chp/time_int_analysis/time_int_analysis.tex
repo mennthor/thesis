@@ -1,7 +1,7 @@
 \chapter{Time integrated analysis}
-
+  \label{chp:time_indep}
 Another analysis was performed to test for a potential steady flux scenario from the HESE event positions.
-This may be seen as the special case to the previous analysis using time windows as large as all samples combined across all sources.
+This may be seen as the special case to the previous analysis in chapter~\ref{chp:time_dep} using time windows as large as all samples combined across all sources.
 The computing part is done using the \lstinline!skylab! \CITE{skylab, coenders phd} module which is a versatile tool for performing various types of time-integrated point source searches in IceCube.
 Therefore the technical details of the implementation can be reviewed in the module description and only a short summary focusing on the key differences to the time-dependent search is given in this chapter.
 
@@ -9,7 +9,8 @@ As mentioned before, no significant excess of neutrinos at any location on the s
 The results also indicate, that at each HESE position no significant source can be identified.
 This motivates to conduct a time-independent search independently of the previous time-dependent one, to check for the possibility that possible sources that may have emitted the HESE events are only yielding enough events in a combined search.
 
-The method used in this analysis is similar to the previous one and uses the same Likelihood mechanism as derived in the dedicated chapter using different approximations suitable for large statistics samples and a steady source scenario \CITE{Could cite aachen 6yr 100 astro evts on 100k atmo}.
+The method used in this analysis is similar to the previous in chapter~\ref{chp:time_dep} and uses the same underlying Likelihood mechanism.
+The detailed derivation of the used formula using different approximations suitable for large statistics samples and a steady source scenario can be seen in the dedicated section~\ref{chp:pointsource_time_int_llh}.
 The fact that all sources are assumed to contribute to the common neutrino flux at all times throughout all samples simplifies the construction of background PDFs and the process of trial generation.
 Therefore no splitting in off- and on-data regions is done beforehand.
 By scrambling all data events in right-ascension before building any PDFs or doing trials, the experimental data is kept \enquote{blinded}.
@@ -50,7 +51,7 @@ The energy PDF needs to be built and evaluated for multiple power law spectral i
 To avoid long computing times by re-calculating the PDF for every occurring index, the energy PDF is built in three instead of two dimensions and cached beforehand.
 
 For a fixed index $\gamma$ the histograms are built as before from data and signal simulation with the same binning and the ratio built to describe the signal over background ration for the energy term.
-For simulated signal data, the number of events per bin can be computed using the modified OneWeight \footnote{See previous chapters for a more detailed introduction of OneWeight.}
+For simulated signal data, the number of events per bin can be computed using the modified OneWeight \footnote{See equation~(\ref{equ:oneweight_definition}) for a more detailed description of OneWeight.}
 \begin{equation}
   N(\Delta E, \Delta\delta)
   = T\cdot \sum_{(i|E_{\nu,i}\in\Delta E, \delta_i\in\Delta\delta)}
