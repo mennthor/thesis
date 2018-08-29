@@ -14,15 +14,6 @@ Starting from a general unbinned, extended Likelihood approach, the special case
 Particular cases handling multiple years of data from different detector configurations and multiple sources for the so-called stacking case are derived from the basic form.
 In the following a single event is noted with index $i$, a source with index $k$ and a data sample with index $j$.
 
-Significances are obtained using frequentist methods in this thesis \CITE{Some stats book, Fischer?}.
-A p-value $p$ gives the probability to obtain the given or a larger test statistic value under the assumption that the null hypothesis holds
-\begin{equation}
-  p \coloneqq \int_x^\infty f_{H_0}(-2\ln\lambda) \d(x)
-\end{equation}
-where $f_{H_0}(-2\ln\lambda)$ is the test statistic distribution under the null hypothesis $H_0$.
-A small p-value thus indicates a strong deviation from the test result from the expected behaviour of the null hypothesis.
-It does not imply the truth of the alternative hypothesis though, but only that it is so unlikely for the data to originate from the null hypothesis distribution \CITE{Casella Berger}.
-
 \section{Extended unbinned Likelihood}
 The extended Likelihood \CITE{Barlow book} and the corresponding logarithmic extended Likelihood function is defined as
 \begin{equation}
@@ -48,6 +39,7 @@ To obtain a fairly general expression to derive the point source special cases f
 The single $\lambda_k$ can be negative but their sum must not, because it is still a Poisson expectation parameter.
 Additionally, the new split model is normalized over all classes to arrive at the form
 \begin{equation}
+  \label{equ:extended_llh}
   \ln\mathcal{L}(\{\lambda_k\})
   = -\sum_{k=1}^{N_\text{classes}} \lambda_k +
     \sum_{i=1}^N \ln\left(\sum_{k=1}^{N_\text{classes}}
@@ -56,7 +48,7 @@ Additionally, the new split model is normalized over all classes to arrive at th
 \end{equation}
 
 To specialize more, it is usually desired to test a signal hypothesis against a background one, for $N_\text{srcs}$ sources in general, for each event $i$.
-The above expression is thus expanded to include $N_\text{srcs}$ signal and $N_\text{srcs}$ background parameters and the corresponding distributions $S_{i,k}$ and $B_{i,k}$:
+The above expression~(\ref{equ:extended_llh}) is thus expanded to include $N_\text{srcs}$ signal and $N_\text{srcs}$ background parameters and the corresponding distributions $S_{i,k}$ and $B_{i,k}$:
 \begin{equation}
   \ln\mathcal{L}(\{\lambda_{k,S}\}, \{\lambda_{k,B}\})
   = -\sum_{k=1}^{N_\text{srcs}}\left(\lambda_{k,S}+\lambda_{k,B}\right) +
@@ -70,7 +62,7 @@ and from the Poisson condition there is still the constrain
   \mperiod
 \end{equation}
 
-For testing the significance of a potential signal contribution in the measured data, a Likelihood ratio test is used.
+For testing the significance of a potential signal contribution in the measured data, a Likelihood ratio test is used \footnote{See section~(\ref{chp:pointsource_frequentist}) for an introduction to frequentist methods}.
 The null hypotheses $H_0$, which means that only background is expected to be measured, is constructed by using only a portion $\Theta_0$ of the allowed parameter space, here by setting all signal expectations to zero
 \begin{equation}
   \ln\mathcal{L}_0(\{\lambda_{k,S}=0\}, \{\lambda_{k,B}\})
@@ -101,6 +93,7 @@ The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H
 where $\hat{\Lambda}$ means the single test statistic value after finding the supremum of both nominator and denominator.
 This leads to the test statistic
 \begin{equation}
+  \label{equ:extended_llh_ts}
   \begin{aligned}
     -2\ln\hat{\Lambda}
     &= 2\ln(\mathcal{L}_1(\{\hat{\lambda}_{k,S/B}\})) -
@@ -120,10 +113,10 @@ This leads to the test statistic
 \end{equation}
 which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \CITE{Wilk paper and/or statistic book}.
 Here the parameters $\hat{\lambda}_{k,S/B}$ were introduced, which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
-As seen above, all best-fit parameters from both hypotheses have to be distinguished.
+As seen in expression~(\ref{equ:extended_llh_ts}), all best-fit parameters from both hypotheses have to be distinguished.
 That means it must be differentiated between the best fit parameters $\hat{\lambda}_{k,B}^{(0)}$ from the null hypothesis, which are in general not the same as $\hat{\lambda}_{k,B}$ from the alternative hypothesis.
 
-In the following sections, specific model choices for the signal and background distributions and approximating assumptions are shown, to transform the above expression to commonly known forms also used for the time-dependent search in this thesis.
+In the following sections, specific model choices for the signal and background distributions and approximating assumptions are shown, to transform expression~(\ref{equ:extended_llh_ts}) to more commonly known forms, and to the ones used for the time-dependent and time-integrated search in this thesis.
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,6 +134,7 @@ For time-dependent analyses, an extra time-dependent part is introduced.
 
 For most IceCube point source searches, the signal and background contributions can be written as independent products of a spatial, an energy and a time-dependent part as
 \begin{align}
+  \label{equ:general_pdfs}
   S_{i,k}
     &= S(\vec{x}_i, \vec{x}_{\mathrm{src},k}, E_i | \gamma)
      = S^S(\vec{x}_i, \vec{x}_{\mathrm{src},k}) \cdot
@@ -155,10 +149,11 @@ For most IceCube point source searches, the signal and background contributions 
 \end{align}
 where $\gamma$ is the shape parameter of a signal flux usually assumed to be a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux describing the background flux dependency.
 The event times $t_i$ and source times $t_k$ define the time dependent emission-model and $\delta_i$ is the declination angle, described in more detail in chapter~(\ref{chp_datasets}).
-Note that the PDFs defined above are used in various analysis but neglect some correlations, which will be explained in more detail in this chapter.
+Note that the PDFs defined in equation~(\ref{equ:general_pdfs}) are used in various analysis but neglect some correlations, which will be explained in more detail in this chapter.
 Also, note that only variables known on experimental data can be used and no simulation ground truth is known on actual data.
 
 \subsection{Spatial distribution}
+  \label{chp:pointsource_signal_pdf}
 The most important part in the search for neutrino point sources is the spatial clustering of events around a point in the sky.
 Without the spatial term, only an insensitive diffuse analysis would be performed.
 For data samples used in point source searches, there is a reconstructed estimate of the per event uncertainty available.
@@ -174,6 +169,7 @@ In a search for point sources at known positions, the distribution of a source p
 The per-event probability distribution is assumed to be a Gaussian PDF, which is connected to the construction of the per-event-uncertainty from a parabolic Likelihood space or a bootstrap algorithm.
 The resulting spatial signal distribution describing the probability of an event being spatially correlated to a given source with density profile $f(\vec{x}_k)$ can thus be expressed as a convolution of the Gaussian per event part and source distribution for the fixed source position
 \begin{equation}
+  \label{equ:spatial_pdf}
   S^S(\vec{x}_i, \vec{x}_k)
   = \int_\Omega \frac{1}{2\pi \sigma_i^2}
     \exp\left(-\frac{|\vec{x}-\vec{x}_i|^2}{2\sigma_i^2}\right) \cdot
@@ -190,7 +186,7 @@ For the point-source hypothesis, $f(\vec{x}_k)$ can be replaced with a delta dis
 for the spatial signal PDF.
 Assuming extended sources with a Gaussian density profile would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exists, resulting in a substitution of $\sigma_i \rightarrow \sqrt{\sigma_i^2 + \sigma_k^2}$ \CITE{Gaussian convolution}.
 
-The spatial background distribution is constructed similarly to the signal case above.
+The spatial background distribution is constructed similarly to the signal case in equation~(\ref{equ:spatial_pdf}).
 Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination dependent only.
 This may break down for time scales so small, that the earth's rotation doesn't smear out the slightly asymmetric distribution in azimuth angle, which can then be used as a drop-in replacement, but holds better the larger the regarded time windows get.
 This dependency is written in a general form here and can, for example, be constructed by computing histograms of experimental data, which is described later in more detail.
@@ -211,7 +207,7 @@ With
       \,\d{\vec{x}}
 \end{equation}
 the per-event distribution would be described in full detail.
-However, as the intrinsic background PDF $\hat{B}^S$ does not change much with declination and a closed form analytic description as in the Gaussian case above is not easily possible with $\hat{B}^S$ derived from histograms, the per-event-uncertainty is neglected.
+However, as the intrinsic background PDF $\hat{B}^S$ does not change much with declination and a closed form analytic description as in the Gaussian case for the signal PDF in~(\ref{equ:spatial_pdf}) is not easily possible, with $\hat{B}^S$ derived from histograms, the per-event-uncertainty is neglected.
 
 
 \subsection{Energy distribution}
@@ -239,7 +235,7 @@ to obtain the intrinsic distribution.
 
 In practice, the integrals may be obtained using histograms in reconstructed declination and an energy estimator from simulations for signal and from either simulations or measured data for the background distributions.
 
-To obtain the convolved PDFs that also take into account the per event uncertainty for each event in energy and position, the same ansatz as above can be used
+To obtain the convolved PDFs that also take into account the per event uncertainty for each event in energy and position, the same ansatz as for the signal PDFs in section~(\ref{chp:pointsource_signal_pdf}) can be used
 \begin{align}
   S^E(E_i, \delta_i|\gamma) &=
     \int_E\int_\Omega f(\vec{x}_i, E_i)\hat{S}^E\,\d{E}\d{\vec{x}} \\
@@ -263,6 +259,7 @@ Because of the precise timing information, there is no relevant time uncertainty
 % %% Special case GRB LLH
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time dependent Likelihood}
+  \label{chp:pointsource_tdep_llh}
 To test for time-dependent emission in this analysis, the general extended Likelihood is altered to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
 As the name may indicate, the source emission is assumed to be per-burst with a fluence $\Phi$ rather than a time-dependent flux.
 
@@ -285,6 +282,7 @@ The time PDFs are therefore constructed using rectangle functions
 where $\Theta$ is the Heaviside step function \CITE{AbramovitzStegun}.
 This way, each source is having only a non-zero emission contribution within its pre-defined source time window
 \begin{equation}
+  \label{equ:time_window_def}
   S_{i,k}^T = B_{i,k}^T = T_k(t_i) \coloneqq
     \rect\left(\frac{t_i - \frac{t_k^1-t_k^0}{2}}
                               {t_k^1-t_k^0}\right)
@@ -314,6 +312,7 @@ The test statistic then turns to the form
 
 The last Likelihood simplification performed, in the necessity to that a large number of free parameters cannot be fitted to very few events in a low background analysis, is to fix the relative signal expectations of each source a priori and only fit for the total expectation
 \begin{equation}
+  \label{equ:tdep_ts_general}
   \lambda_{k,S} = n_S \cdot w_k
 \end{equation}
 with a free global signal strength parameter $n_S$ and weights $w_k$ normalized so that
@@ -343,7 +342,7 @@ If the true scenario strongly differs from the assumed weights, very little can 
 Shown here is, that the assumption of independent time windows for the sources simplifies the test statistic further.
 The expression can be rearranged to an explicit sum of logarithms, that better resembles the uniqueness of each source in its time window.
 
-Starting from the test statistic from above
+Starting from the test statistic~(\ref{equ:tdep_ts_general})
 \begin{equation}
   -2\ln\hat{\Lambda}
   = -2\hat{n}_S +
@@ -355,7 +354,7 @@ Starting from the test statistic from above
   \mcomma
 \end{equation}
 and from the definition of the unique time windows, it can be seen that each event $i$ can only contribute to a single source $k$.
-The event belongs to the source in which time window it falls or to no source at all, where the time windows are defined as above
+The event belongs to the source in which time window it falls or to no source at all, where the time windows are defined as in~(\ref{equ:time_window_def})
 \begin{equation}
   T_k(t_i) \coloneqq \rect \left(
     \frac{t_i - \frac{t_k^1-t_k^0}{2}} {t_k^1-t_k^0}
@@ -451,6 +450,7 @@ Additionally, $P(k)$ is the probability of getting signal from source $k$ at all
 \end{equation}
 These relations can also be written in a concise matrix notation
 \begin{equation}
+  \label{equ:sample_w_matrix}
   \begin{pmatrix} w_1 \\ \vdots \\ w_{N_\text{sam}} \end{pmatrix} =
     \begin{pmatrix}
       P(j=0|k=0) & \dots & P(j=0|k=N_\text{srcs}) \\
@@ -466,8 +466,8 @@ The unnormalized, conditional signal expectation values can be obtained in each 
 These values can then be used to normalize the matrix per column and construct the $P(k)$ vector by summing over each column per source $k$.
 
 The most complex weighting case in this scenario would be multiple sources that have time PDFs overlapping in their emission region and are also leaking into another data sample.
-The formalism above still applies, and the sample splitting weighs can be obtained by integrating the time emission PDFs per sample to obtain the relative emission strength for the source portions lying in each sample.
-These are then multiplied with the usual declination dependent weights per sample to form the $P(j|k)$ entries of the above matrix.
+The formalism then still applies, and the sample splitting weighs can be obtained by integrating the time emission PDFs per sample to obtain the relative emission strength for the source portions lying in each sample.
+These are then multiplied with the usual declination dependent weights per sample to form the $P(j|k)$ entries of the matrix in expression~(\ref{equ:sample_w_matrix}).
 The weighting within each sample wouldn't be affected and is still valid as explained in the previous section.
 
 For the special case treated here, with each source having its unique time window and also falling exclusively in a single sample, each column has only a single entry which is $1$ after the trivial normalization. \TODO{Maybe put complete and explicit matrix and weights for the 22 HESE sources in the appendix.}
@@ -533,6 +533,7 @@ Starting again from the general form
 \end{equation}
 the following approximation can be used
 \begin{equation}
+  \label{equ:time_indep_fixed_expectation}
   \sum_{k=1}^{N_\text{srcs}} \hat{\lambda}_{k,S} + \hat{\lambda}_{k,B} \approx
     \sum_{k=1}^{N_\text{srcs}} \hat{\lambda}_{k,B}^{(0)} \approx N
   \mperiod
@@ -578,7 +579,7 @@ Using the same argument for the background distributions in the nominator, the s
   \mperiod
 \end{align}
 
-Using the fixed expectation approximation from above again, the background parameter $\hat{\lambda}_B$ can be eliminated leaving $N_\text{srcs}$ free signal parameters, one for each source
+Using the fixed expectation approximation from~(\ref{equ:time_indep_fixed_expectation}) again, the background parameter $\hat{\lambda}_B$ can be eliminated leaving $N_\text{srcs}$ free signal parameters, one for each source
 \begin{align}
   -2\ln\hat{\Lambda}
   &= 2\sum_{i=1}^N \ln\left(
@@ -661,7 +662,7 @@ inserted in the familiar combination of single sample Likelihoods
   \mperiod
 \end{align}
 The number of events $N_j$ is now related to the number of events per sample $j$, the number of sources is the same in each sample, because of the steady state emission scenario.
-Also the PDFs $S_{i,k,j}$, $B_{i,j}$ and stacking weights $w_{k,j}$ are taken and normalized per sample as seen before in the time dependent Likelihood.
+Also the PDFs $S_{i,k,j}$, $B_{i,j}$ and stacking weights $w_{k,j}$ are taken and normalized per sample as seen before in the time dependent Likelihood, section~(\ref{chp:pointsource_tdep_llh}).
 
 Because all sources contribute in all times and thus all samples, the weights are not written out in a compact form here, but they still represent the relative sensitivity of a single sample to a given source hypothesis combined with the global sensitivity to a single source across all samples.
 This may also be seen as a special case for the time-dependent Likelihood weights, where all the time windows for signal and background are as large as the sample livetimes.
@@ -747,6 +748,7 @@ It is useful to imagine what happens if the proposed source class emits signal e
 As an example, a dependency on the source positions $\vec{x}_k$ and spectral indices $\gamma_k$ of the $n_S$ splitting weight per source $k$ is assumed.
 For actually calculating the signal efficiency and thus the expected number of events per source $N_k$ at detector level and for the final sample event selection from an intrinsic, linearly time-dependent neutrino flux $\phi$, the expression
 \begin{equation}
+  \label{equ:eff_area_analytic}
   N_k(\vec{x}_k, \gamma_k)
   = T \cdot \int_{E_\nu} \int_{\Omega_\nu} f(\vec{x}_k - \vec{x})
       A_\text{eff}(E_\nu,\Omega_\nu) \cdot
@@ -764,6 +766,7 @@ When using a time-integrated fluence $\Phi$ model, the livetime is obsolete and 
 \end{equation}
 The normalized weights per source in a single sample can be constructed by
 \begin{equation}
+  \label{equ:general_satcking_weights}
   w_k = \frac{N_k}{\sum_{m=1}^{N_\text{srcs}} N_m}
   \mperiod
 \end{equation}
@@ -798,11 +801,11 @@ When using OneWeight to express the generating flux the number of events can be 
 \end{align}
 where $N_\text{gen}$ is the generated total number of events summed over both particle and anti-particle types.
 This scaling makes sure, that the physical expectation value stays the same regardless of the number of simulated events.
-The sum can also be taken across subsamples of a whole data set to obtained differential event counts, e.g. per energy or solid angle to obtain approximations for the analytic formulas shown above.
+The sum can also be taken across subsamples of a whole data set to obtained differential event counts, e.g. per energy or solid angle to obtain approximations for the analytic formula~(\ref{equ:eff_area_analytic}).
 
 \subsection{Intrinsic source weights}
 Additional intrinsic source weights can be introduced to capture differences in the expected, relative fluxes or fluences from the sources themselves.
-This is decoupled from the actual detection mechanism and the detector efficiency weights described above.
+This is decoupled from the actual detection mechanism and the detector efficiency weights expressed by formula~(\ref{equ:general_satcking_weights}).
 The weight selection strongly depends on the used catalogue or source category and can, for example, be the gamma or x-ray flux or distance weighting \CITE{1, 2 analyses with this weighting}.
 These intrinsic source weights $w_k^\text{src}$ are independently multiplied with the corresponding detector weights $w_k^\text{det}$ to form the total source weights use in the stacking
 \begin{equation}
@@ -812,7 +815,7 @@ These intrinsic source weights $w_k^\text{src}$ are independently multiplied wit
 If the intrinsic source properties are not known or not reliably available otherwise, the intrinsic source weights are usually assumed to be equal.
 
 \subsection{Connecting weighting formulas}
-The connection to the effective area formula from above with the more practical one using simulation weights is shortly depicted below.
+The connection to the effective area formula~(\ref{equ:eff_area_analytic}) with the more practical one using simulation weights is shortly depicted below.
 From the definition of the effective area
 \begin{equation}
   A_\text{eff}(\Delta E, \Delta \Omega) =
@@ -879,3 +882,58 @@ is used, which is only valid for small integration intervals, because it assumes
   = \frac{1}{\Delta E}
   \mperiod
 \end{equation}
+
+
+\section{Frequentist methods}
+  \label{chp:pointsource_frequentist}
+In this thesis, significances for hypothesis tests are obtained using frequentist methods.
+This section shortly introduces the relevant terminology and is a summary of the extensive treatments in \CITE{CasellaBerger, Blobel, Barlow}.
+The methods used are \emph{point estimation} and \emph{interval estimation}.
+Usually, the result of a model-dependent point source search, as done here, is a single best fit result.
+This best fit result is the point in the considered space of free parameters, that gives the most likely model to describe the measured data.
+This is called a point estimate.
+To also obtain an estimate of the region of the true underlying physics parameters, an \emph{interval estimation} needs to be done.
+
+Point estimation is directly connected to hypothesis testing because for a given best-fit result, the significance of being compatible with the null hypothesis is wanted, to see if the alternative model is favoured.
+Therefore, the general procedure is to set the null hypothesis to a background-only assumption or the current understanding of the underlying physics.
+For a given point estimate, an incompatible result can give a reason to reject the null hypothesis and thus open the possibility to claim new discoveries.
+A p-value $p$ gives the probability to obtain the given or a larger test statistic value under the assumption that the null hypothesis holds
+\begin{equation}
+  p \coloneqq \int_x^\infty f_{H_0}(-2\ln\lambda) \d(x)
+\end{equation}
+where $f_{H_0}(-2\ln\lambda)$ is the test statistic distribution under the null hypothesis $H_0$.
+The test statistic is generated by doing pseudo experiments by drawing samples from a distribution, that resembles the parameter space of the null hypothesis.
+A small p-value indicates a strong deviation from the test result from the expected behaviour of the null hypothesis.
+It does not imply the truth of the alternative hypothesis though, but only that it is unlikely for the data to originate from the null hypothesis distribution.
+
+To obtain further information on the underlying true parameter, an interval estimation needs to be done.
+In general, a frequentist confidence region $[\theta_0, \theta_1]$ for a parameter $\theta$ at a confidence level $\alpha$ is defined to have the property of \enquote{covering the true parameter $\hat{\theta}$ in a fraction $\alpha$ of random measurements} \CITE{CasellaBerger}.
+Note, that the interval itself is a random quantity and may or may not contain the true parameter.
+Only a statement about ensembles of measurements can be made.
+By following the definition for a consistent construction of the intervals, it is ensured the desired coverage probability is reached.
+
+A general method to construct confidence intervals is the \emph{Neyman construction} \CITE{Neyman}.
+In a modern language, the method relies on the sampling of the probability space of the defined parameter space, creating sets of samples for which the true parameters are known.
+For example, a single parameter $n_S$ is fitted in a point source Likelihood, which is an estimator for the true, but unknown signal strength $\mu$.
+Using a set of experimental data $X=(x_1, \dots, x_N)$, a best-fit point estimator can be obtained by finding the parameter $\hat{n}_S$, that maximises the Likelihood
+\begin{equation}
+  \mathcal{L}(n_S) = \prod_{i=1}^N P(n_s|x_i)
+  \mperiod
+\end{equation}
+By performing pseudo experiments and creating samples for which the true parameter is scanned in a region of interest, a two-dimensional plane of the true and estimated parameter can be created for the example case here.
+To construct the confidence interval for $\mu$, first, an interval containing the probability $\alpha$ is created on the sampled statistic for each parameter $\mu_i$.
+This ensures a consistent treatment of the enclosed probabilities according to the definition.
+Then the confidence interval for $\mu$ from the single point estimate $\hat{n}_S$ at a $\alpha$ confidence level is the set of all $\mu_i$, which have the measured value $\hat{n}_S$ in the previously built interval.
+Using the histogram analogy again, with $n_S$ on the x-axis and $\mu$ on the y-axis, the interval $[\mu_0, \mu_1]$ is the vertical line, that cuts through the band created by marking the horizontal interval start and end points for each value $\mu_i$.
+
+Interval estimation is closely related to hypothesis testing.
+Hypothesis testing is built to find the acceptance region for a fixed set of model parameters by probing all possible sample values.
+In interval estimation, the sample is fixed and the question is, which model parameters are plausible in the whole parameter space.
+This can be expressed schematically with
+\begin{equation}
+  (x_1, \dots, x_N) \in A(\theta_0)
+  \Leftrightarrow
+  \theta_0 \in C(x_1, \dots, x_N)
+  \mcomma
+\end{equation}
+with a function $A$ describing the acceptance region for the sample $X=(x_1, \dots, x_N)$ and a function $C$ describing the confidence region for the true parameter $\theta_0$.
