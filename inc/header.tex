@@ -5,6 +5,7 @@
 \documentclass[
   headsepline,
   bibliography=totoc,
+  listof=totoc,
   parskip=half,
   cleardoublepage=plain,
   captions=tableheading,
@@ -118,7 +119,11 @@
 %------------------------------------------------------------------------------
 %-- Bibliography
 %------------------------------------------------------------------------------
-\usepackage[backend=biber]{biblatex}
+\usepackage[
+  backend=biber,
+  style=alphabetic,  % Style:
+  sorting=nyt        % Sorting: Name, year, title
+  ]{biblatex}
 
 %------------------------------------------------------------------------------
 %-- Code environment
