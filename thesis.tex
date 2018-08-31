@@ -8,11 +8,13 @@
 \chair{Lehrstuhl für Experimentelle Physik V}
 \division{Fakultät Physik}
 \thesisclass{eines Doktors der Naturwissenschaften\\(Dr. rer. nat.)}
-\submissiondate{Hoffentlich 2018...}
+\submissiondate{31.09.2018}
 \firstcorrector{Prof.~Dr.~Dr.~Wolfgang~Rhode}
 \secondcorrector{Prof.~Dr.~Bernhard~Spaan}
 
 \titlehead{\includegraphics[height=1cm]{inc/tu-logo.pdf}}
+
+\addbibresource{inc/references.bib}
 
 
 \begin{document}
@@ -32,15 +34,24 @@
 \subimport*{chp/pointsource/}{pointsource.tex}
 \subimport*{chp/time_dep_analysis/}{time_dep_analysis.tex}
 \subimport*{chp/time_int_analysis/}{time_int_analysis.tex}
-\subimport*{chp/}{discussion/discussion.tex}
-\subimport*{chp/}{outlook/outlook.tex}
+\subimport*{chp/discussion/}{discussion.tex}
 
 \appendix
 % \subimport*{appendix/}{appendix.tex}
 
 \backmatter
-% \addbibresource{references.bib}
-% \printbibliography
+\printbibliography
+
+% Name of LoF and LoT chapters using small chars as everywhere else
+% https://latex.org/forum/viewtopic.php?t=2385
+\renewcommand{\listfigurename}{List of figures}
+\renewcommand{\listtablename}{List of tables}
+
+\cleardoublepage
+\listoffigures
+
+\cleardoublepage
+\listoftables
 
 % \cleardoublepage
 % \subimport*{chp/}{eid_versicherung.tex}
