@@ -1,4 +1,5 @@
 \chapter{Point source searches with IceCube neutrinos}
+  \label{chp:pointsource}
 In this chapter, the unbinned Likelihood methods used for multiple IceCube point source searches are derived.
 To identify an astrophysical neutrino signal from a specific source location on the sky, an excess of events from that direction needs to be identified.
 In general, it cannot be distinguished between atmospheric and the sought after extraterrestrial neutrinos on a per event basis.
@@ -707,10 +708,11 @@ The assumption that IceCube is right-ascension symmetric yields stacking weights
 For extended sources the, detector response needs to be folded with the source extension density profile incorporating efficiencies from multiple detector regions.
 
 When using a time-dependent emission scenario the number of expected events do vary with the emission type.
-For example in a per-burst scenario, the amount of signal events is independent of the considered emission time scale and a time-integrated fluence is assumed rather than a time-dependent flux.
 Because the detector response to signal usually does not vary with time, only the relative differences in the time window functions matter for the stacking weights.
+For example in a per-burst scenario, the amount of signal events is independent of the considered emission time scale and a time-integrated fluence is assumed rather than a time-dependent flux.
 The cases regarded in this thesis both lead to a vanishing temporal dependence.
 In the time-dependent analysis, a fluence scenario is considered and all sources have the same time window length, making the temporal emission equal by design.
+Even with time-windows that differ in length between each other, the expected signal is equal from all bursts.
 In the time-independent case, all sources have the same linear dependence on the flux
 \begin{equation}
   \int_T \phi \,\d{t} = T\cdot \phi
@@ -719,9 +721,11 @@ and are expected to emit for the whole sample livetime, so all integrals over th
 Only when considering fluxes differential in time with different emission profiles, the integral contributions differ and the stacking weights become truly time-dependent.
 It is also possible to split time-dependent sources across multiple samples with this formalism.
 If they are assumed to depend on a flux, then the portion of the flux PDF in each sample can be computed.
-If using a per-burst scenario the time evolution information is lost, so a fair approach would be to assume a uniform dependence and again see how much is in each sample.
+If using a per-burst scenario the time evolution information is lost.
+Therefore, it is not exactly possible to split a burst time window across multiple samples.
+A fair and general approach might be to assume a uniform temporal dependency and again see how much of the integral lies in each sample.
 Repeating sources in per-burst scenarios can be treated by assuming that each burst is a separate source and making sure, that time windows do not overlap.
-The latter is needed because a source can't emit two bursts at the same time.
+The latter is needed because a source can't emit into two bursts at the same time.
 
 The third common scenario is that sources also vary in their energy dependence for their intrinsic flux strengths.
 Usually, this happens in the form of altering the spectral index of the assumed power-law flux.
