@@ -1,5 +1,6 @@
 TEXOPTS = --output-directory=build --lualatex
 TEXHEADER = ./inc/header.tex
+export TEXINPUTS=./:./inc:
 
 TARGET = thesis
 
