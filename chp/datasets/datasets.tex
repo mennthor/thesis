@@ -5,27 +5,27 @@ Two distinct datasets are used in a so far unique way in the analyses conducted 
 One is the source dataset and the other one is the test dataset.
 In both sets, six years of IceCube data is used.
 Usually, in point source searches, locations of sources measured from other experiments are tested, for example from high energy cosmic ray information or from gamma-ray observations.
-These are either classic catalogue stacking point source searches, where the external catalogue provides source locations with a sufficiently high precision to treat the sources as point sources with respect to the resolution capabilities of IceCube which is in the order of $\SI{1}{\degree}$ \CITE{Moon Sun shadow Bos and IceCube paper}.
+These are either classic catalogue stacking point source searches, where the external catalogue provides source locations with a sufficiently high precision to treat the sources as point sources with respect to the resolution capabilities of IceCube which is in the order of $\SI{1}{\degree}$ \cite{Aartsen:2013zka,Bos:2015SunMoon}.
 Or the analyses incorporate the uncertainty from external sources usually by expanding the spatial per event uncertainty to $\sigma_\text{tot}^2 = \sigma_\text{evt}^2 + \sigma_\text{src}^2$ effectively treating the source as an extended emitter\footnote{More on the Likelihood formalism in the next chapter.}.
-This is problematic when a test for point sources is needed, especially when testing for extragalactic sources that always appear point-like, due to the large cosmic distances \footnote{Maybe with the exception of Centaurus A (NGC 5128) \CITE{Yang}}.
+This is problematic when a test for point sources is needed, especially when testing for extragalactic sources that always appear point-like, due to the large cosmic distances \footnote{Maybe with the exception of Centaurus A (NGC 5128) \cite{Yang:2012CentaurusA}}.
 Here, 22 track-like events from six years of the high energy starting event (HESE) selection data are used as potential source candidates.
 In this chapter, the two different data sets partaking in the analyses are shortly introduced.
 Also, they need to be slightly adapted from the raw sets to be suitable for the analyses conducted here.
 
 In the following, the naming scheme for data taken in each period is following the number of operational strings until the complete detector was operational.
 After that, the data taking periods are numbered consecutively with the corresponding year the data was taken in.
-In IceCube, a data taking period starts around May each year, where a new detector configuration set-up may be installed or trigger or filter systems get updated \CITE{Detector paper}.
+In IceCube, a data taking period starts around May each year, where a new detector configuration set-up may be installed or trigger or filter systems get updated \cite{Aartsen:2016nxy}.
 
 \section{High energy starting event data}
-The high energy starting event selection has led to the first-ever detection of a diffuse astrophysical neutrino signal in 2013 \CITE{science}.
-Additionally, a dedicated point source search was made using only the HESE event selection, however with no significant detection throughout the years \CITE{HESE2,3,4,6}.
+The high energy starting event selection has led to the first-ever detection of a diffuse astrophysical neutrino signal in 2013 \cite{Aartsen:2013jdh}.
+Additionally, a dedicated point source search was made using only the HESE event selection, however with no significant detection throughout the years \cite{Aartsen:2013rt,Aartsen:2014gkd,Kopper:2015vzf,Kopper:2017zzm}.
 The idea behind the data selection is to use the outermost detector units as a veto against events starting outside the detector.
 In figure~(\ref{fig:data_hese_veto}) the veto region can be seen.
-Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected \footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS. \CITE{ICRC17 HESE}}.
+Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected \footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS. \cite{Kopper:2017zzm}}.
 Additionally, to make sure, no lower energy muon enters the detector, at least a total charge of $\num{6000}$ photoelectrons is required to be detected in the whole detector.
 From 2010 to 2015, $\num{82}$ events possibly including all three neutrino flavours have been collected so far.
 $\num{22}$ of these events are the track-like starting events with a good angular resolution of about $\SI{1}{\degree}$ used as sources in this work.
-Additionally, $\num{60}$ cascade-like events with a much worse angular resolution where recorded, making a total of $\num{82}$ high energy starting events in six years of data \CITE{HESE ICRC17}.
+Additionally, $\num{60}$ cascade-like events with a much worse angular resolution where recorded, making a total of $\num{82}$ high energy starting events in six years of data \cite{Kopper:2017zzm}.
 Unlike in most other point source searches, the positions of the sources are not exactly known due to the reconstruction uncertainties, bit full Likelihood scans of the reconstruction algorithm are available.
 To include this uncertainty in the analyses performance estimation the Likelihood scan maps are later used to inject source positions during trial generation.
 The cascades could potentially also be considered as sources, but this would require a more advanced Likelihood formalism as known to-date in this thesis to capture the wide-spread source regions properly, preferably by fitting the positions themselves using the Likelihood maps as priors.
@@ -39,20 +39,20 @@ Therefore, only the track-like events with good pointing capabilities are used i
     The  DOMs with a grey background are only used to veto incoming events that don't start within the detector.
     The top needs to be thicker due to a large number of atmospheric muons entering the detector.
     The middle layer is due to the light absorbing dust layer, which could cause events to enter the detector horizontally in this region without being vetoed if only the outer layers would be used.
-    Image taken from \CITE{HESE 3yr}, colours removed.
+    Image taken from \cite{Aartsen:2013jdh}, colours removed.
   }
   \label{fig:data_hese_veto}
 \end{figure}
 
 \subsection{HESE reconstruction map handling}
 To use the HESE track-like events as sources, their positions must be reconstructed first.
-Instead of determining a single best-fit position, a full Likelihood scan utilizing an advanced reconstruction algorithm is done \footnote{Internally named \enquote{millipede} due to the segmentation of the track. For each segment the energy losses are fitted, unfolded and compared to data.} \CITE{Energy Reco Methods}.
+Instead of determining a single best-fit position, a full Likelihood scan utilizing an advanced reconstruction algorithm is done \footnote{Internally named \enquote{millipede} due to the segmentation of the track. For each segment the energy losses are fitted, unfolded and compared to data.} \cite{Aartsen:2013vja}.
 For the few track-like events recorded this is feasible, even though scanning the whole sky is a slow procedure and takes up several hours of computing time on a distributed system.
 Since 2016, the scan procedure is running automated to support follow-up observation programs for the IceCube real-time alert system.
-When a triggered event passes the high energy starting event filter running live at the South Pole, an alert is sent and the event reconstruction starts immediately to make the position available for other observatories \CITE{Realtime paper}.
+When a triggered event passes the high energy starting event filter running live at the South Pole, an alert is sent and the event reconstruction starts immediately to make the position available for other observatories \cite{Aartsen:2016lmt}.
 
-For the scan procedure, the sky is binned in a HEALPix pixelization scheme in a three pass procedure \CITE{HEALPix}.
-The HEALPix grid was originally developed for a frequency analysis of the cosmic microwave background measured with the Wilkinson Microwave Anisotropy Probe (WMAP) satellite mission \CITE{Bennet WMAP}.
+For the scan procedure, the sky is binned in a HEALPix pixelization scheme in a three pass procedure \cite{Gorski:2004by}.
+The HEALPix grid was originally developed for a frequency analysis of the cosmic microwave background measured with the Wilkinson Microwave Anisotropy Probe (WMAP) satellite mission \cite{Jarosik:2010iu}.
 It tesselates the unit sphere in hierarchical segments, where all pixels for a given resolution have the same area and are distributed on lines of constant latitude.
 This has the advantage of having a constant normalization in each pixel, instead of using, for example, a usual rectangular grid, where pixels areas get smaller towards the poles.
 To get a rough idea of the most likely event direction, at first a coarse scan with only a few pixels is used.
@@ -68,18 +68,14 @@ The advantage of this method is two-fold.
 First, the fitting algorithm has to deal with less free parameters in a difficult scenario, making it more stable.
 The region around the best-fit position can be inspected for failures in the fitting procedures, for example, when sudden drops of the Likelihood value for neighbour pixels occur.
 Secondly, the scanned Likelihood gives an estimate of the uncertainty of the angular reconstruction by inspection of the Likelihood landscape around the best fit pixel.
-Though the underlying test statistic, which would allow the needed mapping of Likelihood values to probabilities, is not known here and can only be obtained by extensive and costly re-simulation per event, the uncertainty can be estimated in a first approximation using Wilks' theorem \CITE{WILK}.
+Though the underlying test statistic, which would allow the needed mapping of Likelihood values to probabilities, is not known here and can only be obtained by extensive and costly re-simulation per event, the uncertainty can be estimated in a first approximation using Wilks' theorem \cite{Wilks:1938dza,casella2002statistical,bohm2010introduction}.
 To factor in possible systematic uncertainties, each map is convolved with a $\SI{1}{\degree}$ gaussian filter.
-The $\SI{1}{\degree}$ is an upper limit of these effects derived from a study of the cosmic ray shadow of the moon in IceCube \CITE{HESE 2yr, CR shadow}.
+The $\SI{1}{\degree}$ is an upper limit of these effects derived from a study of the cosmic ray shadow of the moon in IceCube \cite{Aartsen:2013jdh,Aartsen:2013zka}.
 
 The reconstruction Likelihood is originally scanned in local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\varphi\in[0, 2\pi]$.
 However, source objects are usually described in equatorial coordinates, declination $\delta\in[-\pi/2, \pi/2]$ and right-ascension $\alpha\in[0, 2\pi]$ or often also $\alpha\in[\SI{0}{\hour}, \SI{24}{\hour}]$
 The equatorial coordinate system is created by projecting the earth's equator onto the celestial sky for the horizon and the March equinox point is used as the starting point for the perpendicular coordinate, right-ascension, in a right-handed system.
-Far away objects are fixed in these coordinates, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \footnote{At least for a certain time in which earth precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}} \CITE{Hohenkerk}.
-% CITE: Hohenkerk, C. Y., Yallop, B. D., Smith, C. A., & Sinclair, A. T.
-% 1992, Explanatory Supplement to the Astronomical Almanac, ed.
-% P. K. Seidelmann, Chap. 3 (University Science Books, Mill Valley,
-% California)
+Far away objects are fixed in these coordinates, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \footnote{At least for a certain time in which earth precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}} \cite{Hohenkerk:1992AstroAlmanac}.
 Though the basic coordinate transformations in IceCube are relatively easy because of the special position directly at the south pole, for which the approximation $\delta \approx \theta-\pi$ holds reasonably well, the full set of transformations including the sun position and other corrections takes a long time to process.
 Therefore, the local event coordinates from a test dataset are converted to equatorial coordinates beforehand, so their positions can, in general, be directly compared to the equatorial source coordinates.
 To become computationally feasible, also the aforementioned reconstruction maps for the HESE events need to be converted into a fast-to-evaluate equatorial representation.
@@ -103,7 +99,7 @@ The maximum error that can happen this way is in the order of a single pixel off
 Next, the maps should represent a probability distribution that gives the probability of the true source position being at a specific pixel.
 For this, the transformed maps are first converted back from the original logarithmic Likelihood space after the scan in local coordinates, to linear Likelihood space by $m\rightarrow \exp{(m)}$.
 To approximately and conservatively account for unknown systematics, the transformed maps are smeared with a symmetric Gaussian kernel of width $\SIsigma{1}$ as mentioned before.
-The smoothing introduces some numerical errors because it is done in spherical harmonics space which has to be truncated numerically \CITE{healpy}.
+The smoothing introduces some numerical errors because it is done in spherical harmonics space which has to be truncated numerically \cite{Gorski:2004by}.
 The artefacts are removed by normalizing the smoothed maps to have an integral value of
 \begin{equation}
   \sum_{i=1}^{N_\text{pix}} \d{A_\text{pix}} = 1
@@ -126,7 +122,7 @@ But this ensures that the sampling procedure from the map does not introduce a b
 \centering
 \caption[Time and angular position for the 22 HESE events]{
   Time and angular position for the 22 high energy starting track events used as potential source candidates.
-  In total, 82 HESE events where detected in six years of data, including these 22 track-like events and 60 cascade-like events with a worse angular resolution \CITE{HESE ICRC17}.
+  In total, 82 HESE events where detected in six years of data, including these 22 track-like events and 60 cascade-like events with a worse angular resolution \cite{Kopper:2017zzm}.
   For an explanation of the equatorial coordinates $\delta$, $\alpha$, see the description in the text.
   }
 \label{tab:reco_hese_track_positions}
@@ -175,8 +171,7 @@ But this ensures that the sampling procedure from the map does not introduce a b
 The second type of dataset used here is a collection of six years of muon track-like event data.
 Parts of this dataset have been extensively used to test for various source hypothesis in the past.
 Here, data from the same detector seasons as for the source events is used, so from IC79 to IC86, 2015.
-Though the underlying event selection differs slightly for each sample and also the detector configuration changes for certain seasons, the basic steps to arrive at the final event selection is summarized in \CITE{Very HE GFU} for the IC86, 2015 season, in \CITE{ALL-SKY SEARCH FOR TIME-INTEGRATED} for the IC86, 2012--2014 season, in \CITE{Search time-ind nu from
-astro srcs 3 years} for IC86, 2011 and \CITE{Searches for Extended and Point-like} for IC79.
+Though the underlying event selection differs slightly for each sample and also the detector configuration changes for certain seasons, the basic steps to arrive at the final event selection is summarized in \cite{Aartsen:2016qbu} for the IC86, 2015 season, in \cite{Aartsen:2016oji} for the IC86, 2012--2014 season, in \cite{Aartsen:2013uuv} for IC86, 2011 and \cite{Aartsen:2014PS4yrs} for IC79.
 The same selection is used for all three years of the IC86, 2012--2014 season, because the detector configuration was not changed.
 In the following, this three-year dataset is always considered in total, not for each season separately.
 The goal of the data selection was to obtain a highly pure muon track sample from the whole sky in each case.
@@ -212,10 +207,10 @@ The number of events in each dataset is shown in table~(\ref{tab:reco_nunber_exp
 \end{table}
 
 A standardized form utilizing a named array structure is used to provide the datasets.
-The per-event attributes used for experimental data are the reconstructed angular direction in equatorial coordinates declination and right-ascension, the logarithm to base $\num{10}$ of an energy proxy variable, the event times in Modified Julian Date representation \CITE{Astro Almanac} and the combined events angular uncertainty $\sigma$ \footnote{Named accordingly with keys \lstinline!'ra', 'dec', 'logE', 'sigma', 'time'!}, where the angles and $\sigma$ are given in radian.
+The per-event attributes used for experimental data are the reconstructed angular direction in equatorial coordinates declination and right-ascension, the logarithm to base $\num{10}$ of an energy proxy variable, the event times in Modified Julian Date representation \cite{Hohenkerk:1992AstroAlmanac} and the combined events angular uncertainty $\sigma$ \footnote{Named accordingly with keys \lstinline!'ra', 'dec', 'logE', 'sigma', 'time'!}, where the angles and $\sigma$ are given in radian.
 The underlying reconstruction algorithms for the energy proxy or the directional reconstruction may differ per or within a sample.
-However, in general, the reconstruction algorithms for the angles is one of the algorithms described in \CITE{AMANDA Muon Track Reconstruction and Data}, because a time costly scan as done with the HESE events is not feasible for a large number of events.
-The same reasoning applies to the energy proxy variable, which is one of the faster algorithms from \CITE{Energy Reco}.
+However, in general, the reconstruction algorithms for the angles is one of the algorithms described in \cite{Ahrens:2003fg}, because a time costly scan as done with the HESE events is not feasible for a large number of events.
+The same reasoning applies to the energy proxy variable, which is one of the faster algorithms from \cite{Aartsen:2013vja}.
 Though the actually used algorithm does not matter, the unbinned Likelihood will perform better, the better the algorithms can reconstruct the true quantities of each event.
 The per event angular uncertainty $\sigma$ is either constructed using a coarse Likelihood scan around the best-fit position from the directional reconstruction algorithm and approximating this landscape with a parabola, which justifies its use as a Gaussian uncertainty or, where that scan fails, through a bootstrap procedure.
 
@@ -228,7 +223,7 @@ However, for the time-dependent analysis done here, this only leads to a slight 
 Therefore this can only worsen the sensitivity, so the procedure is safe to use, despite not being optimal.
 
 In addition to the experimental data sets, dedicated Monte Carlo simulation tailored to the specific detector configuration is used to estimate the behaviour of signal-like events from the source regions.
-The simulation sets are computed by the collaboration using a software based on \CITE{ANIS}.
+The simulation sets are computed by the collaboration using a software based on \cite{Gazizov:2004va}.
 For the Monte Carlo datasets, additionally, the ground simulation truth is also available to study the effects of the detection mechanism on the incident neutrino signal.
 Added are the true neutrino direction in equatorial coordinates, the true neutrino energy and a weight \lstinline!'ow'! \footnote{Named accordingly with keys \lstinline!'trueRa', 'trueDec', 'trueE', 'ow'!} , with the energy in GeV and the angles given in radian.
 The attribute \lstinline!'ow'!, short for \emph{OneWeight}, contains a per-event simulation weight that allows mapping the number of produced simulation events to an expectation value for the desired target flux that can be directly compared to measured data.
@@ -238,7 +233,7 @@ The simulation data is used for building the model PDFs in the Likelihood constr
 Another important step, that is already included in the standardized dataset is the so-called \emph{pull correction}.
 In general, the per event uncertainty reconstruction has an energy-dependent bias, which needs to be corrected.
 This is usually called pull correction, where the pull is defined by the estimated angular uncertainty divided by the angular separation of the true neutrino direction and the reconstructed muon direction, where the former is only available from simulation $\sigma / \Delta\Psi$.
-Because the per event uncertainty is later used in a two-dimensional Gaussian distribution and is also constructed for that use in mind, the median of the energy-dependent pull is corrected the expected value of $\num{1.1774}$ \footnote{The $\SIsigma{1}$ error ellipse region of a 2D Gaussian contains $\SI{39}{\percent}$ of probability. Equivalently, the $\SIsigma{1.1774}$ contour contains $\SI{50}{\percent}$ as expected from the median. In general this can be calculated using $\sigma^2 = \chi^2_\text{ppf}(1-p|k)$, where $k$ is the dimension, $p$ the tail probability and $\chi^2_\text{ppf}$ the inverse of the CDF \CITE{Slotani}}.
+Because the per event uncertainty is later used in a two-dimensional Gaussian distribution and is also constructed for that use in mind, the median of the energy-dependent pull is corrected the expected value of $\num{1.1774}$ \footnote{The $\SIsigma{1}$ error ellipse region of a 2D Gaussian contains $\SI{39}{\percent}$ of probability. Equivalently, the $\SIsigma{1.1774}$ contour contains $\SI{50}{\percent}$ as expected from the median. In general this can be calculated using $\sigma^2 = \chi^2_\text{ppf}(1-p|k)$, where $k$ is the dimension, $p$ the tail probability and $\chi^2_\text{ppf}$ the inverse of the CDF \cite{Siotani:1963Gaus}}.
 Because this can only be computed using the ground truth on simulation data, the same correction formula is applied as-is to the per-event uncertainties on experimental data.
 
 \subsection{Decorrelation}
@@ -249,6 +244,6 @@ To avoid this bias these events are removed from the data before doing any analy
 Because the simulation datasets also contain events, that are similar to high energy starting event signatures and therefore would also be handled as sources rather than test events in the analyses done here, they need to be removed from the simulation files too.
 This avoids a bias in the build Likelihood PDFs and in the performance estimation, for which the simulation is used.
 Here a conservative approach is taken and all HESE-like events are removed from the simulation.
-A more sensitive estimation of the veto passing fraction of HESE candidates can be found in \CITE{Unified atmospheric neutrino passing fractions}.
+A more sensitive estimation of the veto passing fraction of HESE candidates can be found in \cite{Arguelles:2018awr}.
 The removal of the events is done by applying the same HESE veto filter module on the simulation datasets as used to originally select the events on data.
 The IDs of the vetoed events are collected and matched against the full simulation set to remove the HESE-like events from the final simulation sets.
