@@ -3,26 +3,26 @@
 Despite the coincidence of the Blazar TXS 0506+056 and a single ultra-high-energy neutrino together with the evidence for a temporally constrained neutrino flux about three years earlier, lasting 110 days, no other significant result of neutrino point source searches were obtained in the last years.
 Most prominent examples are the generic all-sky search which scans the whole sky for an unknown neutrino emitter with a large amount of data.
 Three analysis stand out in this scenario.
-One is testing the whole sky using seven years of data with no prior assumptions \CITE{coenders} and the other one is probing only the northern sky with priors obtained from the most recent diffuse flux measurement in the muon track channel \CITE{aachen 6yr and reiman}.
+One is testing the whole sky using seven years of data with no prior assumptions \cite{Aartsen:2016oji} and the other one is probing only the northern sky with priors obtained from the most recent diffuse flux measurement in the muon track channel \cite{Haack:2017dxi,Reimann:2017owh}.
 Both analyses couldn't find a significant contribution, mostly because the large trial factor from scanning the whole sky is dropping the significance.
 Another analysis of this kind is using the high energy starting event sample directly to test for a clustering of these events, assuming at least some of them originate from the same source region, again with no significant result.
 Therefore, many different approaches were followed, to search with more bias but better significance by introducing a priori knowledge of emission scenarios.
 One class of searches relevant here is the stacked search approach.
 Expecting that individual sources are too weak to be detected as a single source, it is tested for multiple sources of the same source classes, which are assumed to have similar intrinsic emission mechanisms.
-Popular and well-motivated choices here, for example, Blazars and sources, known from source catalogues of other high energy astrophysical observatories like FERMI \CITE{A bunch of stacking papers, blazars, grb, etc.}
+Popular and well-motivated choices here, for example, Blazars and sources, known from source catalogues of other high energy astrophysical observatories like FERMI \cite{Aartsen:2017zvw,Aartsen:2017wea,Aartsen:2016lir,Aartsen:2017ujz}
 To further reduce the background also timing information can be taken into account.
-Several source classes are transient events and neutrino emission is then also expected only on a corresponding time scale \CITE{grb, frb, emission models}.
+Several source classes are transient events and neutrino emission is then also expected only on a corresponding time scale \cite{Bianco:2007fe,Komossa:2015qya,Katz:2016dti}.
 All of the shortly summarized analysis above could not find a significant contribution of the expected neutrino signal.
 The non-detection seen in so many analysis may also have the reason that emission scenarios are not understood well enough yet so that the searched catalogues are not specific enough thus dropping the sensitivity Or maybe there are simply not enough events collected so far to make significant statements about possibly weak sources.
 
 Therefore, a different, more generic approach is used here, under the following assumptions.
-As the HESE events on their own show a clear astrophysical signal and therefore should originate from some sources, also a lower energy neutrino flux should be produced during the emission of the high energy events \CITE{Some model dealing with HESE}.
+As the HESE events on their own show a clear astrophysical signal and therefore should originate from some sources, also a lower energy neutrino flux should be produced during the emission of the high energy events \cite{MESZAROS2014241,Murase:2014tsa}.
 This analysis test if there is any clustering of lower energy neutrino events around the HESE locations.
 A stacking search in used because no significant signal can be seen, by examining the HESE event positions in the aforementioned all-sky searches, so the possible emitters are likely too weak to reveal themselves in the large sample background.
-In this first analysis, also the possibility of a time-dependent emission which could, for example, originate from a flaring state is considered \CITE{AGN flare stuff}.
+In this first analysis, also the possibility of a time-dependent emission which could, for example, originate from a flaring state is considered \cite{Mundell:2011radio,Goosmann:2004hw,Eichmann:2012blazars}.
 This also further reduces the expected background and would be very sensitive to a time-constrained emission scenario.
 
-The analysis method uses the time-dependent, unbinned Likelihood approach as described before, similar to the one used for example in \CITE{MRichman GRB search} but with some major methodical differences.
+The analysis method uses the time-dependent, unbinned Likelihood approach as described before, similar to the one used for example in \cite{Aartsen:2017zvw} but with some major methodical differences.
 The required test statistics to obtain final significances on data are built on experimental data.
 Each source is always unique in its time window and is also only present in a single sample, so all sources are treated independently of each other.
 Because of the low amount of background in the tested, quite small time windows, only a single free parameter, the expected signal strength is fitted.
@@ -59,7 +59,8 @@ where
     \sin(\delta_k)\sin(\delta_i)
 \end{equation}
 is the space angle between the positions of source $k$ and event $i$ in equatorial coordinates $\delta, \alpha$.
-Instead of using the Gaussian uncertainty $\sigma$ directly, the Kent distribution uses $\kappa \approx \sfrac{1}{\sigma^2}$ which holds up to $\sigma \approx \SI{40}{\degree}$ \CITE{relation kappa sigma}\TODO{plot in appendix?}.
+Instead of using the Gaussian uncertainty $\sigma$ directly, the Kent distribution uses $\kappa \approx \sfrac{1}{\sigma^2}$ which holds up to $\sigma \approx \SI{40}{\degree}$ \cite{Yasutomi:2014kent,Jakob:2012kent}.
+\TODO{plot in appendix?}.
 The Kent distribution is used here because it is correctly normalized on the sphere and virtually indistinguishable for small angle uncertainties as tracks usually have.
 
 Background PDFs are constructed in equatorial coordinates as well and the distribution is estimated from data, using the off-time dataset only to avoid signal contamination.
@@ -73,7 +74,7 @@ Here the PDF is only declination independent and can be written as
 where $t_k$ is the time of source $k$ used to account for varying background strengths due to seasonal variations.
 This considers that a source occurring in a time of lower than average background rate has a higher chance of seeing a signal contribution which is not influenced by the change in background rate.
 Seasonal variations in the atmospheric neutrino flux are directly correlated to the variation in temperature in the upper atmosphere layers.
-Changed densities hinder or promote the interactions of primary cosmic rays and influence the neutrino production \CITE{Barret, Gaisser Seas., IceCube Seasonal}.
+Changed densities hinder or promote the interactions of primary cosmic rays and influence the neutrino production \cite{Barret:1952seasons,Gaisser:2010seasons,Gaisser:2013icrc}.
 
 To build a custom background PDF for each source in its respective sample, first all events in each sample are binned in $\sin(\delta)$ in $\num{20}$ bins, with $\num{14}$ more densely spaced bins around the horizon region defined as $\delta\in[\SI{-30}{\degree}, \SI{30}{\degree}]$.
 In this region the selection models are usually switched between dedicated models for the northern and southern sky are used and the finer resolution helps to catch the resolution features in the distributions.
@@ -98,7 +99,7 @@ For each parameter set, the model is integrated over the sources time window to 
 To evaluate the PDf for each events' declination an interpolating spline is used to include the dense grid in a continuous model.
 
 \subsection*{Energy PDF}
-The energy PDFs introduces a significant amount of separation power compared to using the spatial clustering only \CITE{Braun Paper}.
+The energy PDFs introduces a significant amount of separation power compared to using the spatial clustering only \cite{Braun:2008bg}.
 The integral values
 \begin{equation}
   \int_0^\infty P(E_i,\delta_i|E_\nu)\cdot P(E_\nu|\gamma) \d{E_\nu}
@@ -145,7 +146,7 @@ So for code simplicity, simple rectangle model is used for the background PDF.
 This also means that no extra sensitivity is coming from the temporal term, it is merely there to select events within the time windows and alters the amount of total background contribution which is almost zero for the smallest and grows approximately linearly for larger time windows.
 
 In this analysis, $\num{21}$ time windows are tested, from $\SI{2}{\second}$ to $\SI{5}{\day}$.
-This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray Burst, Fast Radio Burst or tidal disruption events \FIX{Look up correct values}\CITE{Paper on GRB, TDE scales}.
+This corresponds to typical scales of fast transient sources with the potential of also having neutrino emission, like Gamma Ray or Fast Radio Burst \cite{Gompertz:2017bif,Hessels:2018zvt}.
 The time windows are spaced symmetrically around each source.
 All sources are given the same time window and all time windows are tested independently of each other.
 This is done to avoid an unstable resource consuming fitting of the time window size but comes at the cost of an additional trial factor for testing multiple windows and selecting the best one.
@@ -231,7 +232,7 @@ The declination dependent signal efficiency weight for each source in a specific
 \end{equation}
 Here $\Phi(E_{\nu,i})$ is the combined fluence of both neutrinos and anti-neutrinos the simulation shall be weighted to.
 The histogram entries are then normalized by diving by the bin width $\Delta\Omega_\text{bin}$ to obtain a proper number density.
-If a flux per particle type $p$ is used $\Phi(E_{\nu,i}, p)$, then an additional factor $f_p$ for the OneWeight needs to be considered which gives the fraction of simulated particle types – usually $f_p=0.5$, so that $\text{OneWeight}\rightarrow\text{OneWeight}/f_p$ \CITE{nugen docs?}.
+If a flux per particle type $p$ is used $\Phi(E_{\nu,i}, p)$, then an additional factor $f_p$ for the OneWeight needs to be considered which gives the fraction of simulated particle types – usually $f_p=0.5$, so that $\text{OneWeight}\rightarrow\text{OneWeight}/f_p$ \cite{Gazizov:2004va}.
 
 Here an equidistant binning is used so that at least $100$ events are in each bin.
 To obtain a smooth representation of the expected events per declination function, a smoothing spline is fitted to the histogram bin centres.
@@ -271,7 +272,7 @@ The gradient in the single fit parameter $n_S$ then reads
 
 For zero events the case is trivial because the \enquote{fit} is directly zero, as under fluctuations for $n_S < 0$ are excluded in this analysis and it is only fitted for over-fluctuations.
 This might result in slightly worse sensitivity and limits due to compressing the complete test statistic in a delta peak at $-2\ln\Lambda=0$.
-Though, for code and fit procedure simplicity, this is accepted in this analysis. \CITE{Thorstens wiki page??}
+Though, for code and fit procedure simplicity, this is accepted in this analysis. \cite{Aartsen:2016lir}
 For zero events, no sum term is surviving and the analytic solution is
 \begin{equation}
   \ln\Lambda = -n_S
@@ -327,7 +328,7 @@ This builds a distribution of test statistic values the final fit on data can be
 To estimate the analysis' performance beforehand, simulated signal can be injected into the pseudo background events.
 
 \subsection*{Background trials}
-To obtain background like pseudo-event samples, the experimental off-time data is re-sampled in this analysis to avoid bias from mismatching simulation data \CITE{Some PS paper this is mentioned}.
+To obtain background like pseudo-event samples, the experimental off-time data is re-sampled in this analysis to avoid bias from mismatching simulation data \cite{Aartsen:2016lir}.
 By re-sampling data, it is either assumed, that only a fraction of the sample is made from true signal events, or that only data from off regions is used, so in regions where no signal is assumed anyway.
 The first case uses randomized data and assumes that, when scrambled, the few potential signal events don't interfere with the larger portion of background like events.
 The latter case only uses a fraction of the data in regions that are not tested for a signal contribution.
@@ -377,10 +378,11 @@ The number of generated trials allow using the samples directly as an empirical 
 In principle $\num{e8}$ samples allow to empirically estimate the significance up to about $\SIsigma{5.7}$, but with very poor statistics in the high confidence regime.
 To make the p-value estimation more robust for large test statistic values, the tail of each time windows test statistic is fitted with an exponential distribution.
 To find a robust set of exponential PDF parameters, an exponential is fitted to the tail of the distribution with a threshold scanned on a grid between $\SIsigma{3.5}$ and $\SIsigma{4.5}$.
-The best-fit is selected using a Kolmogorov-Smirnov test \CITE{KS Test} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $\SIsigma{1}$ level.
+The best-fit is selected using a Kolmogorov-Smirnov test \cite{Horn:1977KSTest} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $\SIsigma{1}$ level.
 This yields quite robust tails even in the smallest time windows.
 For the larger time windows, the $\chi^2_1$-like forms of the distributions are naturally described by the exponential tails.
-An independent set of trials is used to verify the validity of the tail fits.\TODO{Attach plot}
+An independent set of trials is used to verify the validity of the tail fits.
+\TODO{Attach plot}
 The resulting PDFs are then a hybrid made from the empirical distribution and the exponential tail smoothly describing the distribution tails and are used to estimate p-values for further evaluations.
 \TODO{Plots in app.}
 
@@ -456,7 +458,7 @@ where $\tilde{w}_k^\text{src}$ are the intrinsic source weights normalized over 
 \end{equation}
 where the inner sum runs over all sources in sample $j$.
 Using the total number of expected events from each sample by summing all re-normalized weights $\tilde{w}_{i,k}$ per sample, the relative event distribution can be computed.
-During sampling, the split number of events for the current trial is sampled from a multinomial distribution with the distribution weights as expectation values and requests each injector to sample the correct amount of signal \CITE{BohmZech PoissonAndMultinomials}.
+During sampling, the split number of events for the current trial is sampled from a multinomial distribution with the distribution weights as expectation values and requests each injector to sample the correct amount of signal \cite{BOHM20141}.
 
 
 \section{Performance estimation}
@@ -509,7 +511,7 @@ Another usual convention is to use the normalization at $\SI{100}{\TeV}$ which d
   \label{chp:time_dep_post_trial}
 In this analysis, the Likelihood is only fitted for the single signal strength parameter $n_S$ because a two-parameter fit the number of events in the same order for small time windows is not feasible.
 Nevertheless, multiple time windows are tested because a possible true time window size is unknown.
-By doing the grid scan in $\num{21}$ different time windows, a trial factor needs to be regarded \CITE{LLH methods for HE Phys?}.
+By doing the grid scan in $\num{21}$ different time windows, a trial factor needs to be regarded \cite{Gross:2010qma}.
 The trial factor accounts for the fact, that multiple options are trialled and a-posteriori the best one is chosen as the final result.
 The connection to Wilks' theorem here is as follows.
 Wilks' theorem states, that the difference in the number of free parameters comparing the alternative and null hypothesis is the degree of freedom of the resulting $\chi^2$ test statistic.
@@ -550,7 +552,7 @@ or for the often used distribution of the negative logarithm to base $\num{10}$
   = N \left( 1 - 10^{-y} \right) \cdot -\ln(10)\cdot 10^{-y}
   \mcomma
 \end{equation}
-where the rule for transforming probability densities was used \CITE{mentioned rule}.
+where the rule for transforming probability densities was used \cite{blobel2013statistische}.
 
 However, here $\num{e6}$ post trials are done to have a robust estimate even for higher significances without having to assume some underlying distribution to fit against.
 The recorded results are then transformed to pre-trial p-values using the per time window background test statistics.

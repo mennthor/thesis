@@ -5,7 +5,7 @@ To identify an astrophysical neutrino signal from a specific source location on 
 In general, it cannot be distinguished between atmospheric and the sought after extraterrestrial neutrinos on a per event basis.
 Instead, it is possible to search from a sample based point-of-view by measuring deviations for an ensemble of events with respect to a known background expectation.
 A simple method could be to define a fixed search region around a direction from which signal is expected, count the number of measured events and compare them to the number of events from a background expectation in the region.
-\CITE{Li Ma Paper.}
+\cite{LiMa:1983ApJ}
 If the measured number of events is significantly higher than the expected number of background events that may be a hint for a signal from that direction.
 
 Here the followed approach is similar but used in a more advanced form, incorporating multiple pieces of event information to increase the detection sensitivity.
@@ -16,7 +16,7 @@ Particular cases handling multiple years of data from different detector configu
 In the following a single event is noted with index $i$, a source with index $k$ and a data sample with index $j$.
 
 \section{Extended unbinned Likelihood}
-The extended Likelihood \CITE{Barlow book} and the corresponding logarithmic extended Likelihood function is defined as
+The extended Likelihood \cite{barlow1989statistics} and the corresponding logarithmic extended Likelihood function is defined as
 \begin{equation}
   \mathcal{L}(\lambda) = \frac{\lambda^N e^{-\lambda}}{N!}\prod_{i=1}^N P_i
   \quad\Rightarrow\quad
@@ -82,7 +82,7 @@ The alternative hypothesis $H_1$ is constructed by using the full Likelihood par
   \mperiod
 \end{equation}
 
-The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H_0$ against the alternative $H_1$ is defined as \CITE{Casella Berger Book}
+The Likelihood ratio test statistic $\Lambda$ for testing the null hypothesis $H_0$ against the alternative $H_1$ is defined as \cite{casella2002statistical}
 \begin{equation}
   \ln\hat{\Lambda}
   = \ln\left(\frac{\sup_{\theta \in \Theta_0} \mathcal{L}(\theta)}
@@ -112,7 +112,7 @@ This leads to the test statistic
     \mcomma
   \end{aligned}
 \end{equation}
-which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \CITE{Wilk paper and/or statistic book}.
+which has been decorated by the factor $-2$ to be compatible to Wilks' theorem \cite{Wilks:1938dza,casella2002statistical}.
 Here the parameters $\hat{\lambda}_{k,S/B}$ were introduced, which mean the parameters $\lambda_{k,S/B}$ that maximize the Likelihood $\mathcal{L}_1$ under the complete parameter space and $\hat{\lambda}_{k,B}^{(0)}$ maximizing $\mathcal{L}_0$.
 As seen in expression~(\ref{equ:extended_llh_ts}), all best-fit parameters from both hypotheses have to be distinguished.
 That means it must be differentiated between the best fit parameters $\hat{\lambda}_{k,B}^{(0)}$ from the null hypothesis, which are in general not the same as $\hat{\lambda}_{k,B}$ from the alternative hypothesis.
@@ -126,7 +126,7 @@ In the following sections, specific model choices for the signal and background 
 \section{Per event distributions}
 The introduced per event distributions $S_i, B_i$ are the functions that actually define the tested hypothesis of the analysis.
 Depending on their structure they can describe a single point source search, a stacking search for searching at various source positions at once or a template search, where a whole spatial region is tested for neutrino emission over the expectation.
-The used PDFs are usually similar for all analysis types and the conventions applied for most point source searches in IceCube are followed here \CITE{Braun paper. Maybe both for time dep. / indep. searches.}.
+The used PDFs are usually similar for all analysis types and the conventions applied for most point source searches in IceCube are followed here \cite{Braun:2010APh,Braun:2008bg}.
 
 The per-event distributions describe the main separation power between signal and background hypotheses in combination with the mixing portions $\lambda_{i,S/B}$ by introducing a priori knowledge in defining signal- and background-like regions in the tested parameter space.
 The better these distributions are able to separate signal and background regions, the more sensitive the analysis becomes.
@@ -159,7 +159,7 @@ The most important part in the search for neutrino point sources is the spatial 
 Without the spatial term, only an insensitive diffuse analysis would be performed.
 For data samples used in point source searches, there is a reconstructed estimate of the per event uncertainty available.
 This estimator is built from the positional reconstruction Likelihood fit and is constructed assuming a symmetric, two-dimensional Gaussian distribution describing the reconstruction uncertainty.
-Alternatively, the same value can be transformed and used for the symmetric Kent distribution \CITE{Kent paper} for the per event spatial distribution instead.
+Alternatively, the same value can be transformed and used for the symmetric Kent distribution \cite{Kent:1982pdf} for the per event spatial distribution instead.
 The Kent distribution is the pendant of the symmetric, two-dimensional Gaussian distribution but correctly normalized on the sphere and is useful for larger uncertainties for example when investigating cascade-like events.
 For tracks, the good angular resolution of about \SI{1}{\degree} justifies the use of the simpler and more familiar Gaussian distribution as both distributions become virtually indistinguishable for small uncertainties.
 \TODO{Appendix: Show or ref to plot of sigma vs kappa}
@@ -185,7 +185,7 @@ For the point-source hypothesis, $f(\vec{x}_k)$ can be replaced with a delta dis
                     {2\sigma_i^2}\right)
 \end{equation}
 for the spatial signal PDF.
-Assuming extended sources with a Gaussian density profile would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exists, resulting in a substitution of $\sigma_i \rightarrow \sqrt{\sigma_i^2 + \sigma_k^2}$ \CITE{Gaussian convolution}.
+Assuming extended sources with a Gaussian density profile would follow the same scheme and an analytic solution for the convolution of two Gaussian distributions exists, resulting in a substitution of $\sigma_i \rightarrow \sqrt{\sigma_i^2 + \sigma_k^2}$ \cite{Bromiley2014ProductsAC}.
 
 The spatial background distribution is constructed similarly to the signal case in equation~(\ref{equ:spatial_pdf}).
 Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination dependent only.
@@ -212,7 +212,7 @@ However, as the intrinsic background PDF $\hat{B}^S$ does not change much with d
 
 
 \subsection{Energy distribution}
-In addition to the spatial clustering, the event's energy can also provide a powerful separation argument and lead to a large improvement in sensitivity \CITE{Braun Paper}.
+In addition to the spatial clustering, the event's energy can also provide a powerful separation argument and lead to a large improvement in sensitivity \cite{Braun:2008bg}.
 As the energy density of atmospheric neutrinos can approximately be described by a power law $\phi_\mathrm{BG}(E) \propto E^{-3.7}$ and astrophysical signal by a harder spectrum around $\phi(E)_S \propto E^{-2}$, higher energy events are more likely to originate from an extraterrestrial source rather than having been created in the atmosphere.
 In the PDFs, the energy dependence can only be taken into account with energy estimators of the true neutrino energy $E_\nu$ because the information must also be available on measured data, not knowing the true neutrino energy.
 Formally, that mapping can be written as an integration using the law of total probabilities of the distribution of the energy proxy of the event with the probability of obtaining a true neutrino energy under the current flux hypothesis
@@ -261,7 +261,7 @@ Because of the precise timing information, there is no relevant time uncertainty
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time dependent Likelihood}
   \label{chp:pointsource_tdep_llh}
-To test for time-dependent emission in this analysis, the general extended Likelihood is altered to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \CITE{Mikes thesis or GRB paper or FRB paper}.
+To test for time-dependent emission in this analysis, the general extended Likelihood is altered to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \cite{Aartsen:2017zvw,Aartsen:2014aqy,Aartsen:2017wea}.
 As the name may indicate, the source emission is assumed to be per-burst with a fluence $\Phi$ rather than a time-dependent flux.
 
 This includes explicit assumptions about the temporal source emission PDFs and simplifications of the general Likelihood formula introduced before.
@@ -280,7 +280,7 @@ The time PDFs are therefore constructed using rectangle functions
     \end{cases}
   \mcomma
 \end{equation}
-where $\Theta$ is the Heaviside step function \CITE{AbramovitzStegun}.
+where $\Theta$ is the Heaviside step function \cite{Abramowitz:1974handbook}.
 This way, each source is having only a non-zero emission contribution within its pre-defined source time window
 \begin{equation}
   \label{equ:time_window_def}
@@ -336,7 +336,7 @@ The test statistic can then be expressed by
 The a priori fixed weights resemble the expectation from every single source at the detector.
 They can, therefore, depend on the explicitly chosen source emission model and the detection efficiency depending on the source location in the detector.
 Note that the a priori chosen weights should match the true, but usually unknown, emission scenario as much as possible to obtain a good analysis sensitivity.
-If the true scenario strongly differs from the assumed weights, very little can be obtained from the analysis \CITE{Rameez thesis}.
+If the true scenario strongly differs from the assumed weights, very little can be obtained from the analysis.
 
 
 \subsection{Single sample stacking case}
@@ -432,7 +432,7 @@ Again, a priori information about the expected number of signal events originati
   n_{S,j} = w_j n_S
   \mperiod
 \end{equation}
-To calculate the a-priori weights $w_j$ the law of total probability is applied \CITE{Casella Berger}
+To calculate the a-priori weights $w_j$ the law of total probability is applied \cite{casella2002statistical}
 \begin{equation}
   w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k)
   = \sum_{k=1}^{N_\text{srcs}} \underbrace{P(j,k)}_\text{unknown}
@@ -779,7 +779,7 @@ The normalized weights per source in a single sample can be constructed by
 This effective area formulation holds for calculating the multi sample splitting weights as well as for the expected $n_S$ splitting within a single sample, because it generally calculates the detector efficiency to a given flux or fluence hypothesis.
 
 In practice to obtain the desired number of events for a given signal flux or fluence a simulation quantity called OneWeight is used to weight neutrino simulation.
-The OneWeight per event $i$ is defined as \CITE{ANIS}
+The OneWeight per event $i$ is defined as \cite{Gazizov:2004va}
 \begin{align}
   \label{equ:oneweight_definition}
   \text{OneWeight}_i
@@ -813,7 +813,7 @@ The sum can also be taken across subsamples of a whole data set to obtained diff
 \subsection{Intrinsic source weights}
 Additional intrinsic source weights can be introduced to capture differences in the expected, relative fluxes or fluences from the sources themselves.
 This is decoupled from the actual detection mechanism and the detector efficiency weights expressed by formula~(\ref{equ:general_satcking_weights}).
-The weight selection strongly depends on the used catalogue or source category and can, for example, be the gamma or x-ray flux or distance weighting \CITE{1, 2 analyses with this weighting}.
+The weight selection strongly depends on the used catalogue or source category and can, for example, be the gamma-ray flux or distance weighting \cite{Huber:2017wxt,Aartsen:2016lir}.
 These intrinsic source weights $w_k^\text{src}$ are independently multiplied with the corresponding detector weights $w_k^\text{det}$ to form the total source weights use in the stacking
 \begin{equation}
   w_k \coloneqq w_k^\text{det} \cdot w_k^\text{src}
@@ -894,7 +894,7 @@ is used, which is only valid for small integration intervals, because it assumes
 \section{Frequentist methods}
   \label{chp:pointsource_frequentist}
 In this thesis, significances for hypothesis tests are obtained using frequentist methods.
-This section shortly introduces the relevant terminology and is a summary of the extensive treatments in \CITE{CasellaBerger, Blobel, Barlow}.
+This section shortly introduces the relevant terminology and is a summary of the extensive treatments in \cite{casella2002statistical,blobel2013statistische,barlow1989statistics}.
 The methods used are \emph{point estimation} and \emph{interval estimation}.
 Usually, the result of a model-dependent point source search, as done here, is a single best fit result.
 This best fit result is the point in the considered space of free parameters, that gives the most likely model to describe the measured data.
@@ -914,12 +914,12 @@ A small p-value indicates a strong deviation from the test result from the expec
 It does not imply the truth of the alternative hypothesis though, but only that it is unlikely for the data to originate from the null hypothesis distribution.
 
 To obtain further information on the underlying true parameter, an interval estimation needs to be done.
-In general, a frequentist confidence region $[\theta_0, \theta_1]$ for a parameter $\theta$ at a confidence level $\alpha$ is defined to have the property of \enquote{covering the true parameter $\hat{\theta}$ in a fraction $\alpha$ of random measurements} \CITE{CasellaBerger}.
+In general, a frequentist confidence region $[\theta_0, \theta_1]$ for a parameter $\theta$ at a confidence level $\alpha$ is defined to have the property of \enquote{covering the true parameter $\hat{\theta}$ in a fraction $\alpha$ of random measurements} \cite{casella2002statistical}.
 Note, that the interval itself is a random quantity and may or may not contain the true parameter.
 Only a statement about ensembles of measurements can be made.
 By following the definition for a consistent construction of the intervals, it is ensured the desired coverage probability is reached.
 
-A general method to construct confidence intervals is the \emph{Neyman construction} \CITE{Neyman}.
+A general method to construct confidence intervals is the \emph{Neyman construction} \cite{Neyman:1937cls}.
 In a modern language, the method relies on the sampling of the probability space of the defined parameter space, creating sets of samples for which the true parameters are known.
 For example, a single parameter $n_S$ is fitted in a point source Likelihood, which is an estimator for the true, but unknown signal strength $\mu$.
 Using a set of experimental data $X=(x_1, \dots, x_N)$, a best-fit point estimator can be obtained by finding the parameter $\hat{n}_S$, that maximises the Likelihood
