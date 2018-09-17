@@ -1,0 +1,123 @@
+% \input{../inc/header.tex}
+\RequirePackage{luatex85}
+\documentclass[border=2pt]{standalone}
+
+% \usepackage[active, tightpage]{preview}
+% \PreviewEnvironment{tikzpicture}
+
+\usepackage{tikz}
+  \usetikzlibrary{decorations, arrows}
+
+\definecolor{cearth}{HTML}{AAAAAA}
+\definecolor{catmo}{HTML}{CCCCCC}
+\definecolor{catmo1}{HTML}{DDDDDD}
+\definecolor{catmo2}{HTML}{EEEEEE}
+\definecolor{catmo3}{HTML}{F9F9F9}
+\definecolor{cdg}{HTML}{353132}
+\definecolor{cdoms}{HTML}{FFFFFF}
+
+
+\begin{document}
+
+\begin{tikzpicture}[x=1cm ,y=1cm]
+
+  \tikzstyle{nu}=[
+    ->,
+    >=stealth,
+    dashed,
+    draw=cdg,
+    line width=2pt,
+    line cap=round,
+    rounded corners
+    ]
+  \tikzstyle{mu}=[
+    solid,
+    draw=cdg,
+    line width=1.75pt,
+    line cap=round,
+    rounded corners
+    ]
+  \tikzstyle{CR}=[double, draw=cdg, very thick]
+  \tikzstyle{interaction}=[fill=cdg, circle, inner sep=2pt, outer sep=0pt]
+
+\pgfmathsetmacro{\rearth}{3.}
+\pgfmathsetmacro{\ratmo}{\rearth + 0.2}
+\pgfmathsetmacro{\ratmoa}{\rearth + 0.3}
+\pgfmathsetmacro{\ratmob}{\rearth + 0.4}
+\pgfmathsetmacro{\ratmoc}{\rearth + 0.5}
+
+% Earth with atmo
+\draw[draw=none, thin, fill=catmo3] (0, 0) circle (\ratmoc);
+\draw[draw=none, thin, fill=catmo2] (0, 0) circle (\ratmob);
+\draw[draw=none, thin, fill=catmo1] (0, 0) circle (\ratmoa);
+\draw[draw=none, thin, fill=catmo] (0, 0) circle (\ratmo);
+\draw[draw=cdg, fill=cearth] (0, 0) circle (\rearth);
+
+% Earth labels
+\node[anchor=south east, xshift=-0.1cm]
+  (north) at (-\ratmo, 0) {north\vphantom{p}};
+\node[anchor=north east, xshift=-0.1cm] (south) at (-\ratmo, 0) {south};
+
+\node[anchor=south west, xshift=+0.2cm] (upgoing) at (\ratmo, 0) {upgoing};
+\node[anchor=north west, xshift=+0.2cm] (downgoing) at (\ratmo, 0) {downgoing};
+\draw[->, >=stealth, shorten >=2pt]
+  (upgoing.north west) -- (upgoing.south west);
+\draw[->, >=stealth, shorten >=2pt]
+  (downgoing.south west) -- (downgoing.north west);
+
+% \draw[thin] (-\ratmoc - 1., 0) -- (\ratmoc + 0.5, 0);
+\draw[thin] (south.north west) -- (downgoing.north east);
+
+% IceCube doms
+\foreach \x in {-0.4, -0.2, 0.0, +0.2, +0.4} {
+  \foreach \y in {1.3, 1.1, 0.9, 0.7, 0.5, 0.3} {
+    \draw[draw=none, fill=white] (\x, \y - \rearth) circle (0.1);
+  }
+}
+
+% Particle tracks
+% Northern astro nu
+\draw[nu] (3, 4) -- (0, -2);
+% Southern astro nu
+\draw[nu] (-4, -5) -- (1, -2)
+  node[near start, above, sloped] (LABEL) {astro. $\nu$};
+% North CR + muon shower
+\draw[CR] (-4, 4) -- +(-55:2.4) node[interaction] (CR) {};
+  \draw[mu] (CR) -- +(-45:0.5);
+  \draw[mu] (CR) -- +(-65:0.8);
+  \draw[mu] (CR) -- +(-25:0.6);
+  \draw[mu] (CR) -- +(-85:0.4);
+% South CR + muon shower
+\draw[CR] (0.2, -5) -- +(95:1.75) node[interaction] (CR) {};
+  \draw[mu] (CR) -- +( 75:0.7);
+  \draw[mu] (CR) -- +(115:0.4);
+  \draw[mu] (CR) -- +( 85:1.2);
+
+% Atmo nu south from CR + mu shower
+\draw[CR] (5, -3) -- +(170:3.0) node[interaction] (CR) {};
+  \draw[mu] (CR) -- +(175:0.7);
+  \draw[mu] (CR) -- +(160:0.8);
+  \draw[mu] (CR) -- +(135:0.4);
+  \draw[mu] (CR) -- +(185:0.8) node[interaction] (WW) {};
+    \draw[nu] (WW) -- +(165:3.0);
+% Atmo nu north from CR + mu shower
+\draw[CR] (0.5, 4) -- +(-95:0.9) node[interaction] (CR) {};
+  \draw[mu] (CR) -- +(-90:0.4);
+  \draw[mu] (CR) -- +(-65:0.5);
+  \draw[mu] (CR) -- +(-110:0.7) node[interaction] (WW) {};
+    \draw[nu] (WW) -- +(-95:5.0)
+      node[near start, above, sloped] (LABEL) {atmo. $\nu$};
+
+
+% Legend
+\draw[nu] (4, 4) -- (4.5, 4) node[anchor=west] {$\nu$};
+\draw[mu] (4, 4cm - 2ex) -- (4.5, 4cm - 2ex) node[anchor=west] {$\mu$};
+\draw[CR] (4, 4cm - 4ex) -- (4.5, 4cm - 4ex) node[anchor=west] {CR};
+
+
+% Helper for drawing
+% \draw[step=1.0, dotted, red] (-5, -5) grid (5, 5);
+
+\end{tikzpicture}
+
+\end{document}
