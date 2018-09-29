@@ -140,7 +140,7 @@ The time PDFs are simple rectangle functions
 \end{equation}
 for both signal and background.
 For signal, this is a rather generic choice for an unknown emission process.
-For background, the same sinus function rate model used for the spatial PDFs could more accurately be used.
+For background, the same sine function rate model used for the spatial PDFs could more accurately be used.
 But as the amplitudes are small, even at the largest time window the resulting PDF would be virtually indistinguishable from a uniform distribution.
 So for code simplicity, simple rectangle model is used for the background PDF.
 This also means that no extra sensitivity is coming from the temporal term, it is merely there to select events within the time windows and alters the amount of total background contribution which is almost zero for the smallest and grows approximately linearly for larger time windows.
@@ -216,7 +216,7 @@ The time window intervals can be found in table~(\ref{tab:time_windos}).
 
 \section{Background estimation and stacking weights}
 The estimates of the number of background events per source $\Braket{\lambda_{k,B}}$ are not fitted in this analysis but fixed from a priori estimates on data.
-The values are obtained by fitting the sinus rate model to the whole off-time data on the whole sky, again using monthly bins.
+The values are obtained by fitting the sine rate model to the whole off-time data on the whole sky, again using monthly bins.
 \TODO{plots in app.}
 The rate model for each sample is then integrated over each sources time window in that sample, to obtain the average number of background events.
 Again, the amplitudes are quite flat, so the exact integral is almost the same as just using the product of time window length and average rate.
