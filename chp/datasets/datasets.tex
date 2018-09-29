@@ -1,16 +1,16 @@
 \chapter{Datasets}
   \label{chp:datasets}
 
-Two distinct datasets are used in a so far unique way in the analyses conducted in this thesis.
-One is the source dataset and the other one is the test dataset.
+Two distinct datasets are used in a so far unique way in the analyses done in this thesis.
+Here, two different event selections serve as a test and as a source dataset.
 In both sets, six years of IceCube data is used.
 Usually, in point source searches, locations of sources measured from other experiments are tested, for example from high energy cosmic ray information or from gamma-ray observations.
-These are either classic catalogue stacking point source searches, where the external catalogue provides source locations with a sufficiently high precision to treat the sources as point sources with respect to the resolution capabilities of IceCube which is in the order of $\SI{1}{\degree}$ \cite{Aartsen:2013zka,Bos:2015SunMoon}.
-Or the analyses incorporate the uncertainty from external sources usually by expanding the spatial per event uncertainty to $\sigma_\text{tot}^2 = \sigma_\text{evt}^2 + \sigma_\text{src}^2$ effectively treating the source as an extended emitter\footnote{More on the Likelihood formalism in the next chapter.}.
-This is problematic when a test for point sources is needed, especially when testing for extragalactic sources that always appear point-like, due to the large cosmic distances \footnote{Maybe with the exception of Centaurus A (NGC 5128) \cite{Yang:2012CentaurusA}}.
+These are either classic catalogue stacking point source searches, where the external catalogue provides source locations with a sufficiently high precision to treat the sources as point sources with respect to the resolution capabilities of IceCube, which is in the order of $\SI{1}{\degree}$ \cite{Aartsen:2013zka,Bos:2015SunMoon}.
+Or the analyses incorporate the uncertainty from external sources, usually by expanding the spatial per event uncertainty to $\sigma_\text{tot}^2 = \sigma_\text{evt}^2 + \sigma_\text{src}^2$, effectively treating the source as an extended emitter\footnote{More on the Likelihood formalism in the next chapter.}.
+This is problematic when a test for point sources is needed, especially when testing for extragalactic sources that always appear point-like, due to the large cosmic distances \footnote{Maybe with the exception of Centaurus A (NGC 5128) \cite{Yang:2012CentaurusA}.}.
 Here, 22 track-like events from six years of the high energy starting event (HESE) selection data are used as potential source candidates.
 In this chapter, the two different data sets partaking in the analyses are shortly introduced.
-Also, they need to be slightly adapted from the raw sets to be suitable for the analyses conducted here.
+Also, they need to be slightly adapted from the originally prepared sets to be suitable for the analyses performed here.
 
 In the following, the naming scheme for data taken in each period is following the number of operational strings until the complete detector was operational.
 After that, the data taking periods are numbered consecutively with the corresponding year the data was taken in.
@@ -20,16 +20,17 @@ In IceCube, a data taking period starts around May each year, where a new detect
 The high energy starting event selection has led to the first-ever detection of a diffuse astrophysical neutrino signal in 2013 \cite{Aartsen:2013jdh}.
 Additionally, a dedicated point source search was made using only the HESE event selection, however with no significant detection throughout the years \cite{Aartsen:2013rt,Aartsen:2014gkd,Kopper:2015vzf,Kopper:2017zzm}.
 The idea behind the data selection is to use the outermost detector units as a veto against events starting outside the detector.
-In figure~(\ref{fig:data_hese_veto}) the veto region can be seen.
-Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected \footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS. \cite{Kopper:2017zzm}}.
-Additionally, to make sure, no lower energy muon enters the detector, at least a total charge of $\num{6000}$ photoelectrons is required to be detected in the whole detector.
-From 2010 to 2015, $\num{82}$ events possibly including all three neutrino flavours have been collected so far.
+In figure~(\ref{fig:data_hese_veto}) the veto region is shown.
+Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected \footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS \cite{Kopper:2017zzm}.}.
+Additionally, to make sure no lower energy muon enters the detector, a total charge of at least $\num{6000}$ photoelectrons is required to be detected in the whole detector.
+In six years of data, in data taking seasons 2010--2015, $\num{82}$ events, possibly including all three neutrino flavours, have been collected.
 $\num{22}$ of these events are the track-like starting events with a good angular resolution of about $\SI{1}{\degree}$ used as sources in this work.
-Additionally, $\num{60}$ cascade-like events with a much worse angular resolution where recorded, making a total of $\num{82}$ high energy starting events in six years of data \cite{Kopper:2017zzm}.
-Unlike in most other point source searches, the positions of the sources are not exactly known due to the reconstruction uncertainties, bit full Likelihood scans of the reconstruction algorithm are available.
-To include this uncertainty in the analyses performance estimation the Likelihood scan maps are later used to inject source positions during trial generation.
-The cascades could potentially also be considered as sources, but this would require a more advanced Likelihood formalism as known to-date in this thesis to capture the wide-spread source regions properly, preferably by fitting the positions themselves using the Likelihood maps as priors.
+Additionally, $\num{60}$ cascade-like events with a much worse angular resolution where recorded \cite{Kopper:2017zzm}.
+Unlike in most other point source searches, the positions of the sources are not exactly known due to the reconstruction uncertainties, however, full Likelihood scans of the reconstruction algorithm are available.
+To include this uncertainty in the analyses performance estimation, the Likelihood scan maps are later used to inject source positions during trial generation.
+The cascades could potentially also be considered as sources, but this would require a more advanced Likelihood formalism as known to the author to-date to capture the wide-spread source regions properly, preferably by fitting the positions themselves using the Likelihood maps as priors.
 Therefore, only the track-like events with good pointing capabilities are used in this thesis.
+See table~(\ref{tab:reco_hese_track_positions}) for detailed information of each used, track-like high energy starting event.
 
 \begin{figure}[htbp]
   \centering
@@ -46,48 +47,56 @@ Therefore, only the track-like events with good pointing capabilities are used i
 
 \subsection{HESE reconstruction map handling}
 To use the HESE track-like events as sources, their positions must be reconstructed first.
-Instead of determining a single best-fit position, a full Likelihood scan utilizing an advanced reconstruction algorithm is done \footnote{Internally named \enquote{millipede} due to the segmentation of the track. For each segment the energy losses are fitted, unfolded and compared to data.} \cite{Aartsen:2013vja}.
+Instead of determining a single best-fit position, a full Likelihood scan utilizing an advanced reconstruction algorithm is done \footnote{Internally named \enquote{millipede} due to the segmentation of the track hypothesis. For each segment the energy losses are fitted, unfolded and compared to data.} \cite{Aartsen:2013vja}.
 For the few track-like events recorded this is feasible, even though scanning the whole sky is a slow procedure and takes up several hours of computing time on a distributed system.
 Since 2016, the scan procedure is running automated to support follow-up observation programs for the IceCube real-time alert system.
 When a triggered event passes the high energy starting event filter running live at the South Pole, an alert is sent and the event reconstruction starts immediately to make the position available for other observatories \cite{Aartsen:2016lmt}.
 
-For the scan procedure, the sky is binned in a HEALPix pixelization scheme in a three pass procedure \cite{Gorski:2004by}.
+For the scan procedure, the sky is binned in a HEALPix \cite{Gorski:2004by} pixelization scheme in a three pass procedure.
 The HEALPix grid was originally developed for a frequency analysis of the cosmic microwave background measured with the Wilkinson Microwave Anisotropy Probe (WMAP) satellite mission \cite{Jarosik:2010iu}.
 It tesselates the unit sphere in hierarchical segments, where all pixels for a given resolution have the same area and are distributed on lines of constant latitude.
-This has the advantage of having a constant normalization in each pixel, instead of using, for example, a usual rectangular grid, where pixels areas get smaller towards the poles.
+This has the advantage of having a constant normalization in each pixel, instead of using, for example, a rectangular grid, where pixel areas get smaller towards the poles.
 To get a rough idea of the most likely event direction, at first a coarse scan with only a few pixels is used.
 At each pixel, the reconstruction algorithm is run with the event positions fixed.
 It then fits the best matching support point and the energy losses along the track pointing to the fixed direction of the current pixel.
-As the same fit hypothesis is used across all pixels, the resulting Likelihood values can be directly compared and the highest value, or the minimum, as the negative logarithm of the Likelihood is used, can be found from the map of scanned Likelihood values.
+As the same fit hypothesis is used across all pixels, the resulting Likelihood values can be directly compared and the highest value, or the minimum if the negative logarithm of the Likelihood is used, can be found from the map of scanned Likelihood values.
 Then, consecutively only increasing the resolution around a large enough region in the vicinity of the previous best fit pixel to save computation time, a second and a third scan is done.
 The final resolution would have over three million pixels on the whole sky, being equal to an angular resolution of about $\SI{0.5}{\degree}$.
-The best fit pixel, with the highest Likelihood value, is then the reported arrival direction.
-\FIX{Example Scan left, zoom right}
+The best fit pixel with the highest Likelihood value is then the reported arrival direction.
+See plots~(\ref{fig:hese_events_reco_landscape_skymap}) and~(\ref{fig:hese_events_per_sample_skymap}) for the reconstruction maps and the events positions for each of the 22 tested HESE events.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{plots/hese_events_per_sample_skymap.pdf}
+  \caption[Skymap of all 22 HESE positions with season information]{
+    Skymap in equatorial coordinates and Mollweide projection showing the positions of all 22 high energy starting events with additional season information.
+  }
+  \label{fig:hese_events_per_sample_skymap}
+\end{figure}
 
 The advantage of this method is two-fold.
 First, the fitting algorithm has to deal with less free parameters in a difficult scenario, making it more stable.
 The region around the best-fit position can be inspected for failures in the fitting procedures, for example, when sudden drops of the Likelihood value for neighbour pixels occur.
 Secondly, the scanned Likelihood gives an estimate of the uncertainty of the angular reconstruction by inspection of the Likelihood landscape around the best fit pixel.
 Though the underlying test statistic, which would allow the needed mapping of Likelihood values to probabilities, is not known here and can only be obtained by extensive and costly re-simulation per event, the uncertainty can be estimated in a first approximation using Wilks' theorem \cite{Wilks:1938dza,casella2002statistical,bohm2010introduction}.
-To factor in possible systematic uncertainties, each map is convolved with a $\SI{1}{\degree}$ gaussian filter.
-The $\SI{1}{\degree}$ is an upper limit of these effects derived from a study of the cosmic ray shadow of the moon in IceCube \cite{Aartsen:2013jdh,Aartsen:2013zka}.
+To factor in possible systematic uncertainties, each map is convolved with a $\SI{1}{\degree}$ Gaussian smoothing kernel.
+The $\SI{1}{\degree}$ is an upper limit of combined systematics effects derived from a study of the cosmic ray shadow of the moon in IceCube \cite{Aartsen:2013jdh,Aartsen:2013zka}.
 
 The reconstruction Likelihood is originally scanned in local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\varphi\in[0, 2\pi]$.
-However, source objects are usually described in equatorial coordinates, declination $\delta\in[-\pi/2, \pi/2]$ and right-ascension $\alpha\in[0, 2\pi]$ or often also $\alpha\in[\SI{0}{\hour}, \SI{24}{\hour}]$
+However, source objects are usually described in equatorial coordinates, declination $\delta\in[-\sfrac{\pi}{2}, \sfrac{\pi}{2}]$ and right-ascension $\alpha\in[0, 2\pi]$ or often also $\alpha\in[\SI{0}{\hour}, \SI{24}{\hour}]$.
 The equatorial coordinate system is created by projecting the earth's equator onto the celestial sky for the horizon and the March equinox point is used as the starting point for the perpendicular coordinate, right-ascension, in a right-handed system.
-Far away objects are fixed in these coordinates, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \footnote{At least for a certain time in which earth precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}} \cite{Hohenkerk:1992AstroAlmanac}.
-Though the basic coordinate transformations in IceCube are relatively easy because of the special position directly at the south pole, for which the approximation $\delta \approx \theta-\pi$ holds reasonably well, the full set of transformations including the sun position and other corrections takes a long time to process.
-Therefore, the local event coordinates from a test dataset are converted to equatorial coordinates beforehand, so their positions can, in general, be directly compared to the equatorial source coordinates.
+Far away objects are fixed in these coordinates \footnote{At least for a certain time range in which the earth's precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}.}, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \cite{Hohenkerk:1992AstroAlmanac}.
+Though the basic coordinate transformations in IceCube are relatively easy because of the special position directly at the South Pole, for which the approximation $\delta \approx \theta - \sfrac{\pi}{2}$ holds reasonably well, the full set of transformations including the sun position and other corrections takes a long time to process.
+Therefore, the local event coordinates from a test dataset are converted to equatorial coordinates beforehand, so their positions can be directly compared to the equatorial source coordinates.
 To become computationally feasible, also the aforementioned reconstruction maps for the HESE events need to be converted into a fast-to-evaluate equatorial representation.
 
 The used HEALPix maps use an internal coordinate-to-pixel-number conversion scheme, with $\Theta\in[0, \pi]$ and $\Phi\in[0, 2\pi]$, that is easily identifiably with IceCube's local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\varphi\in[0, 2\pi]$, so the local maps can directly represent local coordinates for each pixel.
-\TODO{HEALPix coords section in appendix?}.
 The conversion from local to equatorial coordinates depends on the sources' times which fixes the detector location relative to the equatorial coordinate system.
 Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies strongly over time.
 To avoid recalculating costly transformations from local map coordinates to equatorial coordinates at runtime, pre-transformed maps in equatorial coordinates are computed beforehand only once.
 The convention used to efficiently map from HEALPix coordinates to equatorial ones is chosen as
 \begin{equation}
-  \delta = \sfrac{\pi}{2} - \Theta \mintertext{and} \alpha = \varphi
+  \delta = \frac{\pi}{2} - \Theta \mintertext{and} \alpha = \varphi
   \mperiod
 \end{equation}
 This mapping is not bijective though, because $\delta \approx \theta - \sfrac{\pi}{2}$ is only an approximation and the number of pixels in each $\Theta$ band changes depending on whether being close to the poles or to the horizon.
@@ -96,9 +105,21 @@ To overcome this, the mapping is done in reverse by transforming the exact pixel
 Then the local map is interpolated to the new pixel location and that value is stored in the equatorial map.
 The maximum error that can happen this way is in the order of a single pixel offset because the above approximation between zenith and declination holds closely enough.
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{plots/unsmoothed_vs_smoothed.pdf}
+  \caption[Likelihood reconstruction map before and after smoothing]{
+    Likelihood reconstruction map of event $1$ in local coordinates zoomed to the region of high Likelihood.
+    On the left the original Likelihood map as obtained from the scan procedure.
+    On the right the same map convolved with a $\SI{1}{\degree}$ Gaussian smoothing kernel to approximately account for unknown systematics.
+  }
+  \label{fig:unsmoothed_vs_smoothed}
+\end{figure}
+
 Next, the maps should represent a probability distribution that gives the probability of the true source position being at a specific pixel.
 For this, the transformed maps are first converted back from the original logarithmic Likelihood space after the scan in local coordinates, to linear Likelihood space by $m\rightarrow \exp{(m)}$.
-To approximately and conservatively account for unknown systematics, the transformed maps are smeared with a symmetric Gaussian kernel of width $\SIsigma{1}$ as mentioned before.
+To approximately and conservatively account for unknown systematics, the transformed maps are convolved with a symmetric Gaussian kernel of width $\SIsigma{1}$ as mentioned before.
+See figure~(\ref{fig:unsmoothed_vs_smoothed}) for an example of the a smoothed Likelihood map around the best fit position.
 The smoothing introduces some numerical errors because it is done in spherical harmonics space which has to be truncated numerically \cite{Gorski:2004by}.
 The artefacts are removed by normalizing the smoothed maps to have an integral value of
 \begin{equation}
@@ -115,8 +136,18 @@ Due to the lack of a proper test statistic, the Likelihood value $\mathcal{L}_\t
 The resulting maps can then be used as spatial PDF maps and are later sampled during the signal injection trials described in the analysis sections~\ref{chp:time_dep} and~\ref{chp:time_indep}.
 For each event, the tested source position is defined as the direction of the pixel from the smoothed, equatorial PDF map with the highest value.
 These coordinates are slightly different to the published equatorial HESE coordinates due to the necessary map processing procedure.
-But this ensures that the sampling procedure from the map does not introduce a bias by sampling the most likely source position not exactly at the tested one.
-\FIX{Map and truncated map in app. or here?}
+But this ensures that the sampling procedure from the map does not introduce a bias by sampling the most likely source positions not exactly at the tested ones.
+See figure~(\ref{fig:untruncated_vs_truncated}) for an example of the map truncation.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{plots/untruncated_vs_truncated.pdf}
+  \caption[Likelihood reconstruction map truncation after smoothing]{
+    Likelihood reconstruction map of event $1$ in equatorial coordinates.
+    On the left the raw map after the smoothing procedure and on the right the same map truncated at $\SIsigma{6}$ level as described in the text.
+  }
+  \label{fig:untruncated_vs_truncated}
+\end{figure}
 
 \begin{table}[htbp]
 \centering
