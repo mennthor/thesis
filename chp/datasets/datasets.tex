@@ -19,13 +19,13 @@ In IceCube, a data taking period starts around May each year, where a new detect
 \section{High energy starting event data}
 The high energy starting event selection has led to the first-ever detection of a diffuse astrophysical neutrino signal in 2013 \cite{Aartsen:2013jdh}.
 Additionally, a dedicated point source search was made using only the HESE event selection, however with no significant detection throughout the years \cite{Aartsen:2013rt,Aartsen:2014gkd,Kopper:2015vzf,Kopper:2017zzm}.
-The idea behind the data selection is to use the outermost detector units as a veto against events starting outside the detector.
+The idea behind the data selection is to use the outermost detector units as a veto against events starting outside the detector to reject atmospheric muons from the southern sky.
 In figure~(\ref{fig:data_hese_veto}) the veto region is shown.
 Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected\footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS \cite{Kopper:2017zzm}.}.
-Additionally, to make sure no lower energy muon enters the detector, a total charge of at least $\num{6000}$ photoelectrons is required to be detected in the whole detector.
+Additionally, to make sure no lower energy muon enters the detector, a total charge of at least $\num{6000}$ photoelectrons is required to be registered in the whole detector.
 In six years of data, in data taking seasons 2010--2015, $\num{82}$ events, possibly including all three neutrino flavours, have been collected.
 $\num{22}$ of these events are the track-like starting events with a good angular resolution of about $\SI{1}{\degree}$ used as sources in this work.
-Additionally, $\num{60}$ cascade-like events with a much worse angular resolution where recorded \cite{Kopper:2017zzm}.
+Additionally, $\num{60}$ cascade-like events with a much worse angular resolution were recorded \cite{Kopper:2017zzm}.
 Unlike in most other point source searches, the positions of the sources are not exactly known due to the reconstruction uncertainties, however, full Likelihood scans of the reconstruction algorithm are available.
 To include this uncertainty in the analyses performance estimation, the Likelihood scan maps are later used to inject source positions during trial generation.
 The cascades could potentially also be considered as sources, but this would require a more advanced Likelihood formalism as known to the author to-date to capture the wide-spread source regions properly, preferably by fitting the positions themselves using the Likelihood maps as priors.
@@ -118,7 +118,7 @@ The maximum error that can happen this way is in the order of a single pixel off
 
 Next, the maps should represent a probability distribution that gives the probability of the true source position being at a specific pixel.
 For this, the transformed maps are first converted back from the original logarithmic Likelihood space after the scan in local coordinates, to linear Likelihood space by $m\rightarrow \exp{(m)}$.
-To approximately and conservatively account for unknown systematics, the transformed maps are convolved with a symmetric Gaussian kernel of width $\SIsigma{1}$ as mentioned before.
+To approximately and conservatively account for unknown systematics, the transformed maps are convolved with a symmetric Gaussian kernel of width $\SI{1}{\degree}$ as mentioned before.
 See figure~(\ref{fig:unsmoothed_vs_smoothed}) for an example of the a smoothed Likelihood map around the best fit position.
 The smoothing introduces some numerical errors because it is done in spherical harmonics space which has to be truncated numerically \cite{Gorski:2004by}.
 The artefacts are removed by normalizing the smoothed maps to have an integral value of
@@ -207,7 +207,7 @@ The same selection is used for all three years of the IC86, 2012--2014 season, b
 In the following, this three-year dataset is always considered in total, not for each season separately.
 The number of events in each dataset is shown in table~(\ref{tab:reco_nunber_exp_evts}).
 The goal of the data selection was to obtain a highly pure muon track sample from the whole sky in each case.
-Because the background contributions from each hemisphere in the detector are fundamentally different, the samples are usually built for each hemisphere separately and then pieced back together.
+Because the background contributions from each hemisphere in the detector are fundamentally different, the samples are usually built for each hemisphere separately and then combined back into a single sample.
 As depicted in figure~(\ref{fig:atmo_astro_nus}), muons from atmospheric air showers get blocked by the earth and cannot enter the detector from below.
 However, the main reducible background in the northern sky is still the contribution from wrongly reconstructed atmospheric muons where the reconstruction methods computed false entry angles.
 In the southern sky, direct muons from the Antarctic atmosphere which enter the detector from the top are the main background contribution.
@@ -258,7 +258,7 @@ The same reasoning applies to the energy proxy variable, which is one of the fas
 Though the actually used algorithm does not matter, the unbinned Likelihood will perform better, the better the algorithms can reconstruct the true quantities of each event.
 The per event angular uncertainty $\sigma$ is either constructed using a coarse Likelihood scan around the best-fit position from the directional reconstruction algorithm and approximating this landscape with a parabola, which justifies its use as a Gaussian uncertainty or, where that scan fails, through a bootstrap procedure.
 
-To built time-dependent Likelihood PDFs, runtime information is needed too.
+To built time-dependent Likelihood PDFs, the time ranges in which the detector was set up to actually measure event information is needed too.
 Usually, this information is tracked in \emph{good run lists}, which note the start and end times of each detector run.
 Because it was not quite clear which run-list should be used, especially for the older datasets, run information was manually reconstructed from the datasets by using the first and last event per run to estimate each run's livetime.
 This generally underestimates the livetime, with the underestimation being more severe the fewer events are present at final data level within in a run.
