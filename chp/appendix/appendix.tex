@@ -12,11 +12,100 @@ The code written to enable the computational part of this analysis was mainly do
 \chapter{Datasets}
 This appendix chapter includes additional plots for chapter~\ref{chp:datasets}.
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HESE LLH maps skymap
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{../datasets/plots/hese_events_reco_landscape_skymap.pdf}
+  \includegraphics{../datasets/plots/hese_events_reco_landscape_skymap.pdf}
   \caption[Combined Likelihood skymap of the 22 HESEs]{
     Skymap in equatorial coordinates and Mollweide projection of the combination of all Likelihood reconstruction maps from the track-like high energy starting events.
   }
   \label{fig:hese_events_reco_landscape_skymap}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Eff areas and sindec distribution for IC79 and IC86I
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/effA_and_sindec_IC79.pdf}
+    \subcaption{
+        Effective areas and $\sin(\delta_\nu)$ distributions for sample IC79.
+      }
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/effA_and_sindec_IC86_2011.pdf}
+    \subcaption{
+        Effective areas and $\sin(\delta_\nu)$ distributions for sample IC86, 2011.
+      }
+  \end{subfigure}
+  \caption[Effective areas and $\sin(\delta_\nu)$ distributions for IC79, IC86'12]{
+    Effective areas and $\sin(\delta_\nu)$ distributions for for the samples IC7 and IC86, 2011 in the muon neutrino test dataset.
+    The effective areas are shown for multiple declination bands to capture the main features of the underlying sample selection efficiencies.
+    The $\sin(\delta_\nu)$ distributions are weighted to generic power law fluxes with indices $2$ and $2.5$ and to the current measurement from \cite{Haack:2017dxi}.
+    }
+  \label{fig:effA_and_sindec_79_86I}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Eff areas and sindec distribution for IC86II and IC86V
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/effA_and_sindec_IC86_2012-2014.pdf}
+    \subcaption{
+        Effective areas and $\sin(\delta_\nu)$ distributions for sample IC86, 2012--2014.
+      }
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/effA_and_sindec_IC86_2015.pdf}
+    \subcaption{
+        Effective areas and $\sin(\delta_\nu)$ distributions for sample IC86, 2015.
+      }
+  \end{subfigure}
+  \caption[Effective areas and $\sin(\delta_\nu)$ distributions for IC86'12--'14, IC86'15]{
+    Effective areas and $\sin(\delta_\nu)$ distributions for the samples IC86, 2012--2014 and IC86, 2015 in the muon neutrino test dataset.
+    The effective areas are shown for multiple declination bands to capture the main features of the underlying sample selection efficiencies.
+    The $\sin(\delta_\nu)$ distributions are weighted to generic power law fluxes with indices $2$ and $2.5$ and to the current measurement from \cite{Haack:2017dxi}.
+  }
+  \label{fig:effA_and_sindec_86II_86V}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HESE decorrelation plots
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/mc_no_hese_IC79.pdf}
+    \subcaption{Sample IC79}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/mc_no_hese_IC86_2011.pdf}
+    \subcaption{Sample IC86, 2011}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+    \includegraphics{../datasets/plots/mc_no_hese_IC86_2012-2014.pdf}
+    \subcaption{Sample IC86, 2012--2014}
+  \end{subfigure}
+  \caption[HESE decorrelation for IC79, IC86'11, IC86'12--'14]{
+    Plot showing the filtered out HESE-like events in the simulation files used for each sample on the right and the full simulation sample on the left.
+    The samples are weighted to the flux model in \cite{Haack:2017dxi} equally normalized to a livetime of $365$ days.
+    To obtain the total number of events, the integral over the parameter space needs to be taken, shown are differential number of events.
+    }
+  \label{fig:mc_no_hese_79_86I_86II}
 \end{figure}
