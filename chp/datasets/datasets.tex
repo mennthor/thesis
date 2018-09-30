@@ -7,7 +7,7 @@ In both sets, six years of IceCube data is used.
 Usually, in point source searches, locations of sources measured from other experiments are tested, for example from high energy cosmic ray information or from gamma-ray observations.
 These are either classic catalogue stacking point source searches, where the external catalogue provides source locations with a sufficiently high precision to treat the sources as point sources with respect to the resolution capabilities of IceCube, which is in the order of $\SI{1}{\degree}$ \cite{Aartsen:2013zka,Bos:2015SunMoon}.
 Or the analyses incorporate the uncertainty from external sources, usually by expanding the spatial per event uncertainty to $\sigma_\text{tot}^2 = \sigma_\text{evt}^2 + \sigma_\text{src}^2$, effectively treating the source as an extended emitter\footnote{More on the Likelihood formalism in the next chapter.}.
-This is problematic when a test for point sources is needed, especially when testing for extragalactic sources that always appear point-like, due to the large cosmic distances \footnote{Maybe with the exception of Centaurus A (NGC 5128) \cite{Yang:2012CentaurusA}.}.
+This is problematic when a test for point sources is needed, especially when testing for extragalactic sources that always appear point-like, due to the large cosmic distances\footnote{Maybe with the exception of Centaurus A (NGC 5128) \cite{Yang:2012CentaurusA}.}.
 Here, 22 track-like events from six years of the high energy starting event (HESE) selection data are used as potential source candidates.
 In this chapter, the two different data sets partaking in the analyses are shortly introduced.
 Also, they need to be slightly adapted from the originally prepared sets to be suitable for the analyses performed here.
@@ -21,7 +21,7 @@ The high energy starting event selection has led to the first-ever detection of 
 Additionally, a dedicated point source search was made using only the HESE event selection, however with no significant detection throughout the years \cite{Aartsen:2013rt,Aartsen:2014gkd,Kopper:2015vzf,Kopper:2017zzm}.
 The idea behind the data selection is to use the outermost detector units as a veto against events starting outside the detector.
 In figure~(\ref{fig:data_hese_veto}) the veto region is shown.
-Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected \footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS \cite{Kopper:2017zzm}.}.
+Each event lighting up a DOM in the shaded areas would be rejected as background and only those passing the layers and start inside the fiducial detection volume are selected\footnote{Less than three of the first $\num{250}$ registered photoelectrons are allowed to be recorded in any of the veto DOMS \cite{Kopper:2017zzm}.}.
 Additionally, to make sure no lower energy muon enters the detector, a total charge of at least $\num{6000}$ photoelectrons is required to be detected in the whole detector.
 In six years of data, in data taking seasons 2010--2015, $\num{82}$ events, possibly including all three neutrino flavours, have been collected.
 $\num{22}$ of these events are the track-like starting events with a good angular resolution of about $\SI{1}{\degree}$ used as sources in this work.
@@ -47,7 +47,7 @@ See table~(\ref{tab:reco_hese_track_positions}) for detailed information of each
 
 \subsection{HESE reconstruction map handling}
 To use the HESE track-like events as sources, their positions must be reconstructed first.
-Instead of determining a single best-fit position, a full Likelihood scan utilizing an advanced reconstruction algorithm is done \footnote{Internally named \enquote{millipede} due to the segmentation of the track hypothesis. For each segment the energy losses are fitted, unfolded and compared to data.} \cite{Aartsen:2013vja}.
+Instead of determining a single best-fit position, a full Likelihood scan utilizing an advanced reconstruction algorithm is done\footnote{Internally named \enquote{millipede} due to the segmentation of the track hypothesis. For each segment the energy losses are fitted, unfolded and compared to data.} \cite{Aartsen:2013vja}.
 For the few track-like events recorded this is feasible, even though scanning the whole sky is a slow procedure and takes up several hours of computing time on a distributed system.
 Since 2016, the scan procedure is running automated to support follow-up observation programs for the IceCube real-time alert system.
 When a triggered event passes the high energy starting event filter running live at the South Pole, an alert is sent and the event reconstruction starts immediately to make the position available for other observatories \cite{Aartsen:2016lmt}.
@@ -67,7 +67,7 @@ See plots~(\ref{fig:hese_events_reco_landscape_skymap}) and~(\ref{fig:hese_event
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{plots/hese_events_per_sample_skymap.pdf}
+  \includegraphics{plots/hese_events_per_sample_skymap.pdf}
   \caption[Skymap of all 22 HESE positions with season information]{
     Skymap in equatorial coordinates and Mollweide projection showing the positions of all 22 high energy starting events with additional season information.
   }
@@ -85,7 +85,7 @@ The $\SI{1}{\degree}$ is an upper limit of combined systematics effects derived 
 The reconstruction Likelihood is originally scanned in local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\varphi\in[0, 2\pi]$.
 However, source objects are usually described in equatorial coordinates, declination $\delta\in[-\sfrac{\pi}{2}, \sfrac{\pi}{2}]$ and right-ascension $\alpha\in[0, 2\pi]$ or often also $\alpha\in[\SI{0}{\hour}, \SI{24}{\hour}]$.
 The equatorial coordinate system is created by projecting the earth's equator onto the celestial sky for the horizon and the March equinox point is used as the starting point for the perpendicular coordinate, right-ascension, in a right-handed system.
-Far away objects are fixed in these coordinates \footnote{At least for a certain time range in which the earth's precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}.}, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \cite{Hohenkerk:1992AstroAlmanac}.
+Far away objects are fixed in these coordinates\footnote{At least for a certain time range in which the earth's precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}.}, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \cite{Hohenkerk:1992AstroAlmanac}.
 Though the basic coordinate transformations in IceCube are relatively easy because of the special position directly at the South Pole, for which the approximation $\delta \approx \theta - \sfrac{\pi}{2}$ holds reasonably well, the full set of transformations including the sun position and other corrections takes a long time to process.
 Therefore, the local event coordinates from a test dataset are converted to equatorial coordinates beforehand, so their positions can be directly compared to the equatorial source coordinates.
 To become computationally feasible, also the aforementioned reconstruction maps for the HESE events need to be converted into a fast-to-evaluate equatorial representation.
@@ -107,7 +107,7 @@ The maximum error that can happen this way is in the order of a single pixel off
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{plots/unsmoothed_vs_smoothed.pdf}
+  \includegraphics{plots/unsmoothed_vs_smoothed.pdf}
   \caption[Likelihood reconstruction map before and after smoothing]{
     Likelihood reconstruction map of event $1$ in local coordinates zoomed to the region of high Likelihood.
     On the left the original Likelihood map as obtained from the scan procedure.
@@ -141,7 +141,7 @@ See figure~(\ref{fig:untruncated_vs_truncated}) for an example of the map trunca
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{plots/untruncated_vs_truncated.pdf}
+  \includegraphics{plots/untruncated_vs_truncated.pdf}
   \caption[Likelihood reconstruction map truncation after smoothing]{
     Likelihood reconstruction map of event $1$ in equatorial coordinates.
     On the left the raw map after the smoothing procedure and on the right the same map truncated at $\SIsigma{6}$ level as described in the text.
@@ -205,20 +205,33 @@ Here, data from the same detector seasons as for the source events is used, so f
 Though the underlying event selection differs slightly for each sample and also the detector configuration changes for certain seasons, the basic steps to arrive at the final event selection is summarized in \cite{Aartsen:2016qbu} for the IC86, 2015 season, in \cite{Aartsen:2016oji} for the IC86, 2012--2014 season, in \cite{Aartsen:2013uuv} for IC86, 2011 and \cite{Aartsen:2014PS4yrs} for IC79.
 The same selection is used for all three years of the IC86, 2012--2014 season, because the detector configuration was not changed.
 In the following, this three-year dataset is always considered in total, not for each season separately.
+The number of events in each dataset is shown in table~(\ref{tab:reco_nunber_exp_evts}).
 The goal of the data selection was to obtain a highly pure muon track sample from the whole sky in each case.
 Because the background contributions from each hemisphere in the detector are fundamentally different, the samples are usually built for each hemisphere separately and then pieced back together.
-The main reducible background in the northern sky is the contribution from wrongly reconstructed atmospheric muons and direct muons from the Antarctic atmosphere entering the detector from the top in the southern sky.
-\TODO{Include comic as used in talks?}
-The selection efficiency is worse in the southern sky, leading to fewer statistics and making the energy threshold for obtaining a pure neutrino sample much higher.
-The irreducible background in the samples is made of muons produced by atmospheric muon neutrinos.
-These can't be directly distinguished from muons induced by astrophysical muon neutrinos.
+As depicted in figure~(\ref{fig:atmo_astro_nus}), muons from atmospheric air showers get blocked by the earth and cannot enter the detector from below.
+However, the main reducible background in the northern sky is still the contribution from wrongly reconstructed atmospheric muons where the reconstruction methods computed false entry angles.
+In the southern sky, direct muons from the Antarctic atmosphere which enter the detector from the top are the main background contribution.
+The selection efficiency is worse in the southern sky, leading to fewer statistics and a higher energy threshold for obtaining a pure muon neutrino sample.
+The irreducible background in the samples is made of muons induced by atmospheric muon neutrinos produced alongside atmospheric muons in the air showers.
+Because the particle type is the same, these can't be directly distinguished from muons induced by astrophysical muon neutrinos.
+However, atmospheric particles are expected to be produced diffusely with no preferred direction in a large production volume.
 Therefore the Likelihood ansatz described in the next chapter is used to test for a significant clustering of events around the assumed source locations which would be a clear signal of the presence of astrophysical neutrinos.
-The number of events in each dataset is shown in table~(\ref{tab:reco_nunber_exp_evts})
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{plots/atmo_astro_nus.pdf}
+  \caption[Muon and neutrino contributions to the test data set]{
+    Schematic overview of the different particle contributions going into the six year muon neutrino track sample.
+    In the northern sky, the earth shields the detector from the atmospheric muons, so the main irreducible background are the atmospheric neutrinos.
+    In the souther sky, atmospheric muons are able to enter the detector alongside with the atmospheric and astrophysical neutrino contribution.
+  }
+  \label{fig:atmo_astro_nus}
+\end{figure}
 
 \begin{table}[htbp]
   \centering
   \caption[Number of events in the test datasets]{
-    Number of events in the test datasets for each considered season.
+    Number of events in the test datasets remaining after all steps to arrive at the final analysis level for each considered season.
     }
   \label{tab:reco_nunber_exp_evts}
   \begin{tabular}{
@@ -238,43 +251,58 @@ The number of events in each dataset is shown in table~(\ref{tab:reco_nunber_exp
 \end{table}
 
 A standardized form utilizing a named array structure is used to provide the datasets.
-The per-event attributes used for experimental data are the reconstructed angular direction in equatorial coordinates declination and right-ascension, the logarithm to base $\num{10}$ of an energy proxy variable, the event times in Modified Julian Date representation \cite{Hohenkerk:1992AstroAlmanac} and the combined events angular uncertainty $\sigma$ \footnote{Named accordingly with keys \lstinline!'ra', 'dec', 'logE', 'sigma', 'time'!}, where the angles and $\sigma$ are given in radian.
+The per-event attributes used for experimental data are the reconstructed angular direction in equatorial coordinates declination and right-ascension, the logarithm to base $\num{10}$ of an energy proxy variable, the event times in Modified Julian Date representation \cite{Hohenkerk:1992AstroAlmanac} and the combined events angular uncertainty $\sigma$\footnote{Named accordingly with keys \lstinline!'ra', 'dec', 'logE', 'sigma', 'time'!.}, where the angles and $\sigma$ are given in radian.
 The underlying reconstruction algorithms for the energy proxy or the directional reconstruction may differ per or within a sample.
 However, in general, the reconstruction algorithms for the angles is one of the algorithms described in \cite{Ahrens:2003fg}, because a time costly scan as done with the HESE events is not feasible for a large number of events.
 The same reasoning applies to the energy proxy variable, which is one of the faster algorithms from \cite{Aartsen:2013vja}.
 Though the actually used algorithm does not matter, the unbinned Likelihood will perform better, the better the algorithms can reconstruct the true quantities of each event.
 The per event angular uncertainty $\sigma$ is either constructed using a coarse Likelihood scan around the best-fit position from the directional reconstruction algorithm and approximating this landscape with a parabola, which justifies its use as a Gaussian uncertainty or, where that scan fails, through a bootstrap procedure.
 
-To built time-dependent Likelihood PDFs, runtime information is needed.
-Usually, this is collected in \emph{good-run-lists}, which track the start and end times of each detector run.
-Because it was not quite clear which run-list should be used, especially for the older datasets, run information was reconstructed from the datasets by using the first and last event per run to estimate each run's livetime.
+To built time-dependent Likelihood PDFs, runtime information is needed too.
+Usually, this information is tracked in \emph{good run lists}, which note the start and end times of each detector run.
+Because it was not quite clear which run-list should be used, especially for the older datasets, run information was manually reconstructed from the datasets by using the first and last event per run to estimate each run's livetime.
 This generally underestimates the livetime, with the underestimation being more severe the fewer events are present at final data level within in a run.
-If a run only had a single event it was dropped, because the livetime would come out to zero in this case.
+If a run only had a single event it was dropped, because the livetime would become zero in this case.
 However, for the time-dependent analysis done here, this only leads to a slight overestimation of background because of the high statistic in the final samples.
 Therefore this can only worsen the sensitivity, so the procedure is safe to use, despite not being optimal.
 
 In addition to the experimental data sets, dedicated Monte Carlo simulation tailored to the specific detector configuration is used to estimate the behaviour of signal-like events from the source regions.
 The simulation sets are computed by the collaboration using a software based on \cite{Gazizov:2004va}.
-For the Monte Carlo datasets, additionally, the ground simulation truth is also available to study the effects of the detection mechanism on the incident neutrino signal.
-Added are the true neutrino direction in equatorial coordinates, the true neutrino energy and a weight \lstinline!'ow'! \footnote{Named accordingly with keys \lstinline!'trueRa', 'trueDec', 'trueE', 'ow'!} , with the energy in GeV and the angles given in radian.
+For the Monte Carlo datasets, additionally the ground simulation truth is available to study the effects of the detection mechanism on the incident neutrino signal.
+Added are the true neutrino direction in equatorial coordinates, the true neutrino energy and a weight \lstinline!'ow'!\footnote{Named accordingly with keys \lstinline!'trueRa', 'trueDec', 'trueE', 'ow'!.} , with the energy in GeV and the angles given in radian.
 The attribute \lstinline!'ow'!, short for \emph{OneWeight}, contains a per-event simulation weight that allows mapping the number of produced simulation events to an expectation value for the desired target flux that can be directly compared to measured data.
 More details on the OneWeight is given in equation~(\ref{equ:oneweight_definition}).
-Just note that OneWeight is already divided by the number of simulated events in total for the standardized data set used here, which is, in general, not the case for other datasets.
+Just note that OneWeight is already divided by the number of simulated events in total for the standardized datasets used here, which is, in general, not the case for other datasets.
 The simulation data is used for building the model PDFs in the Likelihood construction, described in the next chapters.
-Another important step, that is already included in the standardized dataset is the so-called \emph{pull correction}.
-In general, the per event uncertainty reconstruction has an energy-dependent bias, which needs to be corrected.
-This is usually called pull correction, where the pull is defined by the estimated angular uncertainty divided by the angular separation of the true neutrino direction and the reconstructed muon direction, where the former is only available from simulation $\sigma / \Delta\Psi$.
-Because the per event uncertainty is later used in a two-dimensional Gaussian distribution and is also constructed for that use in mind, the median of the energy-dependent pull is corrected the expected value of $\num{1.1774}$ \footnote{The $\SIsigma{1}$ error ellipse region of a 2D Gaussian contains $\SI{39}{\percent}$ of probability. Equivalently, the $\SIsigma{1.1774}$ contour contains $\SI{50}{\percent}$ as expected from the median. In general this can be calculated using $\sigma^2 = \chi^2_\text{ppf}(1-p|k)$, where $k$ is the dimension, $p$ the tail probability and $\chi^2_\text{ppf}$ the inverse of the CDF \cite{Siotani:1963Gaus}}.
+Another important step, that is also already included in the standardized datasets, is the so-called \emph{pull correction}.
+In general, the per event uncertainty reconstruction has an energy-dependent bias which needs to be corrected \cite{Neunhoffer:2004ha}.
+This is usually called pull correction, where the pull $\sfrac{\Delta\Psi}{\sigma}$ is defined by the angular separation of the true neutrino direction and the reconstructed muon direction $\Delta\Psi$ divided by the estimated angular uncertainty $\sigma$, where the former is only available from simulation.
+Because the per event uncertainty is later used in a two-dimensional Gaussian distribution and is also constructed for that use in mind, the median of the energy-dependent pull is corrected to the expected value of $\num{1.1774}$\footnote{The $\SIsigma{1}$ error ellipse region of a 2D Gaussian contains $\SI{39}{\percent}$ of probability. Equivalently, the $\SIsigma{1.1774}$ contour contains $\SI{50}{\percent}$ as expected from the median. In general this can be calculated using $\sigma^2 = \chi^2_\text{ppf}(1-p|k)$, where $k$ is the dimension, $p$ the tail probability and $\chi^2_\text{ppf}$ the inverse of the CDF \cite{Siotani:1963Gaus}.}.
 Because this can only be computed using the ground truth on simulation data, the same correction formula is applied as-is to the per-event uncertainties on experimental data.
+See figures~(\ref{fig:effA_and_sindec_79_86I}) and~(\ref{fig:effA_and_sindec_86II_86V}) for effective areas and $\sin(\delta_\nu)$ distribution plots for each used sample.
 
 \subsection{Decorrelation}
-In the analyses done here, the HESE events themselves are the sources, but can and do also appear in the test dataset because the original sample that was used to create both sets are the same.
+In the analyses done here, the HESE events themselves are the sources, but can and do also appear in the test dataset because the original data sample that was used to create both sets are the same.
 Leaving the HESE events in the experimental test dataset would introduce a large bias because these events have per-definition a large signal over background ratio as they occur exactly at the source positions, at the source times and also have a high energy.
-To avoid this bias these events are removed from the data before doing any analysis steps.
+To avoid this bias, these events are removed from the data before doing any analysis steps.
 
-Because the simulation datasets also contain events, that are similar to high energy starting event signatures and therefore would also be handled as sources rather than test events in the analyses done here, they need to be removed from the simulation files too.
-This avoids a bias in the build Likelihood PDFs and in the performance estimation, for which the simulation is used.
-Here a conservative approach is taken and all HESE-like events are removed from the simulation.
+Because the simulation datasets also contain events, that are similar to high energy starting event signatures and therefore would also be handled as sources rather than test events in the analyses done here, they need to be removed from the simulation files.
+This avoids a bias in the creation of the Likelihood PDFs and in the performance estimation for which the simulation is used.
+Here, a conservative approach is taken and all HESE-like events are removed from the simulation.
 A more sensitive estimation of the veto passing fraction of HESE candidates can be found in \cite{Arguelles:2018awr}.
 The removal of the events is done by applying the same HESE veto filter module on the simulation datasets as used to originally select the events on data.
 The IDs of the vetoed events are collected and matched against the full simulation set to remove the HESE-like events from the final simulation sets.
+Figures~(\ref{fig:mc_no_hese_86V}) and~(\ref{fig:mc_no_hese_79_86I_86II}) show the filtered out subsample of the HESE-like events per used sample.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../datasets/plots/mc_no_hese_IC86_2015.pdf}
+  \caption[HESE decorrelation for IC86, 2015]{
+    Plot showing the filtered out HESE-like events in the simulation files used for the IC86, 2015 sample on the right and the full simulation sample on the left.
+    As expected the filter removes events with a high energy over all declinations.
+    Note that the plot does not show whether events are starting or not, but only the energy and declination distribution of the removed events.
+    The samples are weighted to the flux model in \cite{Haack:2017dxi} normalized to a livetime of $365$ days.
+    To obtain the total number of events, the integral over the parameter space needs to be taken, shown are differential number of events.
+    }
+  \label{fig:mc_no_hese_86V}
+\end{figure}
