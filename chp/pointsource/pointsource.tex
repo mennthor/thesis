@@ -1,16 +1,16 @@
 \chapter{Point source searches with IceCube neutrinos}
   \label{chp:pointsource}
 In this chapter, the unbinned Likelihood methods used for IceCube point source searches are derived.
-To identify an astrophysical neutrino signal from a specific source location on the sky, an excess of events from that direction needs to be identified.
+To identify an astrophysical neutrino signal from a specific source location in the sky, an excess of events from that direction needs to be identified.
 In general, atmospheric and the sought after extraterrestrial neutrinos cannot be distinguished on a per event basis.
 However, it is possible to search from a sample based point-of-view by measuring deviations for an ensemble of events with respect to a known background expectation.
 A simple method could be to define a fixed search region around a direction from which signal is expected, count the number of measured events and compare them to the number of events from a background expectation in the region \cite{LiMa:1983ApJ}.
-If the measured number of events is significantly higher than the expected number of background events that may be a hint for a signal from that direction.
+If the measured number of events is significantly higher than the expected number of background events, that may be a hint for a signal from that direction.
 
-In this thesis, a similar but more advanced form is used, incorporating multiple pieces of event information to increase the detection sensitivity.
+In this thesis, a similar but more advanced approach is used, incorporating multiple pieces of event information to increase the detection sensitivity.
 Also the usage of pre-defined search regions, often called a binned approach, is replaced with an unbinned version on a per event basis.
 This has the advantage of avoiding hard search region boundaries which can drop the sensitivity of the approach if e.g. an unknown source is located directly at the border of such a region.
-Starting from a general unbinned, extended Likelihood approach, the special cases used in this thesis to carry out a time-dependent and time-integrated search for point-like sources are derived.
+Starting from a general unbinned, extended Likelihood approach, the special cases of a time-dependent and time-integrated search for point-like sources are derived.
 Particular cases handling multiple years of data from different detector configurations and multiple sources for the so-called stacking case are further derived from the basic form.
 In the following, a single event is consistently noted with index $i$, a source with index $k$ and a data sample with index $j$.
 
@@ -133,7 +133,7 @@ A common approach with known good separation power is to combine contributions f
 For time-dependent analyses, an additional time-dependent part is introduced.
 
 In their general form, the model PDFs $S_i$ and $B_i$ are multi-dimensional composite PDFs.
-For the common approach using spatial, energy and time information, the resulting PDFs would have five dimensions, being possibly correlated in the variables declination, right-ascension, energy proxy, the spatial uncertainty estimator and the event times.
+For the common approach using spatial, energy and time information, the resulting PDFs would have five dimensions, being possibly correlated in the variables declination, right ascension, energy proxy, the spatial uncertainty estimator and the event times.
 However, for most IceCube point source searches, the signal and background contributions are written as independent products of a spatial, an energy and a time-dependent part as
 \begin{align}
   \label{equ:general_pdfs}
@@ -150,8 +150,8 @@ However, for most IceCube point source searches, the signal and background contr
        B^T(t_i, t_k)
 \end{align}
 where $\gamma$ is the shape parameter of a signal flux usually assumed to be a power law $\propto E^{-\gamma}$ and $\phi_\mathrm{BG}$ stands for a flux model of the atmospheric neutrino flux describing the background flux dependency.
-The event times $t_i$ and source times $t_k$ define the time dependent emission-model and $\delta_i$ is the declination angle, described in more detail in chapter~\ref{chp:datasets}.
-The choice of splitting the PDF in several independent terms happens for symmetry and ease of use reasons.
+The event times $t_i$ and source times $t_k$ define the time dependent emission model and $\delta_i$ is the declination angle, described in more detail in chapter~\ref{chp:datasets}.
+The choice of splitting the PDF in several independent terms happens for symmetry reasons and to allow the usage of approximate analytic forms of the PDF terms.
 The first step to arrive at the split PDF form, is to apply the law of total probability \cite{casella2002statistical}, which dissects the composite PDF into marginal distributions
 \begin{equation}
   f(x_1, \dots, x_n)
@@ -161,15 +161,15 @@ The first step to arrive at the split PDF form, is to apply the law of total pro
 \end{equation}
 This splits the combined PDF into products of marginal distributions.
 By neglecting the marginal dependency e.g. of the split off energy PDF on the spatial resolution proxy or the energy dependence on the spatial terms, the standalone PDFs in the following sections can be derived.
-Because of the special location of IceCube, often the right-ascension dependency is dropped, because of symmetry arguments.
+Because of the special location and the resulting symmetry of the IceCube detector, the right ascension dependency is often dropped.
 Also, for the spatial PDF, it is chosen to replace the general form with an analytic Gaussian PDF as it resembles the true distribution closely enough but is much easier to handle.
 Note, that all these simplifications and assumptions influence the shape of the obtained test statistics and may lead to deviations of the expected shape from the application of Wilks' theorem.
-Also note, that only variables known on experimental data can be used and no simulation truth is known on actual data.
+Also note, that only variables known on experimental data can be used, because no simulation truth is available on actual data.
 
 \subsection{Spatial distribution}
   \label{chp:pointsource_signal_pdf}
 The most important part in the search for neutrino point sources is the spatial clustering of events around a point in the sky.
-Without the spatial term, only an insensitive diffuse analysis would be performed.
+Without the spatial term, the analysis would be insensitive to the main hypothesis of having a localized excess of neutrino events from a certain location in the sky.
 For data samples used in point source searches, a reconstructed estimate of the per event uncertainty is available.
 This estimator is built from the positional reconstruction Likelihood fit and is constructed assuming a symmetric, two-dimensional Gaussian distribution describing the reconstruction uncertainty.
 The value is obtained by scanning the reconstruction Likelihood on a grid and fitting a two-dimensional parabola through the sampled points to be compliant with the assumed underlying Gaussian distribution.
@@ -211,9 +211,10 @@ For tracks, the good angular resolution of about \SI{1}{\degree} justifies the u
 
 In general, the joint probability for an event $i$ to spatially originate from a source $k$ can be obtained by a convolution of the two separate spatial PDFs.
 One part describes the intrinsic distribution for the source and the other part the intrinsic distribution of the event itself.
-In a search for point sources at known positions, the distribution of a source position is represented by a delta distribution, in searches for spatially extended sources usually, a Gaussian profile is assumed.
+In a search for point sources at known positions, the distribution of a source position is represented by a delta distribution.
+In searches for spatially extended sources a Gaussian profile is usually assumed.
 The per-event probability distribution is assumed to be a Gaussian PDF, which is connected to the construction of the per-event-uncertainty from a parabolic fit of the scanned Likelihood space, as described above or a bootstrap algorithm.
-The resulting spatial signal distribution, describing the probability of an event being spatially correlated to a given source with density profile $f(\vec{x}_k)$, can thus be expressed as a convolution of the Gaussian per event part and source distribution for the fixed source position
+The resulting spatial signal distribution, describing the probability of an event being spatially correlated to a given source with density profile $f(\vec{x}_k)$, can thus be expressed as a convolution of the Gaussian per-event part and source distribution for the fixed source position
 \begin{equation}
   \label{equ:spatial_pdf}
   S^S(\vec{x}_i, \vec{x}_k)
@@ -235,15 +236,15 @@ Note, that the energy dependence of the signal PDF is implicitly included in the
 The marginal term, that needs to be split-off in the application of the law of total probability, resembles the energy distribution, which is then dealt with separately.
 
 The spatial background distribution is constructed similarly to the signal case in equation~(\ref{equ:spatial_pdf}).
-Because IceCube is a nearly right-ascension symmetric detector at the south pole, the distribution is assumed to be declination dependent only, which holds the better the larger the regarded time windows are.
+Because IceCube is a nearly right ascension symmetric detector at the South Pole, the distribution is assumed to be declination-dependent only, which holds the better the larger the regarded time windows are.
 This may break down, however, for time scales short enough that the earth's rotation does not smear out the slightly asymmetric distribution in azimuth angle.
-The declination dependent PDF is written in a general form here and can, for example, be constructed by computing histograms of experimental data, which is described later in more detail.
+The declination-dependent PDF is written in a general form here and can, for example, be constructed by computing histograms of experimental data, which is described later in more detail.
 The spatial background distribution can then be written as
 \begin{equation}
   B^S(\delta_i) = \frac{1}{2\pi} \cdot P(\sin(\delta_i))
   \mcomma
 \end{equation}
-where the first factor is the uniform distribution in right-ascension and the latter indicating, the often alternatively used, dependence on the sine of declination $\delta$.
+where the first factor is the uniform distribution in right ascension and the latter indicating, the often alternatively used, dependence on the sine of declination $\delta$.
 Note that the background distribution is only depending on the event position, as background  events are not expected to have any correlation with a source, by definition.
 This description neglects the per-event uncertainty though.
 In principle, the same method that was used to construct the convoluted signal PDF can be applied to the construction of the background distribution.
@@ -294,12 +295,13 @@ To obtain the convolved PDFs, that also take into account the per event uncertai
       \d{E_\nu}
     \mperiod
 \end{align}
-In the majority of analysis, a delta-distribution is used for the per-event-function in the last step, for the same reasons quoted for the spatial background PDF.
+In the majority of analyses, a delta distribution is used for the per-event function in the last step, for the same reasons quoted for the spatial background PDF.
 Also, the distribution is normalized independently of the spatial PDFs, although the declination occurs in both of them.
-This may be done to simplify the computation and housekeeping in analysis code because it avoids higher dimensional PDF constructions.
+This may be done to simplify the computation and housekeeping in the analysis code because it avoids higher dimensional PDF constructions.
+Additionally, when inferring higher-dimensional PDFs from data, the required statistic may exceed the available number of measured events and a compromise between robust PDF estimation and affordable approximations is considered.
 
 \subsection{Time dependency}
-When testing for time dependent emission models, time dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $B_{i,k}^T(t_i, t_k)$ need to be incorporated, which depend on each event's time and their occurrences relative to the temporal evolution of the sources.
+When testing for time-dependent emission models, the time-dependent PDFs $S_{i,k}^T(t_i, t_k)$ and $B_{i,k}^T(t_i, t_k)$ need to be incorporated, which depend on each event's time and their occurrences relative to the temporal evolution of the sources.
 The assumption is then, that each source only emits neutrinos as given by $S_{i,k}^T(t_i, t_k)$.
 The background can in general also be time dependent to account e.g. for seasonal variations in the detector rate.
 Because of the precise timing information available per event, there is no relevant time uncertainty that needs to be convolved into the intrinsic PDFs.
@@ -308,7 +310,7 @@ Because of the precise timing information available per event, there is no relev
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% Special case GRB LLH
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Time dependent Likelihood}
+\section{Time-dependent Likelihood}
   \label{chp:pointsource_tdep_llh}
 To test for a time-dependent emission in this analysis, the general extended Likelihood is altered to a form similar to what is usually called \emph{Gamma Ray Burst Likelihood}\footnote{Named after the original purpose of searching for emission from a Gamma Ray Burst catalogue. The concept can be applied to other sources testing a similar hypothesis of emission within a defined time window.} \cite{Aartsen:2017zvw,Aartsen:2014aqy,Aartsen:2017wea}.
 As the name may indicate, the source emission is assumed to be per-burst with a fluence $\Phi$ rather than a time-dependent flux, where fluence means the integral form of a time-dependent flux, so particles received per energy and unit area only.
@@ -326,7 +328,7 @@ The time PDFs are therefore constructed using rectangle functions
   = \Theta\left(t+\frac{1}{2}\right) \cdot \Theta\left(t-\frac{1}{2}\right)
   = \begin{cases}
       1 &\text{ , if}\quad |t| \leq \frac{1}{2} \\
-      0 &\text{ , if}\quad  t    >  \frac{1}{2} \\
+      0 &\text{ , if}\quad |t|   >  \frac{1}{2} \\
     \end{cases}
   \mcomma
 \end{equation}
@@ -340,8 +342,8 @@ This way, each source is having only a non-zero emission contribution within its
   \mperiod
 \end{equation}
 This effectively cuts out a subset of events around the sources time stamps $t_k$ and the corresponding time interval around each source $[t_k^0, t_k^1]$ and is a background rejection technique only, because any underlying temporal dependence on the source emission flux is discarded.
-The most simple case is then to have each source in its own, non-overlapping time window so that each source has a unique set of events belonging to it.
-Note again, that no separation-power stems from these time PDFs, they are merely used to reduce the background rate under the assumption of a temporally concentrated emission.
+The simplest case is then to have each source in its own, non-overlapping time window so that each source has a unique set of events belonging to it.
+Note again, that no separation power stems from these time PDFs, they are merely used to reduce the background rate under the assumption of a temporally concentrated emission.
 In this light, a per-burst search is not a \enquote{real} time-dependent search.
 For the ease of use, a time PDF is only defined to effectively cut out the interesting burst regions.
 
@@ -391,7 +393,7 @@ The a priori fixed weights resemble the expectation from every single source at 
 They can, therefore, depend on the explicitly chosen source emission model and the detection efficiency depending on the source locations in the detector.
 Note that the a priori chosen weights should match the true, but usually unknown, emission scenario as much as possible to obtain a good analysis sensitivity.
 If the true scenario strongly differs from the assumed weights, the performance of the analysis drops.
-Generalized assumptions can be made though, in favour of the ability to test a broader range of emission scenarios, but loosing performance when nature indeed chose a specific model realisation.
+Generalized assumptions can be made though, in favour of the ability to test a broader range of emission scenarios, but losing performance when nature indeed chose a specific model realisation.
 
 
 \subsection{Single sample stacking case}
@@ -488,7 +490,7 @@ Again, a priori information about the expected number of signal events originati
   n_{S,j} = w_j n_S
   \mperiod
 \end{equation}
-To calculate the a-priori weights $w_j$ the law of total probability is applied
+To calculate the a priori weights $w_j$ the law of total probability is applied
 \begin{equation}
   w_j = P(j) = \sum_{k=1}^{N_\text{srcs}} P(j|k)\cdot P(k)
   = \sum_{k=1}^{N_\text{srcs}} \underbrace{P(j,k)}_\text{unknown}
@@ -569,7 +571,7 @@ This expression nicely demonstrates the circumstances here, namely that each sou
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% Derivation of classic time integrated LLH used within Skylab
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Time integrated Likelihood}
+\section{Time-integrated Likelihood}
   \label{chp:pointsource_time_int_llh}
 The standard time integrated Likelihood formula used in IceCube point source searches can also be derived from the general, extended Likelihood formula.
 A different approximation than in the time-dependent case is used, which takes into account the usually larger statistics in a time-integrated sample as all events count and not only these in temporal coincidence with any source.
@@ -684,7 +686,7 @@ Sometimes the signal sum term is abbreviated to
 \begin{equation}
   S_i^\text{(tot)} \coloneqq \sum_{k=1}^{N_\text{srcs}}\left(w_k S_{i,k}\right)
 \end{equation}
-and only in this case, with a-priori fixed weights $w_k$, the replacement of the single source signal term $S_i$ with the summed signal term $S_i^\text{(tot)}$ is valid
+and only in this case, with a priori fixed weights $w_k$, the replacement of the single source signal term $S_i$ with the summed signal term $S_i^\text{(tot)}$ is valid
 \begin{equation}
   \sum_{i=1}^N \ln\left(
       \frac{\hat{n}_S}{N}\left( \frac{S_i}{B_i} - 1 \right) + 1
@@ -756,23 +758,23 @@ More details on how these weights are constructed follow in the next section.
 \section{A priori weight selection}
 The a priori weights for the expected signal of a source in a specific sample should match the true emission model as closely as possible to gain optimal analysis performance.
 Note that the weights resemble the expected relative flux at the detector.
-For example, for an IceCube-like detector that only measures the northern sky, all weights for sources on the southern sky would be zero, regardless of the true intrinsic emission strength, because no signal is ever detected.
+For example, for an IceCube-like detector that only measures the Northern sky, all weights for sources on the Southern sky would be zero, regardless of the true intrinsic emission strength, because no signal is ever detected.
 
 To construct the weights that actually distribute the total expected amount of signal to the expected contribution from each source, signal simulation can be used to estimate the signal detection efficiencies.
 This is done by calculating the total number of expected events from each source from a given emission scenario at detector level.
 Depending on the assumed emission scenario, the weights might depend on any source parameter, usually the source position, the time and the spectral emission behaviour of the sources.
-For sources that are not point-like in any parameter but show a functional dependency, the detector response must be folded with the source parameter distribution to obtain the effective weight.
+For sources that are not point-like in any parameter but show a functional dependency, the detector response must be convolved with the source parameter distribution to obtain the effective weight.
 
 For the spatial weight contribution, the weights are dependent only on the source positions and the signal response of the detector at their positions.
-The assumption that IceCube is right-ascension symmetric yields stacking weights that only depend on the source declinations.
-For extended sources the detector response needs to be folded with the source extension density profile incorporating efficiencies from multiple detector regions.
+The assumption that IceCube is right ascension symmetric yields stacking weights that only depend on the source declinations.
+For extended sources the detector response needs to be convolved with the source extension density profile incorporating efficiencies from multiple detector regions.
 
 When using a time-dependent emission scenario the number of expected events varies with the emission type.
 Because the detector response to signal usually does not vary with time, only the relative differences in the time window functions matter for the stacking weights.
 For example in a per-burst scenario, the amount of signal events is independent of the considered emission time scale and a time-integrated fluence is assumed rather than a time-dependent flux.
 The cases regarded in this thesis both lead to a vanishing temporal dependence.
 In the time-dependent analysis, a fluence scenario is considered and all sources have the same time window length, making the temporal emission equal by design.
-Even with time-windows that differ in length between each other, the expected signal is equal from all bursts by definition.
+Even with time windows that differ in length between each other, the expected signal is equal from all bursts by definition.
 In the time-independent case, all source fluxes have the same linear temporal dependence
 \begin{equation}
   \int_T \phi \,\d{t} = T\cdot \phi
@@ -836,7 +838,7 @@ The OneWeight per event $i$ is defined as \cite{Gazizov:2004va}
     A_\text{gen}\Omega_\text{gen}
   \mcomma
 \end{align}
-where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume \footnote{Otherwise the simulation efficiency would be very low due to the small interaction probabilities of neutrinos.}, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the constant surface and the solid angle over which the initial neutrinos are injected.
+where $p_\text{int}$ is the interaction probability for neutrinos forced to interact close to the detection volume\footnote{Otherwise the simulation efficiency would be very low due to the small interaction probabilities of neutrinos.}, $\Phi_\text{gen}$ is the energy fluence used to generate the initial neutrino distribution, usually a power law and $A_\text{gen}$, $\Omega_\text{gen}$ are the constant surface and the solid angle over which the initial neutrinos are injected.
 In the last step, the integration over $\Omega$ is carried out because usually, the injection fluence is only energy dependent.
 By this definition, OneWeight is the inverse of the generating fluence in $\si{\GeV\steradian\cm\squared}$ combined with the correction factor for the forced neutrino interaction close to the detection volume.
 To obtain the number of equivalent data events for a given simulation set, the per event weights
@@ -864,7 +866,7 @@ These intrinsic source weights $w_k^\text{src}$ are independently multiplied wit
   w_k \coloneqq w_k^\text{det} \cdot w_k^\text{src}
   \mperiod
 \end{equation}
-If the intrinsic source properties are not known or not reliably available, the intrinsic source weights are usually assumed to be equal to trade a potentially worsened performance for avoiding to much model specific bias.
+If the intrinsic source properties are not known or not reliably available, the intrinsic source weights are usually assumed to be equal to trade a potentially worsened performance for avoiding too much model specific bias.
 
 \subsection{Connecting weighting formulas}
 The connection to the effective area formula~(\ref{equ:eff_area_analytic}) with the more practical one using simulation weights is shortly depicted below.
@@ -915,7 +917,7 @@ Identifying and replacing the OneWeight definition from~(\ref{equ:oneweight_defi
     \frac{1}{N_\text{gen}\Delta\Omega}\cdot
     \frac{\left(
             \sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
-            \text{Oneweight}_i \cdot f(E_i)
+            \text{OneWeight}_i \cdot f(E_i)
           \right)}
           {\int_{E'}^{E'+\Delta E}f(E)\d{E}}
   \mperiod
@@ -925,7 +927,7 @@ Sometimes a slightly modified version
   A_\text{eff}(\Delta E, \Delta \Omega) =
     \frac{1}{N_\text{gen}\Delta\Omega}\cdot
     \frac{\sum_{(i|E_i\in\Delta E, \Omega_i\in\Delta\Omega)}
-          \text{Oneweight}_i}
+          \text{OneWeight}_i}
          {\Delta E}
 \end{equation}
 is used, which is only valid for small integration intervals, because it assumes an approximately constant generating function $f$ within an interval by simplifying
@@ -946,7 +948,7 @@ The methods used are \emph{point estimation} and \emph{interval estimation}.
 Usually, the result of a model-dependent point source search, as done here, is a single best fit result.
 This best fit result is the point in the considered space of free parameters that gives the most likely model to describe the measured data.
 This is called a point estimate.
-To also obtain an estimate of the region of the true underlying physics parameters, an interval estimation needs to be done.
+To also obtain an estimate of the region of the true underlying physics parameters, an interval estimation needs to be performed.
 
 Point estimation is directly connected to \emph{hypothesis testing} because for a given best-fit result, the significance of being compatible with the null hypothesis is wanted, to see if the alternative model is favoured.
 Therefore, the general procedure is to set the null hypothesis to a background-only assumption or the current understanding of the underlying physics.
@@ -961,7 +963,7 @@ The test statistic is generated by doing pseudo experiments by drawing samples f
 A small p-value indicates a strong deviation from the test result from the expected behaviour of the null hypothesis.
 It does not imply the truth of the alternative hypothesis though, but only that it is unlikely for the data to originate from the null hypothesis distribution.
 
-To obtain further information on the possible value of the true parameter, an interval estimation needs to be done.
+Using an interval estimation, further information on the possible value of the true parameter can be obtained.
 In general, a frequentist confidence region $[\theta_0, \theta_1]$ for a parameter $\theta$ at a confidence level $\alpha$ is defined to have the property of \enquote{covering the true parameter $\hat{\theta}$ in a fraction $\alpha$ of random measurements} \cite{casella2002statistical}.
 Note, that the interval itself is a random quantity and may or may not contain the true parameter.
 Only a statement about ensembles of measurements can be made.
