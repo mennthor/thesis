@@ -83,8 +83,8 @@ To factor in possible systematic uncertainties, each map is convolved with a $\S
 The $\SI{1}{\degree}$ is an upper limit of combined systematics effects derived from a study of the cosmic ray shadow of the moon in IceCube \cite{Aartsen:2013jdh,Aartsen:2013zka}.
 
 The reconstruction Likelihood is originally scanned in local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\varphi\in[0, 2\pi]$.
-However, source objects are usually described in equatorial coordinates, declination $\delta\in[-\sfrac{\pi}{2}, \sfrac{\pi}{2}]$ and right-ascension $\alpha\in[0, 2\pi]$ or often also $\alpha\in[\SI{0}{\hour}, \SI{24}{\hour}]$.
-The equatorial coordinate system is created by projecting the earth's equator onto the celestial sky for the horizon and the March equinox point is used as the starting point for the perpendicular coordinate, right-ascension, in a right-handed system.
+However, source objects are usually described in equatorial coordinates, declination $\delta\in[-\sfrac{\pi}{2}, \sfrac{\pi}{2}]$ and right ascension $\alpha\in[0, 2\pi]$ or often also $\alpha\in[\SI{0}{\hour}, \SI{24}{\hour}]$.
+The equatorial coordinate system is created by projecting the earth's equator onto the celestial sky for the horizon and the March equinox point is used as the starting point for the perpendicular coordinate, right ascension, in a right-handed system.
 Far away objects are fixed in these coordinates\footnote{At least for a certain time range in which the earth's precession can be neglected. These time periods are given as \emph{epochs}. The current epoch is \emph{J2000}.}, which is the reason why it has become the standard coordinate system for a broad range of astronomy tasks \cite{Hohenkerk:1992AstroAlmanac}.
 Though the basic coordinate transformations in IceCube are relatively easy because of the special position directly at the South Pole, for which the approximation $\delta \approx \theta - \sfrac{\pi}{2}$ holds reasonably well, the full set of transformations including the sun position and other corrections takes a long time to process.
 Therefore, the local event coordinates from a test dataset are converted to equatorial coordinates beforehand, so their positions can be directly compared to the equatorial source coordinates.
@@ -92,7 +92,7 @@ To become computationally feasible, also the aforementioned reconstruction maps 
 
 The used HEALPix maps use an internal coordinate-to-pixel-number conversion scheme, with $\Theta\in[0, \pi]$ and $\Phi\in[0, 2\pi]$, that is easily identifiably with IceCube's local detector coordinates zenith $\theta\in[0, \pi]$ and azimuth $\varphi\in[0, 2\pi]$, so the local maps can directly represent local coordinates for each pixel.
 The conversion from local to equatorial coordinates depends on the sources' times which fixes the detector location relative to the equatorial coordinate system.
-Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right-ascension values varies strongly over time.
+Due to IceCube's special location almost directly at the geographic South Pole, the relation between zenith $\theta$ and declination $\delta$ angle is $\delta \approx \theta - \sfrac{\pi}{2}$ and only the right ascension values varies strongly over time.
 To avoid recalculating costly transformations from local map coordinates to equatorial coordinates at runtime, pre-transformed maps in equatorial coordinates are computed beforehand only once.
 The convention used to efficiently map from HEALPix coordinates to equatorial ones is chosen as
 \begin{equation}
@@ -251,7 +251,7 @@ Therefore the Likelihood ansatz described in the next chapter is used to test fo
 \end{table}
 
 A standardized form utilizing a named array structure is used to provide the datasets.
-The per-event attributes used for experimental data are the reconstructed angular direction in equatorial coordinates declination and right-ascension, the logarithm to base $\num{10}$ of an energy proxy variable, the event times in Modified Julian Date representation \cite{Hohenkerk:1992AstroAlmanac} and the combined events angular uncertainty $\sigma$\footnote{Named accordingly with keys \lstinline!'ra', 'dec', 'logE', 'sigma', 'time'!.}, where the angles and $\sigma$ are given in radian.
+The per-event attributes used for experimental data are the reconstructed angular direction in equatorial coordinates declination and right ascension, the logarithm to base $\num{10}$ of an energy proxy variable, the event times in Modified Julian Date representation \cite{Hohenkerk:1992AstroAlmanac} and the combined events angular uncertainty $\sigma$\footnote{Named accordingly with keys \lstinline!'ra', 'dec', 'logE', 'sigma', 'time'!.}, where the angles and $\sigma$ are given in radian.
 The underlying reconstruction algorithms for the energy proxy or the directional reconstruction may differ per or within a sample.
 However, in general, the reconstruction algorithms for the angles is one of the algorithms described in \cite{Ahrens:2003fg}, because a time costly scan as done with the HESE events is not feasible for a large number of events.
 The same reasoning applies to the energy proxy variable, which is one of the faster algorithms from \cite{Aartsen:2013vja}.
