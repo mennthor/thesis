@@ -1,13 +1,5 @@
 \chapter{Time-dependent analysis}
   \label{chp:time_dep}
-
-% \begin{figure}[htbp]
-%   \centering
-%   \includegraphics[width=0.9\textwidth]{plots/.pdf}
-%   \caption[]{}
-%   \label{fig:}
-% \end{figure}
-
 Despite the detected coincidence of the flaring Blazar TXS 0506+056 and a single ultra-high-energy neutrino together with the evidence for a temporally constrained neutrino flux about three years earlier, lasting 110 days, no other significant result of neutrino point source searches were obtained in the last years.
 Most prominent examples are the generic all-sky search, which scans the whole sky for an unknown neutrino emitter with a large amount of data.
 Three analysis stand out in this scenario.
@@ -96,6 +88,7 @@ The model is adapted to the rates at the bin centres from the monthly bins in a 
   \mperiod
 \end{equation}
 The weights $w_i\coloneqq\sfrac{1}{\sigma_i}$ are defined as the standard deviations of the underlying Poisson distributions per bins n the large expectation limit, which is slightly biased, but commonly used and stable weight definition.
+See figures~(\ref{fig:rates_per_bin_IC79},\ref{fig:rates_per_bin_IC86_2011},\ref{fig:rates_per_bin_IC86_2012-2014},\ref{fig:rates_per_bin_IC86_2015}) for the run rates and the fitted models per bin and per sample.
 
 Having obtained the set of discrete background expectations from the two fit parameters per rate model, a smoothing spline is used to continuously model the fit parameter dependence on declination.
 To obtain a reasonable fit of the spline function to the data points, also a weighted $\chi^2$ fit is used.
@@ -108,9 +101,23 @@ The fit parameters of the splines are tuned, so that the resulting loss has appr
   \mcomma
 \end{equation}
 which yields reasonable and stable results.
+The spline fits to the set of discrete parameters for the amplitude and baseline of the sine model can be found in figure~(\ref{fig:tdep_sine_param_splines}).
 Finally, to get the background PDFs per source, the set of rate model parameters is read off from the built splines on a fine $\sin(\delta)$ grid and plugged into the rate model~(\ref{equ:rate_model}).
 For each parameter set, the model is integrated over the sources time window to obtain an average background PDF per source.
 To evaluate the PDf for each events' declination an interpolating spline is used to include the dense grid in a continuous model.
+For each source per sample, figure~(\ref{fig:tdep_bg_pdf_per_sample}) shows the normalized spline PDFs.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_pdf_per_sample.pdf}
+  \caption[Background PDFs per source per sample for the time-dependent analysis]{
+    Resulting background PDFs in $\sin(\delta$ showing the distribution for each source per sample.
+    The distribution are built by integrating the background rate over the current time window for the specific rate model at the sources temporal location.
+    The rate model parameters are taken from the splines in figure~(\ref{fig:tdep_sine_param_splines}).
+    Each spline is normalised only across the $\sin(\delta)$ dimension in the plots, but the normalisation across the right ascension dimension is a constant of $2\pi$ anyway due to the assumption of symmetric right ascension PDF.
+  }
+  \label{fig:tdep_bg_pdf_per_sample}
+\end{figure}
 
 \subsection*{Energy PDF}
 The energy PDFs introduces a significant amount of separation power compared to using the spatial clustering only \cite{Braun:2008bg}.
@@ -142,6 +149,19 @@ The invalid ratios are then linearly interpolated from the previously valid and 
 To smooth out unexpected high ratios coming from limited statistics, the ratio is required to monotonically increase in each $\sin(\delta)$ column, which is valid only for the fixed power law and energy range chosen here.
 To get a continuous representation of the ratio, a linear, regular grid interpolator is fitted to the ratios.
 No extra smoothing e.g. with a Gaussian kernel is applied here.
+The resulting two-dimensional PDFs are shown in figure~(\ref{fig:tdep_energy_pdfs}) for each sample.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/energy_pdfs.pdf}
+  \caption[Energy PDFs for the time-dependent analysis]{
+    Two-dimensional PDFs in $\log_{10}\left(E_\text{proxy}\right)$ and $\sin(\delta)$ for each sample.
+    The binning is the same for each sample.
+    The energy distribution per column in $\sin(\delta)$ is forced to be ascending, which is justified by the fixed power law with index $\gamma=2$.
+    High energies are always favoured by the signal hypothesis then.
+  }
+  \label{fig:tdep_energy_pdfs}
+\end{figure}
 
 A more general strategy could be to fill missing values conservatively to lowest non-zero entry per signal and background histogram and then taking the ratio.
 To average out fluctuations, a smoothing spline could be fitted to the ratio histogram using the statistical errors as smoothing conditions.
@@ -235,6 +255,7 @@ The estimates of the number of background events per source $\Braket{\lambda_{k,
 The values are obtained by fitting the sine rate model to the whole off-time data on the whole sky, again using monthly bins.
 The rate model for each sample is then integrated over each sources time window in that sample, to obtain the average number of background events.
 Again, the amplitudes are quite flat, so the exact integral is almost the same as just using the product of time window length and average rate.
+The allsky total run rates for each sample and the fitted rate model can be seen in figure~(\ref{fig:rates_all}).
 
 The a priori fixed stacking weights should resemble the expected signal emission as closely as possible to the true case, otherwise, the analysis' sensitivity will drop significantly.
 Because this analysis makes no explicit assumption on the emission model, the weights are computed using a generic power law with index $\gamma = 2$.
@@ -260,6 +281,7 @@ The weights are the inverse $\sqrt{N_i}$ Poisson uncertainties of each bin $i$ a
 This gives a stable estimation of the number of events per declination from the given Monte Carlo simulation.
 From this spline, the signal efficiency weights are read off for each exact source location.
 For each sample, this procedure is repeated and the source weights are taken from the spline belonging to the sample they fall into.
+The splines and the resulting source weights are shown in figure~(\ref{fig:tdep_stacking_src_w_per_sample}).
 
 
 \section{Note on LLH minimization}
@@ -400,8 +422,32 @@ To find a robust set of PDF parameters for the exponential tail, the PDF is fitt
 The best-fit is selected using a Kolmogorov-Smirnov test \cite{Horn:1977KSTest} and using the first threshold that no longer supports the null hypothesis, that the fitted tail describes the empirical PDF well enough at the $\SIsigma{1}$ level.
 While being a somewhat arbitrary argument, this procedure yields quite robust tails even for the test statistics in the smallest time windows.
 For the larger time windows, the distributions become more similar to the $\chi^2_1$ PDFs expected form Wilks' theorem and are naturally described by the exponential tails.
-An independent set of trials is used to verify the validity of the tail fits, which reveals a slight, but not sever mismatch between the built models and the independent trials.
+The resulting hybrid test statistic PDFs and the parameter scan for the Kolmogorov-Smirnov test are shown in figures~(\ref{fig:bg_ts_and_ks_tw_ids_0_1_2},\ref{fig:bg_ts_and_ks_tw_ids_18_19_20}) for the three smallest and largest time windows and in figures~(\ref{fig:bg_ts_and_ks_tw_ids_3_4_5}--\ref{fig:bg_ts_and_ks_tw_ids_15_16_17}) for the other ones.
+An independent set of trials is used to verify the validity of the tail fits, which reveals a slight, but not sever mismatch between the built models and the independent trials, as shown in figure~(\ref{fig:ks_test_lido_trials_pvals}).
 The resulting PDFs are then a hybrid made from the empirical distribution and the exponential PDF, which smoothly describe the distribution tails, and are used to estimate p-values for further evaluations.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_0_1_2.pdf}
+  \caption[Background test statistics for the time windows 1, 2 and 3]{
+    Background only test statistics for the time windows 1, 2 and 3 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_0_1_2}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_18_19_20.pdf}
+  \caption[Background test statistics for the time windows 19, 20 and 21]{
+    Background only test statistics for the time windows 19, 20 and 21 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_18_19_20}
+\end{figure}
+
 
 As a technical note, for multiple samples, every single injector can be sampled individually, because each source is unique in its corresponding dataset.
 The used multi sample background injector thus simply samples from all individual background injectors.
@@ -443,7 +489,7 @@ The choice of using a $\SIsigma{3}$ band width is arbitrary but resembles a good
 For all selected events the injection weights are computed as shown in equation~(\ref{equ:sig_inj_weights}).
 For the actual injection during trial sampling, the events from the prepared pool are sampled randomly, automatically respecting each sources contribution due to the weight construction and the intrinsically simulated signal efficiency.
 The number of events drawn in total is given as a Poisson mean number of signal events and the actual number of events drawn in each trial fluctuates accordingly.
-To account for the unknown source positions, new point-like source positions are drawn for each trial.
+To account for the unknown source positions, new point-like source positions are drawn for each trial as shown in figure~(\ref{fig:hese_map_sampling}.
 The positions are drawn independently from each sources reconstruction prior PDF map so that the most likely position is still the tested best-fit position.
 All drawn events are rotated to their new source position in their true spatial coordinates.
 Lastly, a random uniformly sampled new MJD time is assigned per event within the time window for each source.
@@ -534,6 +580,7 @@ Respectively the discovery potential is defined as the flux or fluence needed to
 Another advantage is, that the whole Neyman grid construction can be visually inspected to see if any errors occurred during the minimization or trial generation.
 Errors on the limits or bounds themselves, resulting from the fit of $\chi^2$ CDF to the finite sample size, could be obtained via trial bootstrapping and refitting or error propagation.
 This is neglected here due to the high number of trials done per grid point and the dense grid itself.
+The CDF fits for sensitivity and discovery potential per time window are shown in figure~(\ref{fig:tdep_perf_chi2_fits}).
 
 To express the performance in flux or fluence rather than injected events, the mean injection strength must be converted to a physical intrinsic fluence at the sources.
 This conversion follows straight from the weighting relation between the fluence and number of events
@@ -569,6 +616,21 @@ To express an unbroken powerlaw with spectral index $\gamma$ at a new normalizat
   \Phi'_0 = \Phi_0 \cdot \left(\frac{E'_0}{E_0}\right)^{-\gamma}
   \mperiod
 \end{equation}
+Figure~(\ref{fig:tdep_perf}) shows the resulting sensitivity and discovery potential fluences for each scanned time window.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/perf.pdf}
+  \caption[Performance fluences for each time window]{
+    Sensitivity and discovery potential fluences for each tested time window.
+    The discrete points are drawn as a connected line, because the curve is not expected to show non-smooth behaviour between the tested time window positions.
+    For small time windows, the discovery potential fluence is actually lower than the sensitivity fluence, because of the large number of zero trials.
+    The dashed line shows the $\SI{90}{\percent}$ Neyman upper limit for a Poisson distribution with zero measured events.
+    For the small time windows, the sensitivity is close to that lower bound, because of the low amount of background on the whole sky.
+  }
+  \label{fig:tdep_perf}
+\end{figure}
+
 
 \section{Differential performance}
   \label{chp:time_dep_diff_perf}
@@ -585,6 +647,21 @@ Although the number of injected events stays roughly equal when the bin size is 
 Thus, a global fluence can be made compatible with any differential fluence performance by decreasing the bin size of the differential limits.
 However, the limits can be used to calculate a global limit, which is directly comparable to other differential fluence models.
 This can be used to provide a flexible method for the reader, to obtain performances or limits for its own model creations.
+The differential sensitivities and discovery potentials per time window are shown in figure~(\ref{fig:tdep_diff_perf}).
+The corresponding $\chi^2$ CDF fits for each bin and each time window used to derive the fluences can be seen in figures~(\ref{fig:diff_perf_chi2_fits_tw_00}--\ref{fig:diff_perf_chi2_fits_tw_20}).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf.pdf}
+  \caption[Time-dependent differential performances]{
+    Differential fluences per time window for sensitivity and discovery potential.
+    The values in each bin is the fluence normalization $\Phi_0^{\SI{100}{\TeV}}$ for an unbroken power law with index $2$, $\Phi = \Phi_0^{\SI{100}{\TeV}}\cdot \left(\sfrac{E}{\SI{100}{\TeV}}\right)^{-2}$, used for signal event injection in each bin.
+    Because of the high number of trials with a test statistic value of $0$ in the smaller time windows, the discovery potential fluence is actually below the sensitivity.
+    It turns around to the expected behaviour the larger the time windows get.
+    The bins are uniformly spaced in logarithmic neutrino energy with a width of half a decade.
+  }
+  \label{fig:tdep_diff_perf}
+\end{figure}
 
 Because the differential performance fluence normalisations hold all the information of a global limit, where the only difference is, that the whole energy range would have been used in the injection procedure, it is possible to re-obtain the global performance for the same injection fluence from the differential limits.
 For this, the average number of events $N$ that would have been needed to be injected on the whole energy region needs to be computed from the injected number of events $N_j$ per bin.
@@ -751,11 +828,34 @@ where the rule for transforming probability densities was used \cite{blobel2013s
 The aforementioned independence of p-values may not hold in practice which can lead to deviations in the effective analytic trial factor.
 In this analysis, for example, the time windows are not independent, because each next larger time window includes all smaller ones.
 Therefore $\num{e6}$ post trials are done here to have a robust empirical estimate for the post-trial distribution, even for higher significances without having to assume some underlying model.
+Figure~(\ref{key}) shows the resulting post-trial test statistic and the connection between the pre-trial and post-trial significances.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/post_trial_pre_trial.pdf}
+  \caption[Connection between pre-trial and post-trial significances]{
+    The left plot shows the computed post-trial p-value distribution, sampled from $\num{e6}$ post trials.
+    Using that distribution each pre-trial significance can be transformed in a post-trial, final result significance as shown on the right.
+    Due to the still large number of zero trials even in the largest time window, the smallest non-zero pre-trial significance that can be obtained here, is approximately $\SIsigma{1}$.
+  }
+  \label{fig:post_trial_pre_trial}
+\end{figure}
+
 
 \section{Results}
 The so far held back on-time data, containing all events within any of the largest time windows around any source are used to do a single fit per time window with the prepared Likelihood models.
 This yields $\num{21}$ fit results, one for each time window with a single pre-trial p-value for each one.
 Afterwards, the post-trial significance is calculated by selecting the best p-value and comparing it to the post-trial test statistic as described in section~\ref{chp:time_dep_post_trial}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/exp_res_bg_pdf_post_pdf.pdf}
+  \caption[Experimental result for the time-dependent analysis]{
+    The resulting best fit test statistic value for a single fit on the experimental muon track dataset on the left and the post-trial significance on the right.
+    Both values are shown within their corresponding pre-trial and post-trial distributions.
+  }
+  \label{fig:tdep_exp_res_bg_pdf_post_pdf}
+\end{figure}
 
 No significant excess of neutrinos is seen in the stacked search around the $\num{22}$ proposed HESE events taken as source positions.
 Table~(\ref{tab:time_dep_results}) summarizes the pre-trial fit results.
