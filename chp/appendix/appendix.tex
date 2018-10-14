@@ -5,20 +5,73 @@ These are often similar to each other and would otherwise clutter the main part 
 The code written to enable the computational part of this analysis was mainly done in the \emph{Python} programming language, making heavy use of the scientific computing and visualization libraries \emph{numpy} \cite{numpy}, \emph{scipy} \cite{scipy}, \emph{matplotlib} \cite{matplotlib} and \emph{healpy} \cite{Gorski:2004by}.
 
 \section{Notes on reproducibility}
-\FIX{Shortly describe the folder and script structure?}
+The author tried to leave the analysis code in state that hopefully allows to reproduce the distribution used in this analysis.
+Python is used as the programming language for both the core analysis code and for the scripts using that core code.
+The scripts and data for both analysis can be found on the computing cluster of the IceCube collaboration at University of Wisconsin-Madison (UW-Madison).
+A numbering scheme is used to guide the execution order of the scripts.
+Help strings are included, when additional command line argument are needed.
 
+The core analysis code for the time-dependent analysis was written from scratch, but tried to keep a close connection to the existing \lstinline!skylab! code base used for many other IceCube point-source searches.
+At the time of writing this thesis, the \lstinline!skylab! wasn't capable of handling the needed time-dependent variations of the extended Likelihood formalism though, making the self developed code necessary.
+The code can be found in the \lstinline!github! repository at \url{github.com/mennthor/tdepps}.
+This repository also includes spline and statistics related methods to provide the tools used during the evaluation of the analysis in the \lstinline!tdepps/utils! submodule.
+The installation manual can be found in the modules \lstinline!Readme! file.
+The scripts for the time-dependent analysis can be found on the UW-Madison cluster's file system under \lstinline!\home/tmenne/analysis/hese_transient_stacking_analysis!.
+An additional \lstinline!Readme! file is provided with a short install manual.
+The analysis folder itself is a \lstinline!git! repository so all changes can be tracked.
+For the first setup, the required Python dependencies can be installed using the \lstinline!pip! package manager and the provided \lstinline!py2_requirements.txt! file.
+In this analysis the branch \lstinline!original_hese! is used.
+The master branch was intended to use an improved HESE sample event selection, \enquote{Pass2}, which was not ready at the time of this thesis and the original selection was used instead.
+In general the analysis folder used \lstinline!git! branches and their names for the whole folder tree.
+For this, a \lstinline!_loader.py! and \lstinline!_paths.py! module is provided.
+These modules are used to handle all relative path dependencies and automatically set a new folder structure in the analysis folder and in the users data storage folder when a new branch is used.
+This way, all tests cannot overwrite existing data or results and experiments can be done by simple branching.
+The processing order loosely follows the steps presented in the analysis chapter~\ref{chp:time_dep}.
+Some of the scripts simply run by themselves directly on the gateway machine.
+However, trial generation takes quite some computing time.
+The trial generation scripts are therefore usually split into three parts, where the first one creates job files for the \lstinline!dagman! distributed computing system, the second one resembles the actual code to be executed in each job and the last one is usually a script that collects and combines all the results from the job files in a more compact data structure.
+For this analysis, all results are stored in a human readable form in the \lstinline!JSON! file format.
+Because the format has no compression and can be quite verbose for a large datasets, the \lstinline!gzip! compression algorithm is used to compress the files if necessary.
+The handling of these files in Python is quite easy as demonstrated in the following listing
+\begin{lstlisting}
+  import json;
+  import gzip;
+  fname = "path/to/file.json.gz"
+  # 'gzip' may be optional, use just 'open(...)' then
+  with gzip.open(fname, "r") as fp:
+    data_dict = json.load(fp)
+\end{lstlisting}
+
+For the time-integrated search the existing \lstinline!skylab! core analysis code was used.
+Apart from that, the analysis is structured as explained above for the time-dependent analysis.
+The Likelihood map signal injector was not available to the date when it was needed in the \lstinline!skylab! core code.
+Due to the similar code structure between the self-developed \lstinline!tdepps! and the \lstinline!skylab! code, a simple adapter method was used to inject the signal events as needed by the \lstinline!skylab! code.
+The analysis folder can also be found on the UW-Madison cluster file system at the path \lstinline!/analysis/hese_time_independent_stacking_fit_index!.
+
+\newpage
 \section{Acknowledgements}
-\FIX{Missing personal acknowledgements}
+It would not have been possible to finish this thesis without the help and support of many people.
+Trying to thank each and everyone of them would consequently lead to missing acknowledgement for sure.
+Therefore, I only want to address some of them directly at this place, but also express my gratitude to everyone who participated in any way during the creation of this work and in general during my studies at the university Dortmund.
 
+Firstly I want to thank my parents for making it possible in the first place, with every small decision they made, for me to finish the physics education and the doctoral studies.
+I also want to thank my wife for her support even though the writing of this thesis did take much longer than expected.
+
+Furthermore I want to thank my supervisor Dr.~Dr.~Wolfgang~Rhode for his professional and the financial support, as well as Dr.~Bernhardt~Spaan in his role as second corrector and the other two members of the defence committee Dr.~Bärbel~Siegmann and Dr.~Mirko~Cinchetti.
+
+Lastly, many thanks go to my colleagues at the astroparticle physics chair at TU Dortmund, who helped me with many details and went through the pain of proof-reading of this thesis.
 
 \chapter{Supplementary material}
+This chapter includes supplementary material, mostly additional plots and figures, that otherwise clutter the main chapters too much, but provide useful additional information.
+
+
 \section{Datasets}
 This appendix chapter includes additional plots for chapter~\ref{chp:datasets}.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HESE LLH maps skymap
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics{../datasets/plots/hese_events_reco_landscape_skymap.pdf}
   \caption[Combined Likelihood skymap of the 22 HESEs]{
@@ -27,11 +80,10 @@ This appendix chapter includes additional plots for chapter~\ref{chp:datasets}.
   \label{fig:hese_events_reco_landscape_skymap}
 \end{figure}
 
-
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Eff areas and sindec distributions
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics{../datasets/plots/effA_and_sindec.pdf}
   \caption[Effective areas and $\sin(\delta_\nu)$ distributions]{
@@ -42,11 +94,10 @@ This appendix chapter includes additional plots for chapter~\ref{chp:datasets}.
   \label{fig:effA_and_sindec}
 \end{figure}
 
-
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HESE decorrelation plots
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[htbp]
+\begin{figure}[H]
   \centering
   \begin{subfigure}[t]{\textwidth}
     \centering
@@ -71,4 +122,477 @@ This appendix chapter includes additional plots for chapter~\ref{chp:datasets}.
     To obtain the total number of events, the integral over the parameter space needs to be taken, shown are differential number of events.
     }
   \label{fig:mc_no_hese_79_86I_86II}
+\end{figure}
+
+
+\section{Time-dependent analysis}
+This chapter includes additional plots for the time-dependent analysis chapter.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rates for all samples
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/rates_all.pdf}
+  \caption[Total run rates and sine models for all samples]{
+    Measured run rates and fitted allsky rate models for all four muon trck data samples.
+    The rates per run are rebinned in monthly bins and a sine model is fitted to the bin centres per sample.
+    This global model is integrated over each source's time window to estimate the expected number of background events, which is a priori fixed in the Likelihood fit.
+  }
+  \label{fig:rates_all}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Stacking weights
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/stacking_src_w_per_sample.pdf}
+  \caption[Source stacking weights for the time-dependent analysis]{
+    Source stacking detection efficiency weights for all source per sample.
+    The spline is constructed from the distribution of simulated signal-like events at the same processing level as the measured dataset.
+    The weights per source are read of at the corresponding source declinations and independently normalized per sample.
+  }
+  \label{fig:tdep_stacking_src_w_per_sample}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sine rate model splines
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/sine_param_splines.pdf}
+  \caption[Parameter splines for the sine rate model per sample]{
+    Spline models fitted to the discrete fit parameters from the rate models in figures~(\ref{fig:rates_per_bin_IC79},\ref{fig:rates_per_bin_IC86_2011},\ref{fig:rates_per_bin_IC86_2012-2014},\ref{fig:rates_per_bin_IC86_2015}).
+    The splines are used to obtain the set of rate model parameters used to tailor the model for the source locations in time.
+    On the left the splines for the amplitude parameter $A$ and on right the splines for the baseline parameter $R_0$ for the model~(\ref{equ:rate_model}) are shown.
+  }
+  \label{fig:tdep_sine_param_splines}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rates per bin plots
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/rates_per_bin_IC79.pdf}
+  \caption[Rate models per bin for sample IC79]{
+    Measured run rates and fitted models for the IC79 sample.
+    In each bin, the rates per run are rebinned in monthly bins and a sine model is fitted to the bin centres.
+  }
+  \label{fig:rates_per_bin_IC79}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/rates_per_bin_IC86_2011.pdf}
+  \caption[Rate models per bin for sample IC86, 2011]{
+    Measured run rates and fitted models for the IC79 sample.
+    In each bin, the rates per run are rebinned in monthly bins and a sine model is fitted to the bin centres.
+  }
+  \label{fig:rates_per_bin_IC86_2011}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/rates_per_bin_IC86_2012-2014.pdf}
+  \caption[Rate models per bin for sample IC79]{
+    Measured run rates and fitted models for the IC86, 2012--2014 sample.
+    In each bin, the rates per run are rebinned in monthly bins and a sine model is fitted to the bin centres.
+  }
+  \label{fig:rates_per_bin_IC86_2012-2014}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/rates_per_bin_IC86_2015.pdf}
+  \caption[Rate models per bin for sample IC79]{
+    Measured run rates and fitted models for the IC86, 2015 sample.
+    In each bin, the rates per run are rebinned in monthly bins and a sine model is fitted to the bin centres.
+  }
+  \label{fig:rates_per_bin_IC86_2015}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KS test for independent LIDO trials
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/ks_test_lido_trials_pvals.pdf}
+  \caption[KS test using independent trials for the time-dependent BG TSs]{
+    Kolmogorov-Smirnov test results per time-window testing the exponential tail for the background test statistics against a set of independently sample distributions.
+    A small tendency for a mismatch at larger time windows can be seen, but overall the fitted tails describe the samples distributions sufficiently well.
+  }
+  \label{fig:ks_test_lido_trials_pvals}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HESE map injector sampling
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/hese_map_sampling.pdf}
+  \caption[Sampling from a healpy map for the signal source injection]{
+    Likelihood map for the high energy starting event $1$ as used in the analysis.
+    The dots are the sampled source positions from the signal injector module.
+    Per trial one new source location is sampled per source.
+    The actually injected signal events are rotated to the new source positions in their true coordinates prior to injection and added to the separately sampled background event sample.
+  }
+  \label{fig:hese_map_sampling}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Performance chi2 fit per time window
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/perf_chi2_fits.pdf}
+  \caption[$\chi^2$ CDF fits per time window for the analysis performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for all time windows.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+     The injection is done with a unbroken power law with index $\gamma=2$ over the whole available simulation dataset true neutrino energy range.
+  }
+  \label{fig:tdep_perf_chi2_fits}
+\end{figure}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BG test statistics. 0,1,2 and 19,20,21 are placed in the chapter
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{\Large\sffamily Background test statistics}
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_3_4_5.pdf}
+  \caption[Background test statistics for the time windows 4, 5 and 6]{
+    Background only test statistics for the time windows 4, 5 and 6 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_3_4_5}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_6_7_8.pdf}
+  \caption[Background test statistics for the time windows 7, 8 and 9]{
+    Background only test statistics for the time windows 7, 8 and 9 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_6_7_8}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_9_10_11.pdf}
+  \caption[Background test statistics for the time windows 10, 11 and 12]{
+    Background only test statistics for the time windows 10, 11 and 12 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_9_10_11}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_12_13_14.pdf}
+  \caption[Background test statistics for the time windows 13, 14 and 15]{
+    Background only test statistics for the time windows 13, 14 and 15 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_12_13_14}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/bg_ts_and_ks_tw_ids_15_16_17.pdf}
+  \caption[Background test statistics for the time windows 16, 17 and 18]{
+    Background only test statistics for the time windows 16, 17 and 18 on the left and the parameters scan using the Kolmogorov-Smirnov (KS) test for the best threshold position on the right.
+    The sampled PDF is described empirically up to the threshold value and with an exponential tail after that.
+    The KS test is used to decide when the tail describes the sampled data sufficiently accurate.
+  }
+  \label{fig:bg_ts_and_ks_tw_ids_15_16_17}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Differential perf chi2 fits per bin for each time window
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{\Large\sffamily Differential performances $\chi^2$ CDF fits}
+\enlargethispage*{5cm}
+% 1st
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_00.pdf}
+  \caption[$\chi^2$ CDF fits for the 1st time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the first time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_00}
+\end{figure}
+% 2nd
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_01.pdf}
+  \caption[$\chi^2$ CDF fits for the 2nd time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the second time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_01}
+\end{figure}
+% 3rd
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_02.pdf}
+  \caption[$\chi^2$ CDF fits for the 3rd time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the third time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_02}
+\end{figure}
+% 4th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_03.pdf}
+  \caption[$\chi^2$ CDF fits for the 4th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the fourth time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_03}
+\end{figure}
+% 5th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_04.pdf}
+  \caption[$\chi^2$ CDF fits for the 5th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the fifth time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_04}
+\end{figure}
+% 6th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_05.pdf}
+  \caption[$\chi^2$ CDF fits for the 6th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the sixth time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_05}
+\end{figure}
+% 7th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_06.pdf}
+  \caption[$\chi^2$ CDF fits for the 7th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the seventh time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_06}
+\end{figure}
+% 8th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_07.pdf}
+  \caption[$\chi^2$ CDF fits for the 8th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the eighth time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_07}
+\end{figure}
+% 9th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_08.pdf}
+  \caption[$\chi^2$ CDF fits for the 9th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the ninth time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_08}
+\end{figure}
+% 10th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_09.pdf}
+  \caption[$\chi^2$ CDF fits for the 10th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the tenth time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_09}
+\end{figure}
+% 11th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_10.pdf}
+  \caption[$\chi^2$ CDF fits for the 11th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 11th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_10}
+\end{figure}
+% 12th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_11.pdf}
+  \caption[$\chi^2$ CDF fits for the 12th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 12th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_11}
+\end{figure}
+% 13th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_12.pdf}
+  \caption[$\chi^2$ CDF fits for the 13th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 13th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_12}
+\end{figure}
+% 14th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_13.pdf}
+  \caption[$\chi^2$ CDF fits for the 14th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 14th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_13}
+\end{figure}
+% 15th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_14.pdf}
+  \caption[$\chi^2$ CDF fits for the 15th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 15th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_14}
+\end{figure}
+% 16th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_15.pdf}
+  \caption[$\chi^2$ CDF fits for the 16th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 16th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_15}
+\end{figure}
+% 17th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_16.pdf}
+  \caption[$\chi^2$ CDF fits for the 17th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 17th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_16}
+\end{figure}
+% 18th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_17.pdf}
+  \caption[$\chi^2$ CDF fits for the 18th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 18th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_17}
+\end{figure}
+% 19th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_18.pdf}
+  \caption[$\chi^2$ CDF fits for the 19th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 19th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_18}
+\end{figure}
+% 20th
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_19.pdf}
+  \caption[$\chi^2$ CDF fits for the 20th time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 20th time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_19}
+\end{figure}
+% 21st
+\begin{figure}[H]
+  \centering
+  \includegraphics{../time_dep_analysis/plots/diff_perf_chi2_fits_tw_20.pdf}
+  \caption[$\chi^2$ CDF fits for the 21st time window differential performance]{
+     $\chi^2$ CDF fits to the discrete set of test statistic quantiles from the signal injection trials over the mean number of injected signal events $\mu$ parameter scan for the 21st time window.
+     For each point, the quantile for the current sampled test statistic over the desired test statistic value from the background distribution is calculated from the empiric PDF.
+     The the $\chi^2$ CDF is fitted to the points to obtain a more reliable estimate of the needed quantile.
+     The density of the sampled grid point in $\mu$ is adapted to the needed quantity in each bin.
+     Each set of trials is reused for the sensitivity and discovery potential definitions.
+  }
+  \label{fig:diff_perf_chi2_fits_tw_20}
 \end{figure}
