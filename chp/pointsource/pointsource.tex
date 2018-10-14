@@ -154,6 +154,7 @@ The event times $t_i$ and source times $t_k$ define the time dependent emission 
 The choice of splitting the PDF in several independent terms happens for symmetry reasons and to allow the usage of approximate analytic forms of the PDF terms.
 The first step to arrive at the split PDF form, is to apply the law of total probability \cite{casella2002statistical}, which dissects the composite PDF into marginal distributions
 \begin{equation}
+  \label{equ:law_of_total_probability}
   f(x_1, \dots, x_n)
   = P(x_1) \cdot P(x_2 | x_1) \cdot P(x_3 | x_1 \and x_2) \dots
     P(x_n | x_1 \and \dots \and x_{n-1})
@@ -401,18 +402,7 @@ Generalized assumptions can be made though, in favour of the ability to test a b
 Using the assumption of independent time windows for the sources can further simplify the test statistic.
 The expression can be rearranged to an explicit sum of logarithms that better resembles the uniqueness of each source in its time window.
 
-Starting from the test statistic expression~(\ref{equ:tdep_ts_general})
-% \begin{equation}
-%   -2\ln\hat{\Lambda}
-%   = -2\hat{n}_S +
-%       2\sum_{i=1}^N \ln\left(
-%         \frac{\hat{n}_S \sum_{k=1}^{N_\text{srcs}} w_k S_{i,k}}
-%              {\sum_{k=1}^{N_\text{srcs}}\Braket{\lambda_{k,B}} B_{i,k}}
-%         + 1
-%       \right)
-%   \mcomma
-% \end{equation}
-and from the definition of the unique time windows, it can be seen that each event $i$ can only contribute to a single source $k$.
+Starting from the test statistic expression~(\ref{equ:tdep_ts_general}) and from the definition of the unique time windows, it can be seen that each event $i$ can only contribute to a single source $k$.
 The event belongs to the source in which time window it falls or to no source at all, where the time windows are defined as in~(\ref{equ:time_window_def})
 \begin{equation}
   T_k(t_i) \coloneqq \rect \left(
@@ -553,6 +543,7 @@ $\tilde{w}_{k,j}$ are the un-normalized stacking weights per sample.
 Now the numerator turns out to be exactly the per sample normalization of the per sample splitting weights, which is the sum of all weights for the subset of all sources that actually are in the sample.
 The full multi-sample test statistic then reads
 \begin{equation}
+  \label{equ:tdep_llh_multi_sample_complete}
   -2\ln\hat{\Lambda}
   = -2\hat{n}_S +
       2\sum_{j=1}^{N_\text{sam}} \sum_{i=1}^{N_j} \sum_{k=1}^{N_\text{srcs,j}}
@@ -699,6 +690,7 @@ and only in this case, with a priori fixed weights $w_k$, the replacement of the
 to quickly change from a single to a stacked source hypothesis.
 
 \subsection{Multiple samples stacking case}
+  \label{equ:multi_sam_time_indep}
 Construction of the multi-sample Likelihood formula in the time-integrated case is done exactly as in the time-dependent case before by starting with the sample weight relation
 \begin{equation}
   n_{S,j} = n_S \cdot w_j
