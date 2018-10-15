@@ -45,8 +45,22 @@ Because seasonal variations are averaged out in the whole sample livetime, it is
   \mperiod
 \end{equation}
 This is done by histogramming the data events in sine of declination and fitting an interpolating spline through the resulting bin centre points to have a smooth and continuous representation of the PDF available.
-Again for being consistent with the commonly used PDFs in IceCube, the binning is chosen a bit different than in the previous analysis, which makes almost no difference in the used PDF.
+Again, for being consistent with the commonly used PDFs in IceCube, the binning is chosen a bit different than in the previous analysis, which makes almost no difference in the used PDF.
 The binning set-up can be looked up in the \lstinline!skylab! module which collects the shared settings for the datasets.
+In figure~(\ref{fig:tindep_bg_pdf_per_sample}) the $\sin(\delta)$ PDF for each sample and a comparison to the binning used in the time-dependent analysis can be seen.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{../time_int_analysis/plots/bg_pdf_per_sample.pdf}
+  \caption[Background PDFs per source per sample for the time-integrated analysis]{
+    Resulting background PDFs in $\sin(\delta$ per sample.
+    Because of the steady-state source emission assumption, a single average PDF is sufficient per sample for all sources.
+    On the left plots, the \lstinline!skylab! binning with the spline constructed by interpolating through the bin centres is shown.
+    On the right, the same spline is plotted, but the histogram uses the previous binning from the time-dependent analysis to be able compare the differences.
+    Each spline is normalised only across the $\sin(\delta)$ dimension in the plots, but the normalisation across the right ascension dimension is a constant of $2\pi$ anyway due to the assumption of symmetric right ascension PDF.
+  }
+  \label{fig:tindep_bg_pdf_per_sample}
+\end{figure}
 
 \subsection*{Energy PDF}
 The energy PDF needs to be built and evaluated for multiple power law spectral indices because the second fit parameter is the spectral index of the assumed source flux.
