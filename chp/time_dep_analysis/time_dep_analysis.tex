@@ -111,7 +111,8 @@ For each source per sample, figure~(\ref{fig:tdep_bg_pdf_per_sample}) shows the 
   \centering
   \includegraphics{../time_dep_analysis/plots/bg_pdf_per_sample.pdf}
   \caption[Background PDFs per source per sample for the time-dependent analysis]{
-    Resulting background PDFs in $\sin(\delta$ showing the distribution for each source per sample.
+    Resulting background PDFs in $\sin(\delta$ for each source per sample, for the largest time window.
+    The PDFs for the smaller time windows are almost identical and not separately shown.
     The distribution are built by integrating the background rate over the current time window for the specific rate model at the sources temporal location.
     The rate model parameters are taken from the splines in figure~(\ref{fig:tdep_sine_param_splines}).
     Each spline is normalised only across the $\sin(\delta)$ dimension in the plots, but the normalisation across the right ascension dimension is a constant of $2\pi$ anyway due to the assumption of symmetric right ascension PDF.
@@ -647,7 +648,7 @@ Although the number of injected events stays roughly equal when the bin size is 
 Thus, a global fluence can be made compatible with any differential fluence performance by decreasing the bin size of the differential limits.
 However, the limits can be used to calculate a global limit, which is directly comparable to other differential fluence models.
 This can be used to provide a flexible method for the reader, to obtain performances or limits for its own model creations.
-The differential sensitivities and discovery potentials per time window are shown in figure~(\ref{fig:tdep_diff_perf}).
+The differential sensitivities and discovery potentials per time window are shown in figure~(\ref{fig:tdep_diff_perf}) and the corresponding fluence values can be found in tables~(\ref{tab:tdep_diff_perf_tab1}, \ref{tab:tdep_diff_perf_tab2}).
 The corresponding $\chi^2$ CDF fits for each bin and each time window used to derive the fluences can be seen in figures~(\ref{fig:diff_perf_chi2_fits_tw_00}--\ref{fig:diff_perf_chi2_fits_tw_20}).
 
 \begin{figure}[htbp]
