@@ -51,7 +51,7 @@ In figure~(\ref{fig:tindep_bg_pdf_per_sample}) the $\sin(\delta)$ PDF for each s
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics{../time_int_analysis/plots/bg_pdf_per_sample.pdf}
+  \includegraphics{plots/bg_pdf_per_sample.pdf}
   \caption[Background PDFs per source per sample for the time-integrated analysis]{
     Resulting background PDFs in $\sin(\delta$ per sample.
     Because of the steady-state source emission assumption, a single average PDF is sufficient per sample for all sources.
@@ -68,7 +68,7 @@ To avoid long computing times by re-calculating the PDF for every occurring inde
 To avoid long computing times by re-calculating the two-dimensional PDFs in $\sin(\delta)$ and $\log_{10}\left(E_\text{proxy}\right)$ for every index $\gamma$ occurring during the fitting procedures, the PDFs are built and cached for a fine grid of spectral indices beforehand.
 
 For a fixed index $\gamma$ the histograms are built as before from data and signal simulation with the same binning and the ratio built to describe the signal over background ration for the energy term.
-For simulated signal data, the number of events per bin can be computed using the modified OneWeight \footnote{See equation~(\ref{equ:oneweight_definition}) for a more detailed description of OneWeight.}
+For simulated signal data, the number of events per bin can be computed using the modified OneWeight\footnote{See equation~(\ref{equ:oneweight_definition}) for a more detailed description of OneWeight.}
 \begin{equation}
   N(\Delta E, \Delta\delta)
   = T\cdot \sum_{(i|E_{\nu,i}\in\Delta E, \delta_i\in\Delta\delta)}
@@ -77,6 +77,24 @@ For simulated signal data, the number of events per bin can be computed using th
 \end{equation}
 where now the spectral index $\gamma$ can vary for each source flux hypothesis and each sample livetime $T$ needs to be regarded to adapt the expected number of signal events for each sample accordingly.
 The slightly different binning can again be looked up in the \lstinline!skylab! module.
+Also, a more conservative approach is followed here compared to the time-dependent analysis, which is necessary due to the flexible spectral index and the way the ratios are constructed.
+The ratios without valid background or signal histogram points are set to the lowest ratio and are thus made very background-like.
+This may worsen the sensitivity, especially for high energy proxy values and hard spectra, but cannot artificially introduce separation power based on low simulation or data statistics.
+An approach to resolve this would be to fill in missing values in the background and signal PDF histograms themselves using the underlying model assumptions.
+The ratio would then be defined in every pixel in the ratios.
+Figures~(\ref{fig:tindep_energy_sob_IC79}) and~(\ref{fig:tindep_energy_sob_IC86_2011}--\ref{fig:tindep_energy_sob_IC86_2015}) show the change of the signal over background PDF ratios for selected spectral indices per sample.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics{plots/energy_sob_IC79.pdf}
+  \caption[Energy PDF for the time-integrated analysis for IC79]{
+    Two-dimensional ratio of the signal and background energy PDFs in $\log_{10}\left(E_\text{proxy}\right)$ and $\sin(\delta)$ for the IC79 sample and for different spectral indices $\gamma$.
+    The underlying binning is the same for the signal and background histogram.
+    Each ratio is pre-calculated for a grid of spectral indices beforehand and used during the fitting procedure for the current realization of $\gamma$.
+    A one-dimensional spline, which is not shown here, is used per $\left(\sin(\delta), \log_{10}\left(E_\text{proxy}\right)\right)$ tuple for each event to interpolate the grid and obtain the gradient information for the spectral index fit parameter.
+  }
+  \label{fig:tindep_energy_sob_IC79}
+\end{figure}
 
 To cache the energy PDF dependency on the spectral index, the signal over background ratios are built for each $\gamma$ on a grid, which is constrained in the interval $[1, 4]$ to cover a broad range of physically plausible hard and soft energy spectra.
 The stack of histograms is then used to create a one-dimensional spline in the $\gamma$ direction on the fly for each pair of $\left(\sin(\delta), \log_{10}\left(E_\text{proxy}\right)\right)$ during the fit, to obtain a continuous description and get the needed derivatives for the fit in analytic form as well.
@@ -110,6 +128,7 @@ whereas the $n_S$ sample split weights $w_j$ follow the normalization rule from 
   \mcomma
 \end{equation}
 where $P(j|k,\gamma)$ and $P(k|\gamma)$ can again be obtained by the number of expected events depending on the current spectral index $\gamma$ and have to be adapted accordingly during a fitting procedure.
+The dependency on the spectral index is not very strong, as can be seen in figure~(\ref{fig:sample_split_weights}).
 
 
 \section{Note on LLH minimization}
@@ -185,15 +204,20 @@ The number of degrees of freedom of the $\chi^2$ PDF turns out to be slightly hi
 This is because for very background-like samples, which means $n_S=0$, the spectral index of the signal energy PDF has no relevance any more and is degenerate, leading to the slightly different effective number of degrees of freedom $\hat{n}$.
 The distribution fitted to the test statistic is a split PDF model catching the compactified under-fluctuations at zero with a delta peak and the tail with a $\chi^2$ distribution
 \begin{equation}
+  \label{equ:delta_chi2_pdf}
   f(x \coloneqq -2\ln\hat{\Lambda}) =
   \begin{cases}
-    (1 - \eta) \cdot \chi^2_{\hat{n}}(x) &\text{ , for}\quad x > 0 \\
-    \eta &\text{ , for}\quad x = 0
+    \eta \cdot \chi^2_{\hat{n}}(x) &\text{ , for}\quad x > 0 \\
+    (1 - \eta) &\text{ , for}\quad x = 0
   \end{cases}
   \mperiod
 \end{equation}
-The PDF is fitted to the test statistic by only varying the effective number of degrees of freedom $\hat{n}$.
-The number of zero trials $\eta$ is directly deduced by simple counting.
+The PDF is fitted to the test statistic by only varying the effective number of degrees of freedom $\hat{n}$ with a best fit of $\num{1.17}$.
+The number of non-zero trials $\eta=\num{0.54}$ is directly deduced by simple counting.
+The comparison to the fitted $\chi^2$ model and the hybrid solution that was used in the time-dependent analysis can be seen in figure~(\ref{fig:bg_ts_with_models_and_ks}).
+The distribution of the fitted signal strengths and spectral indices for the background trials are shown in figure~(\ref{fig:bg_ts_ns_and_gamma_hist}).
+As the median of the spectral index fit values lies around $\num{3}$, a small bias towards slightly harder indices than expected from the simplified atmospheric expectation of $\gamma_\text{atmo} \approx 3.7$ can be seen.
+However, this has no influence on the final result, as this type of analysis is not well suited to really measure the astrophysical spectral index, but it is rather treated as a nuisance parameter to adopt the signal model in a flexible way to the data.
 
 \subsection*{Signal trials}
 The signal injection is set up to simulate a steady flux scenario.
@@ -224,7 +248,24 @@ Here, it is sufficient to distribute the samples according to their expected eve
 The a priori estimation of the analysis performance is performed analogue to the procedure in section~\ref{chp:time_dep_perf}.
 Because the performance flux is just a single value for the full analysis, a finely binned differential performance is computed here.
 The differential performance is estimated in logarithmic energy bins, uniformly spaced with an eighth of a decade between $\SI{e2}{\GeV}$ and $\SI{e9}{\GeV}$.
-Additionally the differential performance is computed for two injection spectra, with indices $\gamma_\text{inj} = 2$ and $\gamma_\text{inj} = 3$ to validate if the bin size is sufficiently small to justify the creation of arbitrary flux performances and limits as explained in section~\ref{chp:time_dep_diff_perf}.
+Additionally the differential performance is computed for two injection spectra, with indices $\gamma_\text{inj} = 2$ and $\gamma_\text{inj} = 3$ to validate if the bin size is sufficiently small to justify the creation of arbitrary flux performances and limits as explained in section~\ref{chp:tdep_diff_perf}.
+The differential fluxes can be seen in figure~(\ref{fig:tindep_diff_perf}).
+In figure~(\ref{fig:tindep_diff_perf_inj_mu_comp}), the number of actually injected events per bin to reach the performance definition is shown.
+The amount of signal events needed is almost identical for both injection models.
+This is one requirement needed to be able to derive global performances and limits from the differential fluxes.
+The corresponding $\chi^2$ CDF fits to the discrete test statistic points used to estimate the performance fluxes are shown in figures~(\ref{fig:tindep_diff_perf_chi2_fits_gamma_2_chunk0}, \ref{fig:tindep_diff_perf_chi2_fits_gamma_2_chunk1}) for $\gamma_\text{inj}=2$ and in figures~(\ref{fig:tindep_diff_perf_chi2_fits_gamma_3_chunk0}, \ref{fig:tindep_diff_perf_chi2_fits_gamma_3_chunk1}) for $\gamma_\text{inj}=2$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{plots/diff_perf.pdf}
+  \caption[Differential performance of the time-integrated analysis]{
+    Shown are the differential sensitivity and discovery potential fluxes for the time-integrated analysis.
+    Both performances are computed once with an injection spectrum with a spectral index of $\gamma_\text{inj}=2$ and with $\gamma_\text{inj}=3$ to compare the aforementioned subtleties when using differential performances.
+    The steeper energy dependence of the $\gamma_\text{inj}=3$ model can clearly be seen.
+    The bins are uniformly spaced in logarithmic neutrino energy with a fine width of one eight of a decade in order to minimize the spectral dependency in each bin.
+  }
+  \label{fig:tindep_diff_perf}
+\end{figure}
 
 The connection between the flux normalisation $\phi_0$ and the model flux $F$ is slightly different here, because of the different emission scenario
 \begin{align}
@@ -257,18 +298,16 @@ The resulting test statistic is compared to the background only test statistic m
 No significant excess of neutrinos is seen in the test for a steady state flux scenario.
 The best-fit test statistic is $\num{0.057}$ with best-fit parameters $\hat{n}_S = \num{5.57}$ and $\hat{\gamma} = \num{2.8}$.
 This results in a p-value of $p=0.47$ and a significance of $\SIsigma{0.73}$.
-The  best fit test statistic value together with the background only distribution can be seen in figure~(\ref{fig:time_int_bg_ts_best_fit}).
+The  best fit test statistic value together with the background only distribution can be seen in figure~(\ref{fig:tindep_bg_ts_best_fit}).
 No post-trial correction needs to be applied.
 
-% \begin{figure}[htbp]
-%   \centering
-%   \includegraphics{plots/bg_ts_best_fit}
-%   % \subimport*{plots/}{bg_ts_best_fit.pgf}
-%   \caption{
-%     Background only test statistic together with the experimental, unblinded result.
-%     The best test statistic value of $\num{0.057}$ was shifted to twice its value to be visible in the plot.
-%     In solid, the fitted $\chi^2$ PDF model which is used to estimate the p-value is overlaid.
-%   }
-%   \label{fig:time_int_bg_ts_best_fit}
-% \end{figure}
-
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{plots/bg_ts_best_fit.pdf}
+  \caption[Experimental result of the time-integrated analysis]{
+    Background only test statistic together with the experimental, unblinded result.
+    The best test statistic value of $\num{0.057}$ was shifted to twice its value to be visible in the plot.
+    In solid, the fitted $\chi^2$ PDF model, which is used to estimate the p-value, is overlaid.
+  }
+  \label{fig:tindep_bg_ts_best_fit}
+\end{figure}
