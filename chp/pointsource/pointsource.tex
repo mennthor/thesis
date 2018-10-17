@@ -690,7 +690,6 @@ and only in this case, with a priori fixed weights $w_k$, the replacement of the
 to quickly change from a single to a stacked source hypothesis.
 
 \subsection{Multiple samples stacking case}
-  \label{equ:multi_sam_time_indep}
 Construction of the multi-sample Likelihood formula in the time-integrated case is done exactly as in the time-dependent case before by starting with the sample weight relation
 \begin{equation}
   n_{S,j} = n_S \cdot w_j
@@ -699,6 +698,7 @@ Construction of the multi-sample Likelihood formula in the time-integrated case 
 \end{equation}
 inserted in the familiar combination of single sample Likelihoods
 \begin{align}
+  \label{equ:multi_sam_time_indep}
   -2\ln\hat{\Lambda}
   &= \sum_{j=1}^{N_\text{sam}} -2\ln\hat{\Lambda}_j(\hat{n}_{S,j}) \\
   &= \sum_{j=1}^{N_\text{sam}} \left[
