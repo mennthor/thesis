@@ -113,7 +113,7 @@
   labelfont=bf,
   format=plain,
   width=0.9\textwidth,
-  font=small
+  font=footnotesize
   }
 \usepackage{subcaption}
 
@@ -154,6 +154,9 @@
 \usepackage[pdfusetitle,unicode]{hyperref}
 \usepackage{bookmark}
 \usepackage[shortcuts]{extdash}
+\usepackage{chngcntr}  % Number footnotes per document not only per chapter
+  \counterwithout{footnote}{chapter}
+
 
 %------------------------------------------------------------------------------
 %-- Custom commands
