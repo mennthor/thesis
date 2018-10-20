@@ -1,0 +1,40 @@
+Anmerkungen zur Literatur:
+
+* bei den ersten beiden Chi und Gai fehlt das Jahr
+* Aar16b: die DOI steht da mehmals
+* BS13: ist das nicht in einem Journal, da steht In: 2013, das Proceeding kann man dazu schreiben
+* Bel78a: eprint und url überflüssig. und mit eingetragenem Monat auch erst nach Bel78b
+* BSY14: url ist überflüssig
+* BZ14: url ist überflüssig
+* Bro14: In: 2014 ist kein Journal, also auch nicht so kennzeichnen, ist ein technical report P. Bromiley.  Products and convolutions of Gaussian probability density functions.   Technical Report Tina Memo No. 2003-003, University of Manchester.
+* Che37: url überflüssig
+* Cir08: url überflüssig
+* Dal+17: ist ein eprint
+* DG10: url überflüssig
+* ERS08: url überflüssig
+* Fer49: url überflüssig, ENRICO
+* FS82 eprint, url überflüssig
+* Gai12: url überflüssig
+x Gao+18: ist ein eprint
+* Gol02: url überflüssig
+* Gra+10: url überflüssig
+* Gru05: Verlag fehlt
+* Hoe03, Hör16: einheitlich oe oder ö
+* Hor77: doi 10.2307/2529319 statt url
+* Hun07: url überflüssig
+* Jak12: ist kein Journal, sondern online-resource
+* JOP+01: accessed <today>
+* Kei+18: Journal angeben Astrophys.J. 864 (2018) 84, 10.3847/1538-4357/aad59a
+* Koe+13: url überflüssig
+* Lal12: doppelte Seitenzahl
+* MA74: Abramowitz M. falsche Reihenfolge Vor- und Nachname
+* Mes14: url überflüssig
+* Mos03: [8,183(2003)] überflüssig
+** ODe+10: großes X im Titel
+* RW13: url überflüssig
+* SMM16: url überflüssig
+* The+09: The Pierre Auger Collaboration -> Aab et al
+* Tib12: # in ISBN
+* Wf09: Wiebusch for the IceCube Collaboration
+* Yan+12: url überflüssig
+* YT14: Mises-Fischer groß

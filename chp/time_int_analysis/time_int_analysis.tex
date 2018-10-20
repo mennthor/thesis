@@ -8,7 +8,7 @@ For the signal injection, the same injection code as used for the time-dependent
 
 As mentioned before, no significant excess of neutrinos at any location on the sky could be found in the extensive all-sky search with seven years of data.
 The results also indicate, that at each HESE position no significant source can be identified.
-This motivates to additionally conduct a time-independent stacked search independently of the previous time-dependent one, to check for the possibility that the sources, that may have emitted the high energy starting events, are only emitting enough events for a significant detection in a combined search.
+This motivates to additionally conduct a time-independent stacked search independently of the previous time-dependent one, to check for the possibility that the sources, that have emitted the high energy starting events, are only emitting enough events for a significant detection in a combined search.
 
 The method used in this analysis is similar to the previous one and uses the same underlying Likelihood mechanism.
 The detailed derivation of the used formula using different approximations suitable for large statistics samples and a steady source scenario can be seen in the dedicated section~\ref{chp:pointsource_time_int_llh}.
@@ -16,16 +16,16 @@ The fact that all sources are assumed to contribute to the common neutrino flux 
 Therefore no splitting in off- and on-data regions is done beforehand.
 By scrambling all data events in right ascension before building any PDFs or doing trials, the experimental data is kept \enquote{blinded}.
 
-The main difference to the time-dependent analysis is the usage of a variable, unbroken power law spectrum in the energy PDF.
-This introduces a second free fit parameter, namely the spectral index $\gamma$ of the assumed power law flux $\sim E^{-\gamma}$ shared between all sources under the assumption of equal intrinsic emission.
-Due to the much larger statistics, it is possible to reliably fit the additional parameter.
+The main difference to the time-dependent analysis is the usage of an unbroken power law spectrum with a variable spectral index in the energy PDF.
+This introduces a second free fit parameter, namely the spectral index $\gamma$ of the assumed power law flux $\propto E^{-\gamma}$ shared between all sources under the assumption of equal intrinsic emission.
+Due to the larger available statistics, it is possible to reliably fit the additional parameter.
 From a technical point of view, the new degree of freedom is also needed to match the model to background and signal assumptions.
 While the specific shape of the underlying spectral model was not very important in the time-dependent analysis due to the low overall background expectation, it is necessary here to distinguish signal and background contributions more efficiently.
 
 Performance estimation is done exactly as in the time-dependent analysis, by scanning a grid of true source strengths and building a test statistic for each grid point.
 This yields the Neyman plane marginalized over $\gamma$ and can be used to fit a fairly general $\chi^2$ CDF to the samples, to build the required performance parameters or limits.
 Also differential performances are calculated for a quite high resolution to allow for the computation of a wide range of custom models.
-No post trials are needed here because no grid scan is made.
+No post trials are needed here because no grid scan is performed.
 Instead, the spectral index is fitted directly, which incorporates the trial factor automatically in the fitting procedure.
 
 
@@ -35,7 +35,7 @@ A set of rules regarding the binning and handling of these data, tuned for optim
 
 \subsection*{Spatial PDF}
 Here, the spatial signal PDF is defined as a two-dimensional Gaussian distribution.
-However, this makes virtually no differences to the previous signal PDF, for which where the Kent distribution was used.
+However, this makes virtually no differences to the signal PDF for the time-dependent analysis, where the Kent distribution was used.
 As the dataset consists of well-reconstructed muon tracks, the angular uncertainty is small enough to avoid the regions in which both PDFs would start to severely differ.
 
 The background PDF construction is similar to the time-dependent ones, but is simpler to compute here.
@@ -53,21 +53,20 @@ In figure~(\ref{fig:tindep_bg_pdf_per_sample}) the $\sin(\delta)$ PDF for each s
   \centering
   \includegraphics{plots/bg_pdf_per_sample.pdf}
   \caption[Background PDFs per source per sample for the time-integrated analysis]{
-    Resulting background PDFs in $\sin(\delta$ per sample.
+    Resulting background PDFs in $\sin(\delta)$ per sample.
     Because of the steady-state source emission assumption, a single average PDF is sufficient per sample for all sources.
     On the left plots, the \lstinline!skylab! binning with the spline constructed by interpolating through the bin centres is shown.
     On the right, the same spline is plotted, but the histogram uses the previous binning from the time-dependent analysis to be able compare the differences.
-    Each spline is normalised only across the $\sin(\delta)$ dimension in the plots, but the normalisation across the right ascension dimension is a constant of $2\pi$ anyway due to the assumption of symmetric right ascension PDF.
+    Each spline is normalised only across the $\sin(\delta)$ dimension in the plots, but the normalisation across the right ascension dimension is a constant of $2\pi$ anyway due to the assumption of having a symmetric right ascension PDF.
   }
   \label{fig:tindep_bg_pdf_per_sample}
 \end{figure}
 
 \subsection*{Energy PDF}
 The energy PDF needs to be built and evaluated for multiple power law spectral indices because the second fit parameter is the spectral index of the assumed source flux.
-To avoid long computing times by re-calculating the PDF for every occurring index, the energy PDF is built in three instead of two dimensions and cached beforehand.
 To avoid long computing times by re-calculating the two-dimensional PDFs in $\sin(\delta)$ and $\log_{10}\left(E_\text{proxy}\right)$ for every index $\gamma$ occurring during the fitting procedures, the PDFs are built and cached for a fine grid of spectral indices beforehand.
 
-For a fixed index $\gamma$ the histograms are built as before from data and signal simulation with the same binning and the ratio built to describe the signal over background ration for the energy term.
+For a fixed index $\gamma$ the histograms are built as before from data and signal simulation with the same binning and the ratio is built to describe the signal over background ratios for the energy term.
 For simulated signal data, the number of events per bin can be computed using the modified OneWeight\footnote{See equation~(\ref{equ:oneweight_definition}) for a more detailed description of OneWeight.}
 \begin{equation}
   N(\Delta E, \Delta\delta)
@@ -76,12 +75,12 @@ For simulated signal data, the number of events per bin can be computed using th
   \mcomma
 \end{equation}
 where now the spectral index $\gamma$ can vary for each source flux hypothesis and each sample livetime $T$ needs to be regarded to adapt the expected number of signal events for each sample accordingly.
-The slightly different binning can again be looked up in the \lstinline!skylab! module.
+The binning can again be looked up in the \lstinline!skylab! module.
 Also, a more conservative approach is followed here compared to the time-dependent analysis, which is necessary due to the flexible spectral index and the way the ratios are constructed.
 The ratios without valid background or signal histogram points are set to the lowest ratio and are thus made very background-like.
 This may worsen the sensitivity, especially for high energy proxy values and hard spectra, but cannot artificially introduce separation power based on low simulation or data statistics.
 An approach to resolve this would be to fill in missing values in the background and signal PDF histograms themselves using the underlying model assumptions.
-The ratio would then be defined in every pixel in the ratios.
+The ratio would then be defined in every pixel before taking the ratio.
 Figures~(\ref{fig:tindep_energy_sob_IC79}) and~(\ref{fig:tindep_energy_sob_IC86_2011}--\ref{fig:tindep_energy_sob_IC86_2015}) show the change of the signal over background PDF ratios for selected spectral indices per sample.
 
 \begin{figure}[htpb]
@@ -99,22 +98,22 @@ Figures~(\ref{fig:tindep_energy_sob_IC79}) and~(\ref{fig:tindep_energy_sob_IC86_
 To cache the energy PDF dependency on the spectral index, the signal over background ratios are built for each $\gamma$ on a grid, which is constrained in the interval $[1, 4]$ to cover a broad range of physically plausible hard and soft energy spectra.
 The stack of histograms is then used to create a one-dimensional spline in the $\gamma$ direction on the fly for each pair of $\left(\sin(\delta), \log_{10}\left(E_\text{proxy}\right)\right)$ during the fit, to obtain a continuous description and get the needed derivatives for the fit in analytic form as well.
 The built splines are cached during runtime to avoid repeated construction for the same declinations and energies.
-A less complicated method would be to use multi-dimensional, splines directly to parametrize the PDF.
-In this case, the spline would be three-dimensional, in energy $\log_{10}\left(E_\text{proxy}\right)$, $\sin(\delta)$ and $\gamma$.
+Another approach would be to use multi-dimensional splines directly to parametrize the PDF.
+In this case, the spline would be three-dimensional, in $\log_{10}\left(E_\text{proxy}\right)$, $\sin(\delta)$ and $\gamma$.
 The advantage would be to have a single description of the PDF and obtain analytic gradients in all directions automatically.
 However, it might be more difficult to verify a proper description of the underlying data for higher dimensions, so a thorough verification process would be needed.
-Alternatively, a multidimensional kernel density estimation could be considered, which would automatically come with an easy possibility to directly sample the distributions for trial generation.
+Alternatively, a multidimensional kernel density estimation could be considered, which would automatically come with the possibility to directly sample the distributions for trial generation.
 
 
 \section{Stacking and multi-sample weights}
-Here the source weights and the multi-sample $n_S$ split weights both depend on the current spectral index and have to be re-evaluated each time the index changes.
-Otherwise, the calculation happens similar to the procedure in the time-dependent analysis, but the signal simulation needs to respect the sample livetime $T$ and the current spectral index $\gamma$ for the assumed power-law flux $\phi$ in the weights
+Here, the source weights and the multi-sample $n_S$ split weights both depend on the current spectral index and have to be re-evaluated each time the index changes.
+Otherwise, the calculation happens similar to the procedure in the time-dependent analysis, but the signal simulation needs to respect the sample lifetimes $T$ and the current spectral index $\gamma$ for the assumed power-law flux $\phi$ in the weights
 \begin{equation}
   w_i = T\cdot \phi(E_{\nu,i}|\gamma)\cdot\text{OneWeight}'_i
   \mperiod
 \end{equation}
-An interpolating spline is used to continuously describe the histogram, normalized by the bin width $\Delta\Omega_\text{bin}$ again.
-Though using the same spline per sample, the difference in stacking and sample split weights is the normalization procedure.
+An interpolating spline is used to continuously describe the built histogram, normalized by the bin width $\Delta\Omega_\text{bin}$.
+Though using the same spline per sample, the difference in the construction of the stacking and sample split weights, compared to the time-dependent analysis, is the normalization procedure.
 Stacking weights only consider how a given signal is split according to the expectation within one sample and are normalized accordingly
 \begin{equation}
   \sum_{k=1}^{N_\text{src}} w_{k,j} = 1
@@ -128,11 +127,11 @@ whereas the $n_S$ sample split weights $w_j$ follow the normalization rule from 
   \mcomma
 \end{equation}
 where $P(j|k,\gamma)$ and $P(k|\gamma)$ can again be obtained by the number of expected events depending on the current spectral index $\gamma$ and have to be adapted accordingly during a fitting procedure.
-The dependency on the spectral index is not very strong, as can be seen in figure~(\ref{fig:sample_split_weights}).
+The dependency on the spectral index is not strong though, as can be seen in figure~(\ref{fig:sample_split_weights}).
 
 
 \section{Note on LLH minimization}
-The extra fit parameter $\gamma$ makes it necessary to calculate an additional analytic gradient $\partial{\gamma}$ to avoid costly Likelihood evaluations for numeric gradient calculations and to obtain precise gradients.
+The extra fit parameter $\gamma$ makes it necessary to calculate an additional analytical gradient $\partial{\gamma}$ to avoid costly Likelihood evaluations for numeric gradient calculations and to obtain precise gradients.
 For the full multi-sample Likelihood~(\ref{equ:multi_sam_time_indep}), the gradients are
 \begin{align}
   \deldel{(-2\ln\Lambda)}{n_S}
@@ -183,23 +182,23 @@ The $\partial{\gamma}$ derivatives of the signal over background ratios $R_{i,j}
 
 \section{Trial generation}
 Trial generation is similar to the method in the time-dependent analysis.
-The main differences here are the easier background trial generation, by using the full set of spatially scrambled background data and the different signal injection due to the time-integrated flux.
+The main differences here are the easier background trial generation, by using the full set of spatially scrambled background data and the different signal injection mode due to the time-integrated flux.
 
-Here the added fit parameter $\gamma$ leads to a better conversion to a $\chi^2$ background only test statistic as expected from Wilks' theorem.
-Using a fixed index would result in many test statistic values of zero during background trials because a larger set of background events follows a much steeper energy spectrum as predicted signal and thus makes it hard to properly sample a rather flat spectrum from the given experimental dataset.
+Here, the added fit parameter $\gamma$ leads to a better conversion to a $\chi^2$ background only test statistic as expected from Wilks' theorem.
+Using a fixed index would result in many test statistic values of zero during background trials because a larger set of background events follows a much steeper energy spectrum than predicted signal and thus makes it hard to properly sample a rather flat spectrum from the given experimental dataset.
 The variable index results in almost $\SI{50}{\percent}$ over- and under-fluctuations in background trials with spectral indices preferably getting fitted in the more steep spectral region with indices $\gamma_\text{BG}\in[2.7, 3.7]$.
-These are shifted a bit from the expected atmospheric index of about $\num{3.7}$ indicating a small bias in the fit parameter from the background scrambles.
+These are shifted a bit from the expected atmospheric index of roughly $\num{3.7}$ indicating a small bias in the fit parameter from the background scrambles.
 
 \subsection*{Background trials}
-Pure background pseudo data samples are generated by using the experimental data in this analysis for the same reason of avoiding bias from mismatches between data and background simulation.
-To obtain a pseudo background sample, it is sufficient to simply assign a new right ascension vale, sampled uniformly in $[0, 2\pi]$ to each event per trial.
+In this analysis, pure background pseudo data samples are generated by using the experimental data for the same reason of avoiding bias from mismatches between data and background simulation.
+To obtain a pseudo background sample, it is sufficient to assign a new right ascension value, sampled uniformly in $[0, 2\pi]$ to each event per trial.
 The usage of experimental data as background is justified by the assumption of expecting a low amount of signal in the sample and that the spatial scrambling of the event positions in right ascension ensures the removal of any potential signal clustering.
 Additionally, because the Likelihood works with the approximation of having a constant number of events by dropping the Poisson term, the number of background events stays constant in each trial.
 
-$\num{e6}$ background only trials where performed to describe the test statistic distribution sufficiently accurate.
+$\num{e6}$ background-only trials where performed to describe the test statistic distribution sufficiently accurate.
 Again, no under-fluctuations are fitted and the fit parameter $n_S$ is truncated at zero.
 Due to the variable index, this is not as large an issue as previously described.
-The test statistic follows the expected $\chi^2$ distribution well and is therefore described with a modified $\chi^2$ PDF, which is the common choice for a time-integrated search.
+The test statistic follows the expected $\chi^2$ distribution well and is therefore analytically described with a modified $\chi^2$ PDF, which is a common choice for a time-integrated search.
 The number of degrees of freedom of the $\chi^2$ PDF turns out to be slightly higher than its expected value of $\num{1}$ from Wilks' theorem.
 This is because for very background-like samples, which means $n_S=0$, the spectral index of the signal energy PDF has no relevance any more and is degenerate, leading to the slightly different effective number of degrees of freedom $\hat{n}$.
 The distribution fitted to the test statistic is a split PDF model catching the compactified under-fluctuations at zero with a delta peak and the tail with a $\chi^2$ distribution
@@ -213,11 +212,11 @@ The distribution fitted to the test statistic is a split PDF model catching the 
   \mperiod
 \end{equation}
 The PDF is fitted to the test statistic by only varying the effective number of degrees of freedom $\hat{n}$ with a best fit of $\num{1.17}$.
-The number of non-zero trials $\eta=\num{0.54}$ is directly deduced by simple counting.
+The fraction of non-zero trials $\eta=\num{0.54}$ is directly deduced by simple counting.
 The comparison to the fitted $\chi^2$ model and the hybrid solution that was used in the time-dependent analysis can be seen in figure~(\ref{fig:bg_ts_with_models_and_ks}).
 The distribution of the fitted signal strengths and spectral indices for the background trials are shown in figure~(\ref{fig:bg_ts_ns_and_gamma_hist}).
 As the median of the spectral index fit values lies around $\num{3}$, a small bias towards slightly harder indices than expected from the simplified atmospheric expectation of $\gamma_\text{atmo} \approx 3.7$ can be seen.
-However, this has no influence on the final result, as this type of analysis is not well suited to really measure the astrophysical spectral index, but it is rather treated as a nuisance parameter to adopt the signal model in a flexible way to the data.
+However, this has no influence on the final result, as this type of analysis is not well suited to really measure the astrophysical spectral index, but it is rather treated as a nuisance parameter to adapt the signal model in a flexible way to the data.
 
 \subsection*{Signal trials}
 The signal injection is set up to simulate a steady flux scenario.
@@ -229,14 +228,14 @@ The weights for the signal event sampling are constructed with
 \begin{equation}
   w_{i,k} = w_k \frac{\text{OneWeight}'_i \cdot
     \phi(E_{\nu,i})}{\Omega_k} \cdot T
-  \mperiod
+  \mcomma
 \end{equation}
 where $k$ is the source the event was selected at, $w_k$ the combined source weight and $T$ the sample livetime in seconds.
 The simulated diffuse flux $\phi(E_{\nu,i})$ is normalized to a point source flux by dividing out the solid angle $\Omega_k$ of the selected regions around each source and has units $\si{\per\GeV\per\cm\squared\per\second}$.
 The sampling itself stays the same and is also used with the same HEALPix injection mode to account for the source position uncertainties.
 No time information is sampled or needed in this steady-state scenario.
 
-To combine multiple signal injectors, the distribution weights need to be adapted to account for the fact, that all sources are present in every sample.
+To combine multiple signal injectors, the distribution weights need to be adapted to account for the fact that all sources are present in every sample.
 Here, it is sufficient to distribute the samples according to their expected events in total, without a need to re-normalize the source weights
 \begin{equation}
   w_j = \frac{N_j}{\sum_{m=1}^{N_\text{sam}}N_m}
@@ -253,21 +252,22 @@ The differential fluxes can be seen in figure~(\ref{fig:tindep_diff_perf}).
 In figure~(\ref{fig:tindep_diff_perf_inj_mu_comp}), the number of actually injected events per bin to reach the performance definition is shown.
 The amount of signal events needed is almost identical for both injection models.
 This is one requirement needed to be able to derive global performances and limits from the differential fluxes.
-The corresponding $\chi^2$ CDF fits to the discrete test statistic points used to estimate the performance fluxes are shown in figures~(\ref{fig:tindep_diff_perf_chi2_fits_gamma_2_chunk0}, \ref{fig:tindep_diff_perf_chi2_fits_gamma_2_chunk1}) for $\gamma_\text{inj}=2$ and in figures~(\ref{fig:tindep_diff_perf_chi2_fits_gamma_3_chunk0}, \ref{fig:tindep_diff_perf_chi2_fits_gamma_3_chunk1}) for $\gamma_\text{inj}=2$.
+The corresponding $\chi^2$ CDF fits to the discrete test statistic points used to estimate the performance fluxes are shown in figures~(\ref{fig:tindep_diff_perf_chi2_fits_gamma_2_chunk0}, \ref{fig:tindep_diff_perf_chi2_fits_gamma_2_chunk1}) for $\gamma_\text{inj}=2$ and in figures~(\ref{fig:tindep_diff_perf_chi2_fits_gamma_3_chunk0}, \ref{fig:tindep_diff_perf_chi2_fits_gamma_3_chunk1}) for $\gamma_\text{inj}=3$.
+The numerical values for the differential sensitivity fluxes can be found in tables~(\ref{tab:tindep_diff_perf_gamma2}, \ref{tab:tindep_diff_perf_gamma3}).
 
 \begin{figure}[htbp]
   \centering
   \includegraphics{plots/diff_perf.pdf}
   \caption[Differential performance of the time-integrated analysis]{
     Shown are the differential sensitivity and discovery potential fluxes for the time-integrated analysis.
-    Both performances are computed once with an injection spectrum with a spectral index of $\gamma_\text{inj}=2$ and with $\gamma_\text{inj}=3$ to compare the aforementioned subtleties when using differential performances.
-    The steeper energy dependence of the $\gamma_\text{inj}=3$ model can clearly be seen.
-    The bins are uniformly spaced in logarithmic neutrino energy with a fine width of one eight of a decade in order to minimize the spectral dependency in each bin.
+    Both performances are computed once with an injection spectrum with a spectral index of $\gamma_\text{inj}=2$ and once with $\gamma_\text{inj}=3$ to validate the aforementioned subtleties when using differential performances.
+    The bins are uniformly spaced in logarithmic neutrino energy with a width of one eight of a decade in order to minimize the spectral dependency in each bin.
   }
   \label{fig:tindep_diff_perf}
 \end{figure}
 
-The connection between the flux normalisation $\phi_0$ and the model flux $F$ is slightly different here, because of the different emission scenario
+The connection between the flux normalisation $\phi_0$ and the model flux $F$ is slightly different here.
+Because of the steady-state emission scenario, the expected number of events can be calculated using
 \begin{align}
   N
   &= T\cdot\sum_{k=1}^{N_\text{srcs}} \sum_{(i|\Omega_i \in \Omega_k)}
@@ -282,6 +282,7 @@ where $T$ is the sample livetime.
 A global flux normalization $\phi'_0$ can equivalently be obtained from the differential performance normalizations $\phi_j^0$ using
 \begin{equation}
   \phi'_0 = \frac{1}{\sum_{j=1}^{N_\text{bins}} w_j}
+  \mcomma
 \end{equation}
 where the weights $w_j$ are computed from
 \begin{equation}
@@ -292,8 +293,8 @@ where the weights $w_j$ are computed from
 
 
 \section{Results}
-The result is obtained by doing a single Likelihood fit on unscrambled experimental data.
-The resulting test statistic is compared to the background only test statistic model to obtain the final p-value
+The analysis result is obtained by doing a single Likelihood fit on the unscrambled experimental dataset.
+The resulting test statistic value is compared to the background only test statistic model to obtain the final p-value
 
 No significant excess of neutrinos is seen in the test for a steady state flux scenario.
 The best-fit test statistic is $\num{0.057}$ with best-fit parameters $\hat{n}_S = \num{5.57}$ and $\hat{\gamma} = \num{2.8}$.
@@ -305,9 +306,9 @@ No post-trial correction needs to be applied.
   \centering
   \includegraphics{plots/bg_ts_best_fit.pdf}
   \caption[Experimental result of the time-integrated analysis]{
-    Background only test statistic together with the experimental, unblinded result.
+    Background only test statistic together with the unblinded experimental result.
     The best test statistic value of $\num{0.057}$ was shifted to twice its value to be visible in the plot.
-    In solid, the fitted $\chi^2$ PDF model, which is used to estimate the p-value, is overlaid.
+    In solid, the fitted $\chi^2$ PDF model is overlaid, which is used to estimate the p-value.
   }
   \label{fig:tindep_bg_ts_best_fit}
 \end{figure}
