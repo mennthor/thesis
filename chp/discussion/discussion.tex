@@ -1,13 +1,13 @@
 \chapter{Discussion}
 
-Both analyses conducted in this thesis do not yield a significant measurement of a sought-after, additional neutrino event clustering at the $\num{22}$ proposed high energy starting event positions.
+Both analyses conducted in this thesis do not yield a significant measurement of the sought-after, additional neutrino event clustering at the $\num{22}$ proposed high energy starting event positions.
 Fluence and flux limits based on the non-detection are calculated for each analysis and presented in this chapter, serving as the final analyses results.
 
 \begin{figure}[htpb]
   \centering
   \includegraphics{plots/discussion_tdep/neyman_plane.pdf}
-  \caption[Neyman plane for the signal strength parameter in the time-dependent analysis]{
-    Neyman plane scan for the true but unknown signal strength parameter $\mu$ for the time-dependent analysis.
+  \caption[Neyman plane for the time-dependent analysis]{
+    Neyman plane scan for the true but unknown signal strength parameter $\mu$ for the time-dependent analysis for the largest time window.
     Each row is constructed by doing a number of signal trials injecting the mean number of true signal events.
     The upper limit on the true signal strength parameter can be read of by vertically intersecting the upper limits line with the experimental result test statistic value.
     The plane is smoothed with a Gaussian kernel for viewing purposes only, the bands are constructed from the pure empirical test statistics.
@@ -16,17 +16,31 @@ Fluence and flux limits based on the non-detection are calculated for each analy
 \end{figure}
 
 \section*{Time-dependent search}
-In the time dependent-search a single parameter fit for the global signal strength is done in combination with a scan over $\num{21}$ logarithmically increasing time-windows from two seconds to five days.
+In the time dependent-search, a single parameter fit for the global signal strength is done in combination with a scan over $\num{21}$ logarithmically increasing time-windows from two seconds to five days.
 After trial-correction, the measurement in the largest time window yielded a non-significant result of $\SIsigma{1.03}$.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Neyman plane for n_S
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The true signal strength parameter $\mu$ which is measured by the fitted signal strength parameter $n_S$ is constrained by the construction of Neyman upper limits.
+The true signal strength parameter $\mu$, which is estimated by the fitted signal strength parameter $n_S$, is constrained by the construction of Neyman upper limits.
 For this, the full plane and limit construction is shown in figure~(\ref{fig:tdep_neyman_plane}).
-The construction yields a central $\SIsigma{1}$ with bounds of approximately $[1, 14]$.
+The construction yields a central $\SIsigma{1}$ interval with boundaries $[0.8, 13.2]$ and a $\SI{90}{\percent}$ upper limit of $\num{16.3}$
 These are pre-trial limits in a sense, that they are computed against the pre-trial significance and the single background test statistic for the largest time window only.
-If the significance would have been closer to an actual detection, the trial factor should also be taken into account and the bounds would get wider respecting the additional trial factor.
+If the significance would have been closer to an actual detection, the extra effort of taking the trial factor into account should be taken and the bounds would get wider respectively.
+This could be done similar to the post-trial method used for the background trials.
+Events correlated over all time windows must be drawn for both the pseudo signal and background samples and then the best fit per trial would be incorporated into the post-trial test statistic.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics{plots/discussion_tdep/limits_vs_tw.pdf}
+  \caption[Fluence limits for each time windows for the time-dependent analysis]{
+    $\SI{90}{\percent}$ Neyman upper limits per time window on the fluence normalisation at $\SI{100}{\TeV}$.
+    All limits are equal to the sensitivity except for the largest time window which shows an overfluctuation in the best fit test statistic value with respect to the background expectation.
+    The dark solid line indicates the expected fluence, if the whole astrophysical flux component measured in \cite{Haack:2017dxi} would have been emitted in a burst scenario.
+    Any fluence above that line would lead to a higher diffuse flux than measured.
+  }
+  \label{fig:tdep_limits_vs_tw}
+\end{figure}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Limits vs. time windows
@@ -41,95 +55,95 @@ For the largest time window, the upper limit is higher because of the non-zero s
 
 \begin{figure}[htpb]
   \centering
-  \includegraphics{plots/discussion_tdep/limits_vs_tw.pdf}
-  \caption[Fluence limits for each time windows for the time-dependent analysis]{
-    $\SI{90}{\percent}$ Neyman upper limits per time window on the fluence normalisation at $\SI{100}{\TeV}$.
-    All limits are the same as the sensitivity except for the largest time window which shows an overfluctuation in the best fit test statistic with respect to the background expectation.
-    The dark solid line indicates the expected fluence, if the whole astrophysical flux component measured in \cite{Haack:2017dxi} would have been emitted in a burst scenario.
-    Any fluence above that line would lead to a higher diffuse flux than measured.
-  }
-  \label{fig:tdep_limits_vs_tw}
-\end{figure}
-\enlargethispage*{5cm}
-\begin{figure}[htpb]
-  \centering
   \includegraphics{plots/discussion_tdep/limits_gamma_logE.pdf}
   \caption[Unbroken power-law fluence limits for the largest time window]{
-    $\SI{90}{\percent}$ Neyman upper limits for the largest time window for a selection of spectral indices.
+    $\SI{90}{\percent}$ Neyman upper limits for the largest time window for a selection of spectral indices $\gamma$.
     The solid region gives the central $\SI{90}{\percent}$ interval with the best sensitivity for the given spectral index.
     The range is derived from the differential performances and the weight PDFs can be found in figure~(\ref{fig:tdep_diff_weights}).
+    The double light grey solid line shows the fluence limits derived from the diffuse flux measurement scaled to a burst fluence as explained in the text.
+    The thicker portion of the line shows the valid region given in the original work, the thinner portion the $\SI{90}{\percent}$ central interval obtained from the differential flux limits.
   }
   \label{fig:tdep_limits_gamma_logE}
 \end{figure}
 
-The calculated limits are not directly comparable to a specific model, as models that predict a time-dependent flux or a per-burst emission from a possible source of high energy starting events do not exist so far.
+The calculated limits are not directly comparable to a specific model, as models that predict a time-dependent neutrino flux or a per-burst emission from a possible source of high energy starting events do not exist so far.
 Time-dependent and burst models are primarily built for Gamma Ray Bursts, which have been tested in a dedicated time-dependent analysis similar to this work \cite{Aartsen:2014aqy,Abbasi:2012zw}.
 However, it is possible to generically compare the limits against the current diffuse astrophysical muon neutrino flux measurement made in IceCube \cite{Haack:2017dxi}.
 The used flux model is an unbroken power-law and the best fit is given as
 \begin{equation}
   \label{equ:diffuse_flux}
   \phi^{\nu_\mu+\bar{\nu}_\mu}
-  = \left(1.01_{-0.23}^{+0.26}\right) \cdot
-    \left(\frac{E}{\SI{100}{\TeV}}\right)^{−2.19\pm0.10} \cdot
+  = 1.01 \cdot \left(\frac{E}{\SI{100}{\TeV}}\right)^{−2.19} \cdot
     \SI{e-18}{\per\GeV\per\cm\squared\per\second\per\steradian}
   \mperiod
 \end{equation}
 This can be used to calculate a fluence upper limit that can be compared against this analysis' upper limits.
-Under the assumption, that the whole diffuse flux from~(\ref{equ:diffuse_flux}) is accounted for by burst emission originating from the $N_\text{srcs} = \num{22}$ track-like high energy starting event positions in the 6 years of IceCube data\footnote{As total fluences are compared in the end, the per-source normalisation cancels out again, but was put through the calculation for clarity here.}.
-
-This assumption leads to a burst rate of
+Under the assumption, that the whole diffuse flux from~(\ref{equ:diffuse_flux}) is accounted for by burst emission originating from the $N_\text{srcs} = \num{22}$ track-like high energy starting event positions in $T_\text{tot}=\num{2071.13}$ days of lifetime\footnote{As total fluences are compared in the end, the per-source normalisation cancels out again, but was put through the calculation for clarity here.}, this leads to a burst rate of
 \begin{equation}
   R_\text{HESE}
   = \frac{N_\text{srcs}}{4\pi\cdot T_\text{tot}}
-  \approx \frac{22}{4\pi\cdot6\cdot365\cdot\num{86400}}
+  \approx \frac{22}{4\pi\cdot \num{2071.13} \cdot\num{86400}}
     \si[per-mode=fraction]{\per\second\per\steradian}
-  \approx \SI{3,44e-8}{\per\second\per\steradian}
+  \approx \SI{9.78e-9}{\per\second\per\steradian}
 \end{equation}
-for a single direction per second, where $T_\text{tot}$ is the total livetime of approximately 6 years considered here for the number of sources.
-The $E_\nu^2$ weighted diffuse flux normalization at $\SI{100}{\TeV}$
+for a single direction per second.
+The $E_\nu^2$ weighted diffuse flux normalisation at $\SI{100}{\TeV}$
 \begin{equation}
   E_\nu^2 \phi_0^{\nu_\mu+\bar{\nu}_\mu}
   = \SI{1.01e-8}{\GeV\per\cm\squared\per\second\per\steradian}
 \end{equation}
 can then be scaled to a per-burst fluence with
 \begin{equation}
-  \Phi_\text{HESE}^\text{diff}
-  = \frac{\Delta T \cdot E_\nu^2\phi_0^{\nu_\mu+\bar{\nu}_\mu} \cdot
-          \SI{4\pi}{\steradian}}
-         {\Delta T \cdot R_\text{HESE} \cdot \SI{4\pi}{\steradian}}
+  E_\nu^2 \Phi_\text{HESE}^\text{diff}
+  = \frac{\Delta T \cdot E_\nu^2\phi_0^{\nu_\mu+\bar{\nu}_\mu} \cdot 4\pi}
+         {\Delta T \cdot R_\text{HESE} \cdot 4\pi}
   = \frac{E_\nu^2\phi_0^{\nu_\mu+\bar{\nu}_\mu}}{R_\text{HESE}}
   \mperiod
 \end{equation}
 
-Note, that the dependence on the burst time window $\Delta T$ and the factor $4\pi$ for the isotropic integration over the whole sky is cancelled, because the burst rate scales accordingly and the different spectral indices are not considered here.
+Note, that the dependence on the burst time window $\Delta T$ and the factor $4\pi$ for the isotropic integration over the whole sky is cancelled, because the burst rate scales accordingly.
 This leads to a potential $E_\nu^2$ weighted per-burst fluence of
 \begin{equation}
     E_\nu^2\Phi_\text{HESE, burst}^\text{diff}
-      \approx \SI{1.09}{\GeV\per\cm\squared}
+      \approx \SI{1.03}{\GeV\per\cm\squared}
     \mintertext{or a total fluence of}
     E_\nu^2\Phi_\text{HESE}^\text{diff}
-      \approx \SI{24.0}{\GeV\per\cm\squared}
+      \approx \SI{22.71}{\GeV\per\cm\squared}
 \end{equation}
-at at a normalization energy of $\SI{100}{\TeV}$.
-Any fluence higher than $\Phi_\text{HESE}^\text{diff}$ would mean that more than the total observed, diffuse astrophysical muon neutrino flux would originate from a possible per-burst emission at the HESE event positions, which is a highly unlikely scenario.
-As seen in figure~(\ref{fig:tdep_limits_vs_tw}), the limits set by this analysis are sane and well below the diffuse limits, indicating a smaller contribution to the diffuse flux, if any at all.
+at at a normalisation energy of $\SI{100}{\TeV}$.
+Any fluence higher than $\Phi_\text{HESE}^\text{diff}$ would mean that more than the total observed diffuse astrophysical muon neutrino flux would originate from a possible per-burst emission at the HESE positions, which is a highly unlikely scenario.
+As seen in figure~(\ref{fig:tdep_limits_vs_tw}), the limits set by this analysis are sane and well below the diffuse limits, indicating a smaller contribution to the diffuse flux.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Limits for power laws vs. logEnu
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 To obtain limits for a wider range of spectra and not only the one that is explicitly tested against, limits are calculated for several different spectral indices for the assumed sources and for all time-windows.
-Tested is always against the largest time-window with the highest significance.
+It is always tested against the largest time-window with the highest significance.
 The resulting upper limits can be seen in figure~(\ref{fig:tdep_limits_gamma_logE}).
 The central solid interval indicates the energy region in which the analysis has the most potential sensitivity for the given spectral hypothesis.
-These intervals can be computed from the inverse differential fluences and the weight distribution is shown in figure~(\ref{fig:tdep_diff_weights}).
+These intervals can be computed from the inverse differential fluences as explained in section~\ref{chp:tdep_diff_perf} and the resulting weight distribution is shown in figure~(\ref{fig:tdep_diff_weights}).
 Additionally to the shown selection of three power-laws, a fine grid scan of spectral indices is done.
 Figure~(\ref{fig:tdep_limits_norm_vs_gammas}) shows the resulting limits.
 Instead of plotting the power law energy dependent, only the fluence normalisations are shown for two pivot energies, $\SI{1}{\GeV}$ and $\SI{100}{\TeV}$.
-The fluence shapes, that can be inferred from these two reference points again indicate the relatively low background even for the largest time window range.
-For the normalization at $\SI{100}{\TeV}$ the limit fluence for the $E^{-2}$ power law is actually the highest among the tested indices.
+The fluence shapes, that can be inferred from these two reference points again indicate the low background contribution even for the largest time windows.
+For the normalisation at $\SI{100}{\TeV}$ the limit fluence for the $E^{-2}$ power law is actually the highest among the tested indices.
 This can be understood regarding the low number of background events and the relatively low influence of the energy PDF.
 The energy point at which the energy PDF in combination with a few events close to any source leads to high signal over background ratios, is lower than the shown $\SI{100}{\TeV}$.
-Harder spectra still gain from the in general higher energy events, but also the softer power-laws gain lower limits, because they can counter the lack of higher energy events with more medium energy events, that are enough to yield high test statistics in the absence of many background events.
+Harder spectra still gain from the in general higher energy events, but also the softer power-laws gain lower limits, because they can counter the lack of higher energy events with more medium energy events, that are sufficient to yield high test statistics in the absence of many background events.
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics{plots/discussion_tindep/neyman_plane.pdf}
+  \caption[Neyman plane for the time-integrated analysis]{
+    Neyman plane scan for the true but unknown signal strength parameter $\mu$ for the time-integrated analysis.
+    Each row is constructed by doing a number of signal trials, injecting the mean number of true signal events.
+    The upper limit on the true signal strength parameter can be read of by vertically intersecting the upper limits line with the experimental result test statistic value.
+    The bands are constructed from spline fits to the discrete empirical quantiles for smoothing.
+    The splines can be found in figure~(\ref{fig:tindep_neyman_plane_chi2_splines})
+  }
+  \label{fig:tindep_neyman_plane}
+\end{figure}
 
 \section*{Time-integrated search}
 The search for a steady flux emission originating from the $\num{22}$ high energy starting event positions also yields no significant result.
@@ -139,21 +153,9 @@ Limits are constructed and shown as the main physics results in this section.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Neyman plane for n_S
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[htpb]
-  \centering
-  \includegraphics{plots/discussion_tindep/neyman_plane.pdf}
-  \caption[Neyman plane for the signal strength parameter in the time-integrated analysis]{
-    Neyman plane scan for the true but unknown signal strength parameter $\mu$ for the time-integrated analysis.
-    Each row is constructed by doing a number of signal trials injecting the mean number of true signal events.
-    The upper limit on the true signal strength parameter can be read of by vertically intersecting the upper limits line with the experimental result test statistic value.
-    The bands are constructed from spline fits to the discrete empirical quantiles for smoothing.
-    The splines can be found in figure~(\ref{fig:tindep_neyman_plane_chi2_splines})
-  }
-  \label{fig:tdep_neyman_plane}
-\end{figure}
-
 Equivalently to the Neyman plane constructed in the time-dependent analysis, the bounds for the true signal strength parameters can be computed here too.
-Because of the quite insignificant result, the central $\SIsigma{1}$ bounds are compatible with a true signal strength of zero.
+Because of the quite insignificant result, the central $\SIsigma{1}$ bounds, $[0, 52.7]$, are compatible with a true signal strength of zero as shown in figure~(\ref{fig:tindep_neyman_plane}).
+The resulting $\SI{90}{\percent}$ upper limit is at a signal strength of $68.1$ expected events for all sources.
 As a technical note, the bands are constructed by fitting smoothing splines to the discrete quantiles of the empirical test statistics to counter the effects of finite statistics used for the scan.
 As the results are non-significant anyway, this has no influence on any result.
 The constructed splines and more information on the fitting procedure can be found in figure~(\ref{fig:tindep_neyman_plane_chi2_splines}).
@@ -161,33 +163,32 @@ The constructed splines and more information on the fitting procedure can be fou
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % n_S, gamma plane scan
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Additionally to the Neyman plane scan for the signal strength parameter, a Likelihood landscape scan in both fit parameters is done.
-This serves as a tool to inspect the correlation between the two parameters and can also be used to derive limits on the underlying true parameters.
-The second case is only approximately done here under the assumption that Wilks' theorem holds for connecting the measured with the true values.
-Figure~(\ref{fig:ns_gamma_scan_plane}) shows the scanned parameter region.
-The non-solid lines are marginal scans in each parameter.
-For each marginal scan, one parameter is fixed at a specific value, while the best fit Likelihood value is only obtained by fitting the other one, yielding one-dimensional parameter confidence intervals.
-The scan confirms the low significance result from the comparison with the test statistic.
-The spectral index best fit tends only slightly to harder, signal-like spectra and is close to the median spectral index obtained from the background only trials, shown in figure~(\ref{fig:bg_ts_ns_and_gamma_hist}), indicating a very background-like dataset.
-
 \begin{figure}[htbp]
   \centering
   \includegraphics{plots/discussion_tindep/ns_gamma_scan_plane.pdf}
-  \caption[2D LLH scan of $n_S$ and $\gamma$ for the time integrated search]{
+  \caption[2D LLH scan of $n_S$ and $\gamma$ for the time-integrated analysis]{
     2D Likelihood scan around the experimental best-fit position in spectral index $\gamma$ and expected signal events $n_S$, with the experimental result marked by the white dot.
-    The contours are calculated under the assumption that Wilks' theorem holds, describing the test statistic with a $\chi^2$ distribution with $\num{2}$ degrees of freedom.
-    $\SI{39}{\percent}$ of probability are enclosed by the $\SI{1}{\sigma}$ contour.
+    The contours are calculated under the assumption that Wilks' theorem holds, describing the test statistic with a $\chi^2$ distribution with two degrees of freedom.
+    $\SI{39}{\percent}$ of probability is enclosed by the $\SIsigma{1}$ contour.
     The dashed line gives the marginal scan line for fixing the spectral index and only fitting $n_S$, the dotted line vice versa for a fixed $n_S$.
   }
   \label{fig:ns_gamma_scan_plane}
 \end{figure}
 
+Additionally to the Neyman plane scan for the signal strength parameter, a Likelihood landscape scan in both fit parameters is done.
+This serves as a tool to inspect the correlation between the two parameters and can also be used to derive limits on the underlying true parameters.
+The interval estimation is only approximately done here under the assumption that Wilks' theorem holds for connecting the measured with the true values and only serves visualisation purposes.
+Figure~(\ref{fig:ns_gamma_scan_plane}) shows the scanned parameter region, where the non-solid lines are marginal scans in each parameter.
+For each marginal scan, one parameter is fixed at a specific value, while the best fit Likelihood value is only obtained by fitting the other one, yielding one-dimensional parameter confidence intervals.
+The scan confirms the low significance result from the comparison with the test statistic.
+The spectral index best fit tends only slightly to harder, signal-like spectra and is close to the median spectral index obtained from the background only trials, shown in figure~(\ref{fig:bg_ts_ns_and_gamma_hist}), indicating a very background-like dataset.
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Limits for power laws vs. logEnu
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Power law limits are calculated equivalently to the time-dependent analysis.
+Power-law flux limits are calculated equivalently to the time-dependent analysis.
 The differential limits, shown in figure~(\ref{fig:tdep_diff_limits}) were used to calculate global flux limits for a selection of power-law fluxes.
-Also, the same argumentation used for comparing the limits to the effective point source flux from the diffuse flux can be applied.
+Also, the same argumentation used for comparing the time-dependent limits to an effective point source flux from the diffuse flux can be applied.
 This time, the density of the source events only depends on the sky area
 \begin{equation}
   R_\text{HESE} = \frac{N_\text{srcs}}{4\pi}
@@ -196,9 +197,9 @@ This time, the density of the source events only depends on the sky area
 so the $E_\nu^2$ weighted point source flux normalisation at $\SI{100}{\TeV}$ per source can be obtained via
 \begin{equation}
   \phi_\text{HESE}^\text{diff}
-  = \frac{\phi_0^{\nu_\mu+\bar{\nu}_\mu} \cdot \SI{4\pi}{\steradian}}
-         {R_\text{HESE} \cdot \SI{4\pi}{\steradian}}
-  = \frac{\phi_0^{\nu_\mu+\bar{\nu}_\mu} \cdot \SI{4\pi}{\steradian}}
+  = \frac{\phi_0^{\nu_\mu+\bar{\nu}_\mu} \cdot 4\pi}
+         {R_\text{HESE} \cdot 4\pi}
+  = \frac{\phi_0^{\nu_\mu+\bar{\nu}_\mu} \cdot 4\pi}
          {N_\text{srcs}}
   \mcomma
 \end{equation}
@@ -230,8 +231,8 @@ which yields a total flux for all $\num{22}$ high energy starting events of
 The limits for this analysis are slightly above that potential detection threshold of the single point source search.
 This does not necessarily mean, that at least one of the source locations should have already shown up in the dedicated analysis.
 However, as the limits here are penalized by considering the unknown source positions and in the point source analysis a perfectly known position is assumed, that is not a problem per-se.
-Ignoring the source uncertainties here, would push the limits further away from the single source analysis sensitivity again.
-Also the limits are compared against the most optimistic point source sensitivity flux and the average case, taking into account the source distribution, has worse sensitivity and the dedicated single source search incorporates a seventh year of lifetime instead of the six years of lifetime used here.
+Ignoring the source uncertainties here, would push the limits below the single source analysis sensitivity again.
+Also the limits are compared against the most optimistic point source sensitivity flux and the average case, taking into account the source distribution, has worse sensitivity and the dedicated single source search incorporates a seventh year of lifetime instead of the six years used here.
 In figure~(\ref{fig:tdep_limits_gamma_logE_gamma_inj_2}) the limits from this analysis are compared to the one from the diffuse flux measurement and the point source search sensitivity, both scaled to be comparable to the tested case here.
 As a technical note, for supporting the claim, that the global limits do not depend on the injection spectrum for the fine binning used here, figure~(\ref{fig:tdep_limits_gamma_logE_gamma_inj_3}) shows the same limits, but derived from an injection spectrum with index $\gamma_\text{inj}=3$.
 Also, the weight distributions to obtain the central most significant intervals are shown in figures~(\ref{fig:tindep_diff_weights_gamma_2}, \ref{fig:tindep_diff_weights_gamma_3}).
@@ -240,7 +241,7 @@ Also, the weight distributions to obtain the central most significant intervals 
   \centering
   \includegraphics{plots/discussion_tindep/limits_gamma_logE_gamma_inj_2.pdf}
   \caption[Time-integrated analysis global power-law limits $\gamma_\text{inj}=3$]{
-    This analysis' power-law limits compared to comparable limits derived from the diffuse muon neutrino track flux measurement in \cite{Haack:2017dxi} and the all-sky point source search from \cite{Aartsen:2016oji} using seven years of muon neutrino track data.
+    This analysis' power-law limits compared to generic limits derived from the diffuse muon neutrino track flux measurement in \cite{Haack:2017dxi} and the all-sky point source search from \cite{Aartsen:2016oji} using seven years of muon neutrino track data.
     The global limits are derived from the differential limits shown in figure~(\ref{fig:tdep_diff_limits}) with an injection index of $\gamma_\text{inj}=2$.
     The double light grey solid line shows the flux limits derived from the diffuse flux measurement scaled to a point source flux.
     The thicker portion of the line shows the valid region given in the original work, the thinner portion the $\SI{90}{\percent}$ central interval obtained from the differential flux limits.
