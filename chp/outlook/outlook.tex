@@ -5,63 +5,59 @@ In the time-dependent analysis, small to medium sized time windows are tested in
 The underlying temporal emission behaviour is not modelled in detail here, in favour of a more generic test.
 However, the resulting small background leads to a high sensitivity of catching any event at all.
 On the other end, in the time-integrated analysis, a test for a steady flux assumed to originate from all source positions simultaneously is done.
-Upper limits and parameter space are done in absence of a significant measurement as the main physics results.
+Upper limits and parameter space scans are done in absence of a significant measurement as the main physics results.
+
+For the time-dependent analysis, the largest time window with a total width of five days yielded the most significant result from the $\num{21}$ tested time ranges, with a post-trial significance of $\SIsigma{1.03}$ and is therefore compatible with pure background.
+The resulting limits are calculated for various generic power-law neutrino fluence models and a Neyman upper limit on the number of signal events from the sources could be set.
+Differential limits were provided if limits for a new model need to be calculated at some later time.
+For the time-integrated analysis, the final significance was $\SIsigma{0.73}$ with a best fit spectral index of $\hat{\gamma} \approx 2.8$ which is also well compatible with background.
+The same family of limits has been calculated as for the time-dependent analysis and finely binned differential flux limits are provided.
 
 In the light of the recent discovery of the correlation between the flaring Blazar TXS 0506+056 with an extremely-high-energy event measured in IceCube \cite{IceCube:2018dnn}, the results in this thesis seem to fit in the picture, under the assumption, that the detected extremely-high-energy neutrino may only be the peak energy event from the whole flux range visible.
-The same reasoning should hold for the high-energy starting events in their dedicated event selection.
-A two-fold neutrino point source search was also done in \cite{IceCube:2018cha} after the correlation was found.
-The first analysis was a search for a time-dependent emission using a Gaussian and a box-shaped flux model.
-Both analyses could measure a clustered neutrino emission from the direction of TXS 0506+056 about three years earlier and on a timescale of about $\SI{110}{\day}$.
-A second interesting region with a time window of $\SI{19}{\day}$ was found directly around the time of the extremely-high-energy neutrino event but was mostly dominated by the neutrino event itself.
-A separate time-integrated done with the same dataset as used in this thesis, with an added contribution from the IC59 detector configuration.
-That search yielded an overall significance of $\SIsigma{2.1}$ which shows a strong hint of a signal present in the data.
-Furthermore, the fitted spectral index of the underlying power law assumption yielded almost the same result as the time-dependent analysis.
-A per-event investigation also suggested, that most of the significance indeed comes from events from the time window region of the time-dependent analysis.
-Comparing this recent analysis to the results from this thesis, it seems likely that also the high energy starting events may have an associated lower energy neutrino contribution, but on emission scales somewhere between the time window lengths tested in this work.
+A time window of about $\num{110}$ days has been found in which a significant neutrino emission from TXS could be measured.
+Comparing the results from \cite{IceCube:2018cha,IceCube:2018dnn} to the results from this thesis, it seems likely that also the high energy starting events have an associated lower energy neutrino contribution, but on emission scales somewhere between the time window lengths tested in this work.
 
-This may justify the increasing efforts in multi-messenger observations, where, in the case of IceCube, real-time alerts from high energy events are sent out \cite{Aartsen:2016lmt}.
-Usually, for these alerts, immediate follow-up observations are done when the current observation conditions for the respective instruments are good \cite{DeLotto:2017ggz}.
-A verified, additional neutrino contribution would further justify this approach and would further constrain the parameter space of the neutrino production mechanisms in astrophysical sources.
+Although the results from this thesis are only a hint, it justifies the increasing efforts in multi-messenger observations, where, in the case of IceCube, real-time alerts from high energy events are sent out \cite{Aartsen:2016lmt}.
+Usually, for these alerts, immediate follow-up observations are done when the current observation conditions for the respective instruments are good \cite{DeLotto:2017ggz} and as mentioned before, one of these alert events lead to the observation of the correlated flaring Blazar \cite{IceCube:2018cha}.
+A second confirmed neutrino source would further constrain the parameter space of the neutrino production mechanisms in astrophysical sources.
+Therefore, this analysis aims at a similar approach with a multi-messenger background in mind, although neutrinos are not tested against other messenger particles but against neutrinos from a different energy range that are very likely from astrophysical origin.
+Finding a localized neutrino flux in multiple energy ranges would certainly mean a big step forward in the understanding of the source physics.
 In this light, several approaches may be followed to improve on the analyses strategies presented in this thesis.
 
-In chapter~\ref{chp:pointsource}, an extensive theoretic foundation is laid out for the extended, unbinned Likelihood framework used to gain optimal sensitivity for searches for neutrino sources in the sky.
+In chapter~\ref{chp:pointsource}, an extensive theoretic foundation is laid out for the extended, unbinned Likelihood framework used for searches for neutrino sources in the sky.
 A detailed derivation from the general Likelihood definition and the underlying mechanisms to construct the per-event probability distributions is given.
-The formulas are formulated partly specifically for the IceCube observatory but should be introduced generalised enough to transform the procedure to other, similar environments.
+The formulas are partly specified for the special location of the IceCube detector but should have been introduced generalised enough to transform the procedure to other, similar environments.
 Also, two of the more prominent Likelihood formulas used for the general per-burst search and the time-integrated search are derived, both for the single and multi-sample case.
-All formulas are derived by including the often used stacking generalisation.
+All formulas include the often used stacking generalisation.
 Chapter~\ref{chp:pointsource} therefore gives an extensive review of the used Likelihood formalism.
 
-The two dedicated analyses described in chapter~\ref{chp:time_dep} and chapter~\ref{chp:time_indep} use information from two completely different neutrino event selection to search for a correlated emission of few high-energy neutrino events and the expected, less energetic neutrino contribution.
-For these two searches alone, two improvements may be suggested.
+The two dedicated analyses described in chapter~\ref{chp:time_dep} and~\ref{chp:time_indep} use information from two different neutrino event selections to search for a correlated emission of the few high-energy neutrino events and the expected, less energetic neutrino contribution.
+For the time-dependent case, a detailed method to model per-event and source distributions for the Likelihood model has been worked out.
+Especially the time dependent background modelling has not been included in any analysis of this kind before, taking into account the rate dependency on the naturally occurring seasonal variations.
+Also, the method of using differential flux limits to obtain global model limits has been developed.
+This may be useful for the reader if a specific model limit was not calculated by the analyser.
+With finely binned differential performance values, it should be possible to obtain global limits from these values alone for quite arbitrary flux models.
+
+But, for the two searches done here, two improvements may also be suggested.
 First, for each high energy starting event, a \emph{signalness} parameter can be obtained from dedicated simulation, which estimates the probability of the single event being a true astrophysical signal.
-Some HESE events have a low signalness, indicating, that these events may rather be atmospheric, high-energy muon background.
-A cut on the signalness parameter may be scanned to further improve the sensitivities.
-The cut ensures that the sources are also more likely to have an additional lower energy neutrino contribution.
-However, the fewer sources, the more the sensitivity approaches the single source search described in \cite{Aartsen:2016oji}, in which the events couldn't be seen on their own.
+Some high energy starting events have a low signalness, indicating, that these events may rather be atmospheric high-energy background muons instead of astrophysical particles.
+A cut on the signalness parameter can be scanned to further improve the sensitivities\footnote{Note that introducing an intrinsic source stacking weight proportional to the signalness would not work as maybe expected, because the single events can either be of astrophysical origin or come from interactions in the atmosphere.}.
+A tighter cut ensures that the surviving events originate more likely from astrophysical sources which are expected to have an additional lower energy neutrino contribution.
+However, the fewer sources, the more the sensitivity approaches the single source search described in \cite{Aartsen:2016oji}, in which the potential sources could not be detected.
 Therefore, an optimal cut has to be found.
-Also, an additional selection of \emph{extremely high energy events} (EHE) exists \cite{Yoshida:2017ghs,Aartsen:2016ngq}.
-One of these events lead to the observation of the correlated Blazar flaring \cite{IceCube:2018cha}.
-It may be useful to also include these event positions to increase the catalogue size and thus the needed signal flux per source for a discovery.
+Also, an additional neutrino event selection of \emph{extremely high energy events} (EHE) exists\cite{Yoshida:2017ghs,Aartsen:2016ngq}.
+It may be useful to also include these event positions to increase the catalogue size and thus decrease the needed signal flux per source for a discovery.
 
 Another approach may be to increase the time window size and construct an analysis, which transfers smoothly from the per-burst scenario to the time-integrated search, which is, in principle, just a special case of burst time-windows of the size of the sample livetime.
-However, current analysis frameworks, including the one that was developed for this work, cannot handle that smooth transition automatically and currently a lot of manual work and patching is needed to do such an analysis.
-A useful approach would the development of such a flexible and robust framework for future analysis tasks.
+However, current analysis frameworks, including the one that was developed for this work, cannot handle that smooth transition automatically yet.
+A useful task would be the development of such a flexible and robust framework for future analysis tasks.
 
-Also, a source fitting approach was shortly tested, but not presented in this thesis, by the author.
-Instead of just estimating the worsened sensitivity and limits from the uncertainty of the sources, the positions of the sources themselves could be further constrained using a neutrino sample with higher statistics.
-Previous analysis, testing, for example, the correlation of high energy cosmic rays and neutrinos, have used a simpler, but less suitable approach of estimating the source uncertainty by folding a Gaussian source profile in the spatial signal PDF.
-This results in a broadened PDF, but also assumes an extended emission instead of a point-like one \cite{Aartsen:2015dml}.
-The approach of letting the source positions float in a fitting procedure, constrained by their Likelihood reconstruction prior maps also requires investing more time and thought in a more generalized Likelihood framework.
+% Also, a source fitting approach was shortly tested, but not presented in this thesis, by the author.
+% Instead of just estimating the worsened sensitivity and limits from the uncertainty of the sources, the positions of the sources themselves could be further constrained using a neutrino sample with higher statistics.
+% Previous analysis, testing, for example, the correlation of high energy cosmic rays and neutrinos, have used a simpler, but less suitable approach of estimating the source uncertainty by folding a Gaussian source profile in the spatial signal PDF.
+% This results in a broadened PDF, but also assumes an extended emission instead of a point-like one \cite{Aartsen:2015dml}.
+% The approach of letting the source positions float in a fitting procedure, constrained by their Likelihood reconstruction prior maps also requires investing more time and thought in a more generalized Likelihood framework.
 
-In conclusion, this thesis can serve as a reference to construct more generalized analysis frameworks for future searches for neutrino sources.
-Although the two conducted analyses yielded no significant clustering of neutrino events around high energy starting events assumed as source positions.
-Currently, the IceCube detector is taking data with an uptime of over $\SI{99}{\percent}$.
-Therefore, further detections of neutrino sources and the direct characterisation of source properties may only be a matter of time.
-
-% \begin{itemize}
-%   \item Speculate a bit how dedicated model searches or expanded observation time at the HESE tracks may yield more insight in other messenger particles.
-%   And how this thesis has laid out the required theoretical ground to conduct further approaches, like extended time windows, light curve search or cuts on the HESE event selection themselves.
-%   Also shortly note that tests using a source fitting procedure using lowE IC neutrinos have been done, which may further reduce the angular uncertainties for follow-up searches.
-%   \item Compare emission scenarios to (somewhat) likely scenarios from the intro section, sort into physics context or compare to other analysis??? This may get hard :(
-% \end{itemize}
-
+In conclusion, this thesis can serve as a starting reference to construct more generalized analysis frameworks for future searches for neutrino sources.
+Several new analysis approaches have been developed and utilized in this thesis, however, the two conducted analyses lead to no detection of neutrino sources.
+Currently, the IceCube detector is taking data with an uptime of over $\SI{99}{\percent}$ and therefore, the awaited further detections of neutrino sources and the direct characterisation of source properties may only be a matter of time.
